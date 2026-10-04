@@ -2,6 +2,8 @@
 // @name         IKnights Tools Suite
 // @namespace    IKnights
 // @version      0.11.5
+// @updateURL    https://raw.githubusercontent.com/lKnights/Illyriad-Userscripts/main/IKnights-Tools-Suite/IKnights-Tools-Suite.user.js
+// @downloadURL  https://raw.githubusercontent.com/lKnights/Illyriad-Userscripts/main/IKnights-Tools-Suite/IKnights-Tools-Suite.user.js
 // @description  IKnights' integrated Illyriad tools suite. Includes Quartermaster.
 // @author       IKnights
 // @match        https://elgea.illyriad.co.uk/*
