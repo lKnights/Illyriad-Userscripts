@@ -30,6 +30,13 @@
     let nativeButtonHeight = 35;
     let nativeFallbackSkin = null;
 
+    /*
+     * Captured from Illyriad's untouched Friends / Communities tabs.
+     *
+     * We use these native edges instead of guessing sidebar margins.
+     */
+    let nativeSidebarGeometry = null;
+
 
     // =========================================================================
     // GLOBAL SUITE OBJECT
@@ -403,7 +410,7 @@
             document.createElement("div");
 
         /*
-         * Illyriad owns the appearance.
+         * Use Illyriad's native visual class.
          */
         button.className =
             "sideTab ik-suite-managed-tab";
@@ -455,6 +462,10 @@
             event => {
                 event.preventDefault();
 
+                /*
+                 * Prevent Illyriad's dormant Communities behavior
+                 * from firing when Tools is clicked.
+                 */
                 event.stopImmediatePropagation();
 
                 showSidebarTab(id);
@@ -462,6 +473,83 @@
 
             true
         );
+    }
+
+
+    // =========================================================================
+    // CAPTURE ILLYRIAD'S NATIVE TAB GEOMETRY
+    // =========================================================================
+
+    function captureNativeSidebarGeometry() {
+        if (nativeSidebarGeometry) {
+            return nativeSidebarGeometry;
+        }
+
+        const dock =
+            document.querySelector(
+                "#DockedFriends"
+            );
+
+        const friendsButton =
+            document.querySelector(
+                "#FriendsBtn"
+            );
+
+        const communitiesButton =
+            document.querySelector(
+                "#CommunitiesBtn"
+            );
+
+        if (
+            !dock ||
+            !friendsButton ||
+            !communitiesButton
+        ) {
+            return null;
+        }
+
+
+        const dockRect =
+            dock.getBoundingClientRect();
+
+        const friendsRect =
+            friendsButton.getBoundingClientRect();
+
+        const communitiesRect =
+            communitiesButton.getBoundingClientRect();
+
+
+        const left =
+            friendsRect.left -
+            dockRect.left;
+
+        const right =
+            communitiesRect.right -
+            dockRect.left;
+
+
+        if (
+            Number.isFinite(left) &&
+            Number.isFinite(right) &&
+            right > left
+        ) {
+            nativeSidebarGeometry = {
+                left,
+                right
+            };
+
+
+            console.log(
+                "IKnights Tools captured native sidebar tab geometry:",
+                nativeSidebarGeometry
+            );
+
+
+            return nativeSidebarGeometry;
+        }
+
+
+        return null;
     }
 
 
@@ -525,29 +613,44 @@
 
 
         /*
-         * Match Illyriad's native 6px inset.
+         * Use the exact area occupied by Illyriad's original
+         * Friends + Communities tabs.
+         *
+         * Fallback values are only used if the native dimensions
+         * cannot be measured for some reason.
          */
+        const geometry =
+            nativeSidebarGeometry ||
+            captureNativeSidebarGeometry();
+
+
         const dockWidth =
             dock.clientWidth || 245;
 
-        const leftInset = 6;
-        const rightInset = 6;
+
+        const leftEdge =
+            geometry
+                ? geometry.left
+                : 6;
+
 
         const rightEdge =
-            dockWidth - rightInset;
+            geometry
+                ? geometry.right
+                : dockWidth;
+
 
         const usableWidth =
             Math.max(
                 1,
-                rightEdge - leftInset
+                rightEdge - leftEdge
             );
 
 
         /*
-         * Use whole pixels for the first tabs.
-         *
-         * The final tab receives every remaining pixel,
-         * guaranteeing that its right edge ends exactly at rightEdge.
+         * First tabs use whole-pixel widths.
+         * Last tab receives the remainder so there can never
+         * be a rounding gap on the right.
          */
         const normalTabWidth =
             Math.floor(
@@ -564,7 +667,7 @@
 
 
                 const left =
-                    leftInset +
+                    leftEdge +
                     (
                         index *
                         normalTabWidth
@@ -588,11 +691,10 @@
 
 
                 /*
-                 * Geometry only.
+                 * GEOMETRY ONLY.
                  *
-                 * We deliberately do not set colors,
-                 * backgrounds, borders, fonts or other
-                 * appearance properties here.
+                 * Do not set visual properties here.
+                 * Illyriad's .sideTab class owns the appearance.
                  */
                 button.style.setProperty(
                     "position",
@@ -1677,12 +1779,25 @@
         }
 
 
+        /*
+         * IMPORTANT:
+         *
+         * Capture Illyriad's untouched geometry BEFORE the suite
+         * changes FriendsBtn or CommunitiesBtn positioning.
+         */
+        captureNativeSidebarGeometry();
+
+
         document
             .querySelector(
                 "#ikSidebarTabs"
             )
             ?.remove();
 
+
+        // ---------------------------------------------------------------------
+        // FRIENDS
+        // ---------------------------------------------------------------------
 
         friendsButton.textContent =
             "Friends";
@@ -1696,6 +1811,10 @@
             friendsButton
         );
 
+
+        // ---------------------------------------------------------------------
+        // TOOLS
+        // ---------------------------------------------------------------------
 
         const toolsTab =
             IKTools.sidebarTabs.tools;
@@ -1744,6 +1863,10 @@
         }
 
 
+        // ---------------------------------------------------------------------
+        // ADDITIONAL TABS
+        // ---------------------------------------------------------------------
+
         getRegisteredSidebarTabs()
             .forEach(
                 tab => {
@@ -1785,6 +1908,10 @@
                 }
             );
 
+
+        // ---------------------------------------------------------------------
+        // CLEANUP
+        // ---------------------------------------------------------------------
 
         sideTabs
             .querySelectorAll(
@@ -1881,7 +2008,7 @@
 
 
     /*
-     * Temporary registration.
+     * Temporary Notes registration.
      *
      * features/Notes.js will replace this.
      */
