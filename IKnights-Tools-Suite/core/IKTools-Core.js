@@ -403,10 +403,7 @@
             document.createElement("div");
 
         /*
-         * IMPORTANT:
-         * sideTab is Illyriad's own native class.
-         *
-         * We are not recreating its appearance.
+         * Illyriad owns the appearance.
          */
         button.className =
             "sideTab ik-suite-managed-tab";
@@ -458,11 +455,6 @@
             event => {
                 event.preventDefault();
 
-                /*
-                 * Especially important for CommunitiesBtn.
-                 * Illyriad still has its dormant Communities
-                 * behavior attached to that native element.
-                 */
                 event.stopImmediatePropagation();
 
                 showSidebarTab(id);
@@ -496,11 +488,6 @@
         }
 
 
-        /*
-         * Normalize the native tab container's geometry.
-         *
-         * We are NOT changing its visual styling.
-         */
         sideTabs.classList.add(
             "ik-suite-native-tabs"
         );
@@ -508,12 +495,8 @@
 
         const entries = [
             {
-                id:
-                    "friends",
-
-                name:
-                    "Friends",
-
+                id: "friends",
+                name: "Friends",
                 button:
                     getSidebarButton(
                         "friends"
@@ -523,12 +506,8 @@
             ...getRegisteredSidebarTabs()
                 .map(
                     tab => ({
-                        id:
-                            tab.id,
-
-                        name:
-                            tab.name,
-
+                        id: tab.id,
+                        name: tab.name,
                         button:
                             getSidebarButton(
                                 tab.id
@@ -546,33 +525,35 @@
 
 
         /*
-         * Illyriad's original Friends tab begins at 6px.
-         * We preserve that native inset on both sides.
-         *
-         * The old problem was that the parent tab container itself
-         * was also positioned for Illyriad's two-tab layout.
-         * The core now normalizes the parent first.
+         * Match Illyriad's native 6px inset.
          */
         const dockWidth =
             dock.clientWidth || 245;
 
-        const leftInset =
-            6;
+        const leftInset = 6;
+        const rightInset = 6;
 
-        const rightInset =
-            6;
+        const rightEdge =
+            dockWidth - rightInset;
 
         const usableWidth =
             Math.max(
                 1,
-                dockWidth -
-                leftInset -
-                rightInset
+                rightEdge - leftInset
             );
 
-        const tabWidth =
-            usableWidth /
-            entries.length;
+
+        /*
+         * Use whole pixels for the first tabs.
+         *
+         * The final tab receives every remaining pixel,
+         * guaranteeing that its right edge ends exactly at rightEdge.
+         */
+        const normalTabWidth =
+            Math.floor(
+                usableWidth /
+                entries.length
+            );
 
 
         entries.forEach(
@@ -581,12 +562,24 @@
                 const button =
                     entry.button;
 
+
                 const left =
                     leftInset +
                     (
                         index *
-                        tabWidth
+                        normalTabWidth
                     );
+
+
+                const isLast =
+                    index ===
+                    entries.length - 1;
+
+
+                const width =
+                    isLast
+                        ? rightEdge - left
+                        : normalTabWidth;
 
 
                 button.classList.add(
@@ -597,8 +590,9 @@
                 /*
                  * Geometry only.
                  *
-                 * Colors, backgrounds, borders, fonts, hover styling,
-                 * selected styling, etc. still come from Illyriad.
+                 * We deliberately do not set colors,
+                 * backgrounds, borders, fonts or other
+                 * appearance properties here.
                  */
                 button.style.setProperty(
                     "position",
@@ -613,8 +607,14 @@
                 );
 
                 button.style.setProperty(
+                    "right",
+                    "auto",
+                    "important"
+                );
+
+                button.style.setProperty(
                     "width",
-                    `${tabWidth}px`,
+                    `${width}px`,
                     "important"
                 );
 
@@ -1296,9 +1296,7 @@
         style.textContent = `
 
             /*
-             * =============================================================
              * SAFE ILLYRIAD-STYLE BUTTONS
-             * =============================================================
              */
 
             .ik-game-button {
@@ -1357,18 +1355,10 @@
 
 
             /*
-             * =============================================================
              * NATIVE ILLYRIAD SIDEBAR TABS
-             * =============================================================
              *
-             * NO visual styling here.
-             *
-             * All visual appearance comes from Illyriad's own .sideTab
-             * and .sideTab.selected rules.
-             *
-             * We only override geometry so Illyriad's two-tab layout
-             * can hold three or more tabs.
-             * =============================================================
+             * Geometry only.
+             * Visual appearance remains Illyriad's .sideTab styling.
              */
 
             #DockedFriends > .sideTabs.ik-suite-native-tabs {
@@ -1402,9 +1392,7 @@
 
 
             /*
-             * =============================================================
              * SIDEBAR PANELS
-             * =============================================================
              */
 
             #DockedFriends .ik-suite-sidebar-panel {
@@ -1432,9 +1420,7 @@
 
 
             /*
-             * =============================================================
              * TOOLS PANEL
-             * =============================================================
              */
 
             #ikToolsPanel {
@@ -1492,9 +1478,7 @@
 
 
             /*
-             * =============================================================
              * TEMPORARY NOTES PLACEHOLDER
-             * =============================================================
              */
 
             .ik-suite-placeholder {
@@ -1693,10 +1677,6 @@
         }
 
 
-        /*
-         * Remove the temporary custom header from 0.12.4
-         * if it is still present in the live page.
-         */
         document
             .querySelector(
                 "#ikSidebarTabs"
@@ -1704,11 +1684,6 @@
             ?.remove();
 
 
-        /*
-         * FRIENDS
-         *
-         * Keep Illyriad's original native element.
-         */
         friendsButton.textContent =
             "Friends";
 
@@ -1722,12 +1697,6 @@
         );
 
 
-        /*
-         * TOOLS
-         *
-         * Reuse Illyriad's dormant Communities tab.
-         * It keeps the real .sideTab class and native skin.
-         */
         const toolsTab =
             IKTools.sidebarTabs.tools;
 
@@ -1775,11 +1744,6 @@
         }
 
 
-        /*
-         * ALL ADDITIONAL TABS
-         *
-         * These receive Illyriad's real sideTab class too.
-         */
         getRegisteredSidebarTabs()
             .forEach(
                 tab => {
@@ -1822,10 +1786,6 @@
             );
 
 
-        /*
-         * Remove custom suite buttons that no longer
-         * correspond to registered tabs.
-         */
         sideTabs
             .querySelectorAll(
                 "[data-ik-sidebar-button]"
@@ -1846,9 +1806,6 @@
             );
 
 
-        /*
-         * Remove abandoned custom panels.
-         */
         dock
             .querySelectorAll(
                 "[data-ik-sidebar-panel]"
@@ -1926,8 +1883,7 @@
     /*
      * Temporary registration.
      *
-     * features/Notes.js will replace this with
-     * the real Notes implementation.
+     * features/Notes.js will replace this.
      */
     IKTools.registerSidebarTab({
         id:
