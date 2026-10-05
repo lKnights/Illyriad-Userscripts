@@ -355,12 +355,6 @@
                 tool.init();
 
 
-            /*
-             * A tool can return false when something it needs,
-             * such as jQuery UI, is not ready yet.
-             *
-             * The core will retry later.
-             */
             if (
                 result === false
             ) {
@@ -800,12 +794,16 @@
             245;
 
 
+        /*
+         * Illyriad's native Friends tab begins 6px from the left.
+         * Keep the suite tabs inside the same native inset.
+         */
         const leftPadding =
-            3;
+            6;
 
 
         const rightPadding =
-            3;
+            6;
 
 
         const usableWidth =
@@ -1142,11 +1140,7 @@
 
             } catch (
                 error
-            ) {
-                /*
-                 * Ignore inaccessible or unusual CSS rules.
-                 */
-            }
+            ) {}
         }
     }
 
@@ -1179,11 +1173,7 @@
 
             } catch (
                 error
-            ) {
-                /*
-                 * Cross-origin stylesheet or inaccessible CSSOM.
-                 */
-            }
+            ) {}
         }
 
 
@@ -1237,30 +1227,23 @@
             sample.type =
                 "submit";
 
-
             sample.className =
                 "sendTrade";
-
 
             sample.value =
                 "Send Trade Mission";
 
-
             sample.style.position =
                 "fixed";
-
 
             sample.style.left =
                 "-10000px";
 
-
             sample.style.top =
                 "-10000px";
 
-
             sample.style.visibility =
                 "hidden";
-
 
             sample.style.pointerEvents =
                 "none";
@@ -1488,10 +1471,6 @@
 
         style.textContent = `
 
-            /* =============================================================
-               SAFE ILLYRIAD-STYLE BUTTON
-               ============================================================= */
-
             .ik-game-button {
                 box-sizing: border-box !important;
 
@@ -1538,14 +1517,13 @@
                         158px
                     ) !important;
 
-                float: none !important;
-                margin: 0 !important;
+                float:
+                    none !important;
+
+                margin:
+                    0 !important;
             }
 
-
-            /* =============================================================
-               SIDEBAR TABS
-               ============================================================= */
 
             #DockedFriends .ik-suite-side-tab {
                 left:
@@ -1616,10 +1594,6 @@
             }
 
 
-            /* =============================================================
-               TOOLS PANEL
-               ============================================================= */
-
             #ikToolsPanel {
                 width:
                     245px;
@@ -1673,10 +1647,6 @@
                     15px;
             }
 
-
-            /* =============================================================
-               PLACEHOLDER FEATURE PANEL
-               ============================================================= */
 
             .ik-suite-placeholder {
                 width:
@@ -1909,9 +1879,6 @@
         }
 
 
-        /*
-         * Friends is Illyriad's native tab.
-         */
         friendsButton.textContent =
             "Friends";
 
@@ -1927,9 +1894,6 @@
         );
 
 
-        /*
-         * Tools reuses Illyriad's dormant Communities tab.
-         */
         const toolsTab =
             IKTools.sidebarTabs
                 .tools;
@@ -1996,9 +1960,6 @@
         }
 
 
-        /*
-         * All additional suite tabs are created by the core.
-         */
         getRegisteredSidebarTabs()
             .forEach(
                 tab => {
@@ -2047,9 +2008,6 @@
             );
 
 
-        /*
-         * Remove old custom tabs that are no longer registered.
-         */
         document
             .querySelectorAll(
                 "#DockedFriends [data-ik-sidebar-button]"
@@ -2152,13 +2110,6 @@
     });
 
 
-    /*
-     * Notes lives in its own feature module.
-     *
-     * For now the core provides its permanent sidebar location.
-     * Notes.js will replace this registration with the actual
-     * Notes interface.
-     */
     IKTools.registerSidebarTab({
         id:
             "notes",
