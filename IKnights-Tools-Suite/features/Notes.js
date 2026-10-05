@@ -42,6 +42,7 @@
     const IKTools =
         window.IKTools;
 
+
     const {
         loadJSON,
         saveJSON
@@ -61,58 +62,59 @@
     };
 
 
+    /*
+     * HoRRis's integrated version used these keys.
+     *
+     * We recognize them so notes created with that version
+     * are automatically brought into the modular version.
+     */
+    const LEGACY_STORAGE = {
+        GLOBAL:
+            "ikNotes_global",
+
+        TOWN_PREFIX:
+            "ikNotes_"
+    };
+
+
     // =========================================================================
     // STATE
     // =========================================================================
 
-    let currentLoadedTown = null;
-    let isGlobalMode = false;
+    let notesGlobalMode =
+        false;
 
-    let notesRoot = null;
-    let titleLabel = null;
-    let bodyWrap = null;
-    let displayDiv = null;
-    let textarea = null;
-    let footer = null;
-    let modeAction = null;
-    let editAction = null;
+    let currentNotesTown =
+        null;
 
-    let notesPollingStarted = false;
-    let resizeBound = false;
+    let notesSyncInterval =
+        null;
+
+    let notesPanel =
+        null;
+
+    let notesHeader =
+        null;
+
+    let titleLabel =
+        null;
+
+    let displayDiv =
+        null;
+
+    let textarea =
+        null;
+
+    let globalButton =
+        null;
+
+    let editButton =
+        null;
 
 
     // =========================================================================
     // TOWN DETECTION
     // =========================================================================
-
-    const TOWN_SELECTORS = [
-        "#ddlTowns",
-        'select[name="towns"]',
-        "#townSelect",
-        "#currentTown",
-        ".town-select",
-        "#ddlTown"
-    ];
-
-
-    function getTownSelectEl() {
-        for (
-            const selector of
-            TOWN_SELECTORS
-        ) {
-            const element =
-                document.querySelector(
-                    selector
-                );
-
-            if (element) {
-                return element;
-            }
-        }
-
-        return null;
-    }
-
 
     function cleanTownName(
         rawName
@@ -120,6 +122,7 @@
         if (!rawName) {
             return "";
         }
+
 
         return String(
             rawName
@@ -164,68 +167,53 @@
         ) {}
 
 
+        const element =
+            document.querySelector(
+                "#ddlTowns, " +
+                'select[name="towns"], ' +
+                "#townSelect, " +
+                "#currentTown, " +
+                ".town-select, " +
+                "#ddlTown"
+            );
+
+
         if (
-            window.currentTownId
+            element &&
+            element.tagName ===
+                "SELECT" &&
+            element.value
         ) {
             return String(
-                window.currentTownId
+                element.value
             );
         }
 
 
         if (
-            window.townId
+            element &&
+            element.textContent
         ) {
-            return String(
-                window.townId
-            );
+            return element
+                .textContent
+                .trim();
         }
 
 
-        const townSelect =
-            getTownSelectEl();
-
-
-        if (townSelect) {
-            if (
-                townSelect.tagName ===
-                    "SELECT" &&
-                townSelect.value
-            ) {
-                return String(
-                    townSelect.value
-                );
-            }
-
-
-            if (
-                townSelect.textContent &&
-                townSelect.textContent.trim()
-            ) {
-                return townSelect
-                    .textContent
-                    .trim();
-            }
-        }
-
-
-        const selectedOption =
+        const option =
             document.querySelector(
                 "select option:checked"
             );
 
 
-        if (
-            selectedOption &&
-            selectedOption.value
-        ) {
-            return String(
-                selectedOption.value
-            );
-        }
-
-
-        return "default_city";
+        return (
+            option &&
+            option.value
+        )
+            ? String(
+                option.value
+            )
+            : "default_city";
     }
 
 
@@ -250,50 +238,54 @@
 
 
         if (!rawName) {
-            const townSelect =
-                getTownSelectEl();
+            const element =
+                document.querySelector(
+                    "#ddlTowns, " +
+                    'select[name="towns"], ' +
+                    "#townSelect, " +
+                    "#currentTown, " +
+                    ".town-select, " +
+                    "#ddlTown"
+                );
 
 
-            if (townSelect) {
-                if (
-                    townSelect.tagName ===
-                        "SELECT" &&
-                    townSelect.selectedIndex >=
-                        0 &&
-                    townSelect.options[
-                        townSelect.selectedIndex
-                    ]
-                ) {
-                    rawName =
-                        townSelect.options[
-                            townSelect.selectedIndex
-                        ].text.trim();
+            if (
+                element &&
+                element.tagName ===
+                    "SELECT" &&
+                element.selectedIndex >=
+                    0
+            ) {
+                rawName =
+                    element.options[
+                        element.selectedIndex
+                    ].text.trim();
 
-                } else if (
-                    townSelect.textContent
-                ) {
-                    rawName =
-                        townSelect
-                            .textContent
-                            .trim();
-                }
+            } else if (
+                element &&
+                element.textContent
+            ) {
+                rawName =
+                    element
+                        .textContent
+                        .trim();
             }
         }
 
 
         if (!rawName) {
-            const selectedOption =
+            const option =
                 document.querySelector(
                     "select option:checked"
                 );
 
 
             if (
-                selectedOption &&
-                selectedOption.text
+                option &&
+                option.text
             ) {
                 rawName =
-                    selectedOption.text.trim();
+                    option.text.trim();
             }
         }
 
@@ -306,37 +298,80 @@
 
 
     // =========================================================================
-    // STORAGE
+    // STORAGE HELPERS
     // =========================================================================
 
-    function getStorageKey() {
+    function getNotesStorageKey() {
+        return notesGlobalMode
+            ? STORAGE.GLOBAL
+            : (
+                STORAGE.TOWN_PREFIX +
+                getActiveTownId()
+            );
+    }
+
+
+    function getLegacyStorageKey() {
+        return notesGlobalMode
+            ? LEGACY_STORAGE.GLOBAL
+            : (
+                LEGACY_STORAGE.TOWN_PREFIX +
+                getActiveTownId()
+            );
+    }
+
+
+    function loadNote() {
+        const key =
+            getNotesStorageKey();
+
+
+        const current =
+            loadJSON(
+                key,
+                null
+            );
+
+
         if (
-            isGlobalMode
+            typeof current ===
+            "string"
         ) {
-            return STORAGE.GLOBAL;
+            return current;
         }
 
 
-        return (
-            STORAGE.TOWN_PREFIX +
-            getActiveTownId()
-        );
+        /*
+         * Import HoRRis's earlier localStorage format if found.
+         */
+        const legacy =
+            localStorage.getItem(
+                getLegacyStorageKey()
+            );
+
+
+        if (
+            legacy !== null
+        ) {
+            saveJSON(
+                key,
+                legacy
+            );
+
+
+            return legacy;
+        }
+
+
+        return "";
     }
 
 
-    function loadCurrentNote() {
-        return loadJSON(
-            getStorageKey(),
-            ""
-        ) || "";
-    }
-
-
-    function saveCurrentNote(
+    function saveNote(
         text
     ) {
         saveJSON(
-            getStorageKey(),
+            getNotesStorageKey(),
             String(
                 text || ""
             )
@@ -345,7 +380,7 @@
 
 
     // =========================================================================
-    // TEXT SAFETY
+    // TEXT HELPERS
     // =========================================================================
 
     function escapeHTML(
@@ -379,18 +414,13 @@
 
     function parseHexColor(
         text,
-        tagRegex
+        expression
     ) {
-        if (!text) {
-            return null;
-        }
-
-
         const match =
             String(
-                text
+                text || ""
             ).match(
-                tagRegex
+                expression
             );
 
 
@@ -398,397 +428,150 @@
             !match ||
             !match[1]
         ) {
-            return null;
+            return "";
         }
 
 
-        const rawHex =
-            match[1].trim();
+        let color =
+            match[1]
+                .trim();
 
 
         if (
-            !/^#?([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/
+            !/^#?([0-9a-f]{3}|[0-9a-f]{6})$/i
                 .test(
-                    rawHex
+                    color
                 )
         ) {
-            return null;
+            return "";
         }
 
 
-        return rawHex.startsWith(
-            "#"
-        )
-            ? rawHex
-            : "#" + rawHex;
-    }
-
-
-    // =========================================================================
-    // OPTIONAL THEME TAGS
-    // =========================================================================
-
-    function clearThemeOverrides() {
-        if (!notesRoot) {
-            return;
-        }
-
-
-        [
-            notesRoot,
-            titleLabel,
-            displayDiv,
-            textarea,
-            modeAction,
-            editAction
-        ]
-            .filter(
-                Boolean
+        if (
+            !color.startsWith(
+                "#"
             )
-            .forEach(
-                element => {
-                    element.style.removeProperty(
-                        "color"
-                    );
-
-                    element.style.removeProperty(
-                        "background-color"
-                    );
-
-                    element.style.removeProperty(
-                        "border-color"
-                    );
-                }
-            );
+        ) {
+            color =
+                "#" +
+                color;
+        }
 
 
-        notesRoot.style.removeProperty(
-            "border"
-        );
-
-        titleLabel?.style.removeProperty(
-            "border"
-        );
-
-        displayDiv?.style.removeProperty(
-            "border"
-        );
-
-        textarea?.style.removeProperty(
-            "border"
-        );
-
-        modeAction?.style.removeProperty(
-            "border"
-        );
-
-        editAction?.style.removeProperty(
-            "border"
-        );
+        return color;
     }
 
 
-    function applyCustomUITheme(
-        text
+    function normalizeLink(
+        value
     ) {
-        if (!notesRoot) {
-            return;
-        }
-
-
-        clearThemeOverrides();
-
-
-        const textColour =
-            parseHexColor(
-                text,
-                /!TextColour\(([^)]+)\)/i
-            );
-
-
-        const uiTextColour =
-            parseHexColor(
-                text,
-                /!UITextColour\(([^)]+)\)/i
-            );
-
-
-        const uiButtonColour =
-            parseHexColor(
-                text,
-                /!UIButtonColour\(([^)]+)\)/i
-            );
-
-
-        const uiBodyColour =
-            parseHexColor(
-                text,
-                /!UIBodyColour\(([^)]+)\)/i
-            );
-
-
-        const uiBorderColour =
-            parseHexColor(
-                text,
-                /!UIBorderColour\(([^)]+)\)/i
-            );
-
-
-        const uiHeaderColour =
-            parseHexColor(
-                text,
-                /!UIHeaderColour\(([^)]+)\)/i
-            );
-
-
-        if (
-            textColour
-        ) {
-            displayDiv?.style.setProperty(
-                "color",
-                textColour,
-                "important"
-            );
-
-            textarea?.style.setProperty(
-                "color",
-                textColour,
-                "important"
-            );
-        }
-
-
-        if (
-            uiTextColour
-        ) {
-            titleLabel?.style.setProperty(
-                "color",
-                uiTextColour,
-                "important"
-            );
-
-            modeAction?.style.setProperty(
-                "color",
-                uiTextColour,
-                "important"
-            );
-
-            editAction?.style.setProperty(
-                "color",
-                uiTextColour,
-                "important"
-            );
-        }
-
-
-        if (
-            uiButtonColour
-        ) {
-            modeAction?.style.setProperty(
-                "background-color",
-                uiButtonColour,
-                "important"
-            );
-
-            editAction?.style.setProperty(
-                "background-color",
-                uiButtonColour,
-                "important"
-            );
-        }
-
-
-        if (
-            uiBodyColour
-        ) {
-            displayDiv?.style.setProperty(
-                "background-color",
-                uiBodyColour,
-                "important"
-            );
-
-            textarea?.style.setProperty(
-                "background-color",
-                uiBodyColour,
-                "important"
-            );
-        }
-
-
-        if (
-            uiHeaderColour
-        ) {
-            titleLabel?.style.setProperty(
-                "background-color",
-                uiHeaderColour,
-                "important"
-            );
-        }
-
-
-        if (
-            uiBorderColour
-        ) {
-            notesRoot.style.setProperty(
-                "border",
-                `1px solid ${uiBorderColour}`,
-                "important"
-            );
-
-            titleLabel?.style.setProperty(
-                "border",
-                `1px solid ${uiBorderColour}`,
-                "important"
-            );
-
-            displayDiv?.style.setProperty(
-                "border",
-                `1px solid ${uiBorderColour}`,
-                "important"
-            );
-
-            textarea?.style.setProperty(
-                "border",
-                `1px solid ${uiBorderColour}`,
-                "important"
-            );
-
-            modeAction?.style.setProperty(
-                "border",
-                `1px solid ${uiBorderColour}`,
-                "important"
-            );
-
-            editAction?.style.setProperty(
-                "border",
-                `1px solid ${uiBorderColour}`,
-                "important"
-            );
-        }
-    }
-
-
-    // =========================================================================
-    // RENDERER
-    // =========================================================================
-
-    function stripThemeTags(
-        text
-    ) {
-        return String(
-            text || ""
-        )
-            .replace(
-                /!TextColour\(([^)]+)\)/gi,
-                ""
-            )
-            .replace(
-                /!UITextColour\(([^)]+)\)/gi,
-                ""
-            )
-            .replace(
-                /!UIButtonColour\(([^)]+)\)/gi,
-                ""
-            )
-            .replace(
-                /!UIBodyColour\(([^)]+)\)/gi,
-                ""
-            )
-            .replace(
-                /!UIBorderColour\(([^)]+)\)/gi,
-                ""
-            )
-            .replace(
-                /!UIHeaderColour\(([^)]+)\)/gi,
-                ""
-            );
-    }
-
-
-    function normalizeLinkHref(
-        href
-    ) {
-        let result =
+        let href =
             String(
-                href || ""
+                value || ""
             ).trim();
 
 
-        if (!result) {
+        if (!href) {
             return "#";
         }
 
 
         if (
-            result.startsWith(
+            href.startsWith(
                 "/"
             )
         ) {
-            return result;
+            return href;
         }
 
 
         if (
             /^https?:\/\//i.test(
-                result
+                href
             )
         ) {
-            return result;
+            return href;
         }
 
 
         if (
             /^www\./i.test(
-                result
+                href
             )
         ) {
             return (
                 "https://" +
-                result
+                href
             );
         }
 
 
         return (
             "https://" +
-            result
+            href
         );
     }
 
 
+    // =========================================================================
+    // NOTE RENDERING
+    // =========================================================================
+
     function renderClickableText(
         text
     ) {
-        const sourceText =
+        const source =
             String(
                 text || ""
             );
 
 
         if (
-            !sourceText.trim()
+            !source.trim()
         ) {
             const emptyLabel =
-                isGlobalMode
+                notesGlobalMode
                     ? "No global notes yet."
                     : "No city notes yet.";
 
 
             return (
-                "<em>" +
+                "<span style=\"font-style:italic;opacity:0.7;\">" +
                 escapeHTML(
                     emptyLabel +
-                    " Select Edit to add notes."
+                    ' Click "Edit" to add notes.'
                 ) +
-                "</em>"
+                "</span>"
             );
         }
 
 
-        const cleanText =
-            stripThemeTags(
-                sourceText
-            );
+        let cleanText =
+            source
+                .replace(
+                    /!TextColour\(([^)]+)\)/gi,
+                    ""
+                )
+                .replace(
+                    /!UITextColour\(([^)]+)\)/gi,
+                    ""
+                )
+                .replace(
+                    /!UIButtonColour\(([^)]+)\)/gi,
+                    ""
+                )
+                .replace(
+                    /!UIBodyColour\(([^)]+)\)/gi,
+                    ""
+                )
+                .replace(
+                    /!UIBorderColour\(([^)]+)\)/gi,
+                    ""
+                )
+                .replace(
+                    /!UIHeaderColour\(([^)]+)\)/gi,
+                    ""
+                );
 
 
         let processed =
@@ -805,78 +588,45 @@
             processed.replace(
                 linkRegex,
 
-                function (
+                (
                     match,
                     label,
                     markdownUrl,
                     hexColor,
                     bareUrl
-                ) {
-                    let href = "";
-                    let displayText = "";
-                    let linkColour = null;
+                ) => {
+
+                    const href =
+                        normalizeLink(
+                            markdownUrl ||
+                            bareUrl
+                        );
 
 
-                    if (
-                        label &&
-                        markdownUrl
-                    ) {
-                        href =
-                            normalizeLinkHref(
-                                markdownUrl
-                            );
-
-                        displayText =
-                            label;
+                    const displayText =
+                        label ||
+                        bareUrl;
 
 
-                        if (
-                            hexColor
-                        ) {
-                            const cleanedHex =
-                                hexColor.trim();
+                    const linkColor =
+                        hexColor
+                            ? parseHexColor(
+                                `!color(${hexColor})`,
+                                /!color\(([^)]+)\)/i
+                            )
+                            : "";
 
 
-                            if (
-                                /^#?([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/
-                                    .test(
-                                        cleanedHex
-                                    )
-                            ) {
-                                linkColour =
-                                    cleanedHex.startsWith(
-                                        "#"
-                                    )
-                                        ? cleanedHex
-                                        : "#" +
-                                            cleanedHex;
-                            }
-                        }
-
-                    } else if (
-                        bareUrl
-                    ) {
-                        href =
-                            normalizeLinkHref(
-                                bareUrl
-                            );
-
-                        displayText =
-                            bareUrl;
-
-                    } else {
-                        return match;
-                    }
-
-
-                    const colourStyle =
-                        linkColour
-                            ? ` style="color:${linkColour};"`
+                    const style =
+                        linkColor
+                            ? (
+                                ` style="color:${linkColor};text-decoration:underline;"`
+                            )
                             : "";
 
 
                     return (
-                        `<a href="${href}" target="_top"${colourStyle}>` +
+                        `<a href="${href}" target="_top"${style}>` +
                         displayText +
                         "</a>"
                     );
@@ -884,14 +634,21 @@
             );
 
 
+        /*
+         * Font size:
+         *
+         * <fs(14)>Text</fs>
+         * <fs(1.2em)>Text</fs>
+         */
         processed =
             processed.replace(
                 /&lt;fs\(([^)]+)\)&gt;/gi,
 
-                function (
+                (
                     match,
                     size
-                ) {
+                ) => {
+
                     let cleanSize =
                         size
                             .trim()
@@ -912,9 +669,7 @@
                     }
 
 
-                    if (
-                        !cleanSize
-                    ) {
+                    if (!cleanSize) {
                         return "";
                     }
 
@@ -933,6 +688,9 @@
             );
 
 
+        /*
+         * Original LuperNotes formatting.
+         */
         processed =
             processed.replace(
                 /&lt;(\/?[bui])&gt;/gi,
@@ -940,75 +698,291 @@
             );
 
 
-        return processed;
-    }
+        const textColor =
+            parseHexColor(
+                source,
+                /!TextColour\(([^)]+)\)/i
+            );
 
 
-    // =========================================================================
-    // DISPLAY
-    // =========================================================================
-
-    function getExpectedTitle() {
         if (
-            isGlobalMode
+            textColor
         ) {
-            return "Global Notes";
+            return (
+                `<span style="color:${textColor};">` +
+                processed +
+                "</span>"
+            );
         }
 
 
         return (
-            "City Notes (" +
-            getActiveTownName() +
-            ")"
+            "<span>" +
+            processed +
+            "</span>"
         );
     }
 
 
-    function updateTitle() {
-        if (!titleLabel) {
-            return;
-        }
+    // =========================================================================
+    // OPTIONAL LUPERNOTES THEME TAGS
+    //
+    // No colors are supplied by this module itself.
+    // Overrides only occur when the user explicitly uses a theme tag.
+    // =========================================================================
+
+    function clearThemeOverrides() {
+        const elements = [
+            notesPanel,
+            notesHeader,
+            titleLabel,
+            displayDiv,
+            textarea,
+            globalButton,
+            editButton
+        ];
 
 
-        titleLabel.textContent =
-            getExpectedTitle();
+        elements
+            .filter(
+                Boolean
+            )
+            .forEach(
+                element => {
+
+                    element.style.removeProperty(
+                        "color"
+                    );
+
+                    element.style.removeProperty(
+                        "background-color"
+                    );
+
+                    element.style.removeProperty(
+                        "border-color"
+                    );
+
+                }
+            );
+
+
+        globalButton
+            ?.style
+            .removeProperty(
+                "--ik-btn-color"
+            );
+
+
+        editButton
+            ?.style
+            .removeProperty(
+                "--ik-btn-color"
+            );
     }
 
 
-    function updateModeAction() {
-        if (!modeAction) {
-            return;
+    function applyCustomUITheme(
+        text
+    ) {
+        clearThemeOverrides();
+
+
+        const uiTextColor =
+            parseHexColor(
+                text,
+                /!UITextColour\(([^)]+)\)/i
+            );
+
+
+        const uiHeaderBg =
+            parseHexColor(
+                text,
+                /!UIHeaderColour\(([^)]+)\)/i
+            );
+
+
+        const uiBodyBg =
+            parseHexColor(
+                text,
+                /!UIBodyColour\(([^)]+)\)/i
+            );
+
+
+        const uiButtonBg =
+            parseHexColor(
+                text,
+                /!UIButtonColour\(([^)]+)\)/i
+            );
+
+
+        const uiBorderColor =
+            parseHexColor(
+                text,
+                /!UIBorderColour\(([^)]+)\)/i
+            );
+
+
+        const textColor =
+            parseHexColor(
+                text,
+                /!TextColour\(([^)]+)\)/i
+            );
+
+
+        if (
+            uiTextColor
+        ) {
+            titleLabel
+                ?.style
+                .setProperty(
+                    "color",
+                    uiTextColor,
+                    "important"
+                );
+
+
+            globalButton
+                ?.style
+                .setProperty(
+                    "--ik-btn-color",
+                    uiTextColor
+                );
+
+
+            editButton
+                ?.style
+                .setProperty(
+                    "--ik-btn-color",
+                    uiTextColor
+                );
         }
 
 
-        modeAction.value =
-            isGlobalMode
-                ? "City"
-                : "Global";
-    }
-
-
-    function updatePlaceholder() {
-        if (!textarea) {
-            return;
+        if (
+            uiHeaderBg
+        ) {
+            notesHeader
+                ?.style
+                .setProperty(
+                    "background-color",
+                    uiHeaderBg,
+                    "important"
+                );
         }
 
 
-        textarea.placeholder =
-            isGlobalMode
-                ? "No global notes yet."
-                : "No city notes yet.";
+        if (
+            uiBodyBg
+        ) {
+            displayDiv
+                ?.style
+                .setProperty(
+                    "background-color",
+                    uiBodyBg,
+                    "important"
+                );
+
+
+            textarea
+                ?.style
+                .setProperty(
+                    "background-color",
+                    uiBodyBg,
+                    "important"
+                );
+        }
+
+
+        if (
+            uiButtonBg
+        ) {
+            globalButton
+                ?.style
+                .setProperty(
+                    "background-color",
+                    uiButtonBg,
+                    "important"
+                );
+
+
+            editButton
+                ?.style
+                .setProperty(
+                    "background-color",
+                    uiButtonBg,
+                    "important"
+                );
+        }
+
+
+        if (
+            uiBorderColor
+        ) {
+            notesPanel
+                ?.style
+                .setProperty(
+                    "border-color",
+                    uiBorderColor,
+                    "important"
+                );
+
+
+            notesHeader
+                ?.style
+                .setProperty(
+                    "border-color",
+                    uiBorderColor,
+                    "important"
+                );
+
+
+            displayDiv
+                ?.style
+                .setProperty(
+                    "border-color",
+                    uiBorderColor,
+                    "important"
+                );
+
+
+            textarea
+                ?.style
+                .setProperty(
+                    "border-color",
+                    uiBorderColor,
+                    "important"
+                );
+        }
+
+
+        if (
+            textColor
+        ) {
+            textarea
+                ?.style
+                .setProperty(
+                    "color",
+                    textColor,
+                    "important"
+                );
+        }
     }
 
+
+    // =========================================================================
+    // DISPLAY UPDATE
+    // =========================================================================
 
     function updateNotesDisplay() {
-        if (!displayDiv) {
+        if (
+            !displayDiv
+        ) {
             return;
         }
 
 
         const savedText =
-            loadCurrentNote();
+            loadNote();
 
 
         displayDiv.innerHTML =
@@ -1023,223 +997,25 @@
 
 
         updateTitle();
-        updateModeAction();
-        updatePlaceholder();
-
-
-        scheduleLayoutSync();
     }
 
 
-    // =========================================================================
-    // LAYOUT
-    // =========================================================================
-
-    function syncNotesLayout() {
+    function updateTitle() {
         if (
-            !notesRoot ||
-            !titleLabel ||
-            !bodyWrap ||
-            !footer
+            !titleLabel
         ) {
             return;
         }
 
 
-        /*
-         * Measure the ACTUAL native Illyriad UI instead of
-         * assuming how tall either element should be.
-         */
-        const headerHeight =
-            titleLabel.offsetHeight;
-
-
-        const footerHeight =
-            footer.offsetHeight;
-
-
-        bodyWrap.style.top =
-            `${headerHeight}px`;
-
-
-        bodyWrap.style.bottom =
-            `${footerHeight}px`;
-    }
-
-
-    function scheduleLayoutSync() {
-        requestAnimationFrame(
-            () => {
-                syncNotesLayout();
-
-
-                requestAnimationFrame(
-                    syncNotesLayout
+        titleLabel.textContent =
+            notesGlobalMode
+                ? "Global Notes"
+                : (
+                    "City Notes (" +
+                    getActiveTownName() +
+                    ")"
                 );
-            }
-        );
-
-
-        setTimeout(
-            syncNotesLayout,
-            100
-        );
-    }
-
-
-    // =========================================================================
-    // EDITING
-    // =========================================================================
-
-    function isEditing() {
-        return (
-            textarea &&
-            textarea.style.display ===
-                "block"
-        );
-    }
-
-
-    function enterEditMode() {
-        if (
-            !textarea ||
-            !displayDiv ||
-            !editAction
-        ) {
-            return;
-        }
-
-
-        textarea.value =
-            loadCurrentNote();
-
-
-        displayDiv.style.display =
-            "none";
-
-
-        textarea.style.display =
-            "block";
-
-
-        editAction.value =
-            "Done";
-
-
-        applyCustomUITheme(
-            textarea.value
-        );
-
-
-        textarea.focus();
-
-
-        scheduleLayoutSync();
-    }
-
-
-    function leaveEditMode() {
-        if (
-            !textarea ||
-            !displayDiv ||
-            !editAction
-        ) {
-            return;
-        }
-
-
-        saveCurrentNote(
-            textarea.value
-        );
-
-
-        textarea.style.display =
-            "none";
-
-
-        displayDiv.style.display =
-            "block";
-
-
-        editAction.value =
-            "Edit";
-
-
-        updateNotesDisplay();
-    }
-
-
-    function toggleEditMode() {
-        if (
-            isEditing()
-        ) {
-            leaveEditMode();
-
-        } else {
-            enterEditMode();
-        }
-    }
-
-
-    // =========================================================================
-    // GLOBAL / CITY
-    // =========================================================================
-
-    function toggleNotesMode() {
-        if (
-            isEditing()
-        ) {
-            saveCurrentNote(
-                textarea.value
-            );
-        }
-
-
-        isGlobalMode =
-            !isGlobalMode;
-
-
-        currentLoadedTown =
-            getActiveTownId();
-
-
-        const newText =
-            loadCurrentNote();
-
-
-        if (
-            textarea
-        ) {
-            textarea.value =
-                newText;
-        }
-
-
-        updateNotesDisplay();
-
-
-        if (
-            isEditing()
-        ) {
-            displayDiv.style.display =
-                "none";
-
-
-            textarea.style.display =
-                "block";
-
-
-            editAction.value =
-                "Done";
-
-
-            applyCustomUITheme(
-                newText
-            );
-        }
-
-
-        scheduleLayoutSync();
     }
 
 
@@ -1254,22 +1030,23 @@
 
         if (
             activeTownId !==
-            currentLoadedTown
+            currentNotesTown
         ) {
-            currentLoadedTown =
+            currentNotesTown =
                 activeTownId;
 
 
             if (
-                !isGlobalMode
+                !notesGlobalMode
             ) {
                 const savedText =
-                    loadCurrentNote();
+                    loadNote();
 
 
                 if (
                     textarea &&
-                    isEditing()
+                    textarea.style.display !==
+                        "none"
                 ) {
                     textarea.value =
                         savedText;
@@ -1285,27 +1062,137 @@
     }
 
 
-    function startTownPolling() {
+    // =========================================================================
+    // EDIT MODE
+    // =========================================================================
+
+    function toggleEditMode() {
         if (
-            notesPollingStarted
+            !textarea ||
+            !displayDiv ||
+            !editButton
         ) {
             return;
         }
 
 
-        notesPollingStarted =
-            true;
+        const isEditing =
+            textarea.style.display ===
+            "block";
 
 
-        setInterval(
-            checkAndSyncTownNotes,
-            500
-        );
+        if (
+            isEditing
+        ) {
+            saveNote(
+                textarea.value
+            );
+
+
+            textarea.style.display =
+                "none";
+
+
+            displayDiv.style.display =
+                "block";
+
+
+            editButton.value =
+                "Edit";
+
+
+            updateNotesDisplay();
+
+        } else {
+            textarea.value =
+                loadNote();
+
+
+            displayDiv.style.display =
+                "none";
+
+
+            textarea.style.display =
+                "block";
+
+
+            editButton.value =
+                "Done";
+
+
+            applyCustomUITheme(
+                textarea.value
+            );
+
+
+            textarea.focus();
+        }
     }
 
 
     // =========================================================================
-    // STYLES
+    // GLOBAL / CITY MODE
+    // =========================================================================
+
+    function toggleGlobalMode() {
+        if (
+            textarea &&
+            textarea.style.display ===
+                "block"
+        ) {
+            saveNote(
+                textarea.value
+            );
+        }
+
+
+        notesGlobalMode =
+            !notesGlobalMode;
+
+
+        globalButton.value =
+            notesGlobalMode
+                ? "City"
+                : "Global";
+
+
+        const savedText =
+            loadNote();
+
+
+        if (
+            textarea
+        ) {
+            textarea.value =
+                savedText;
+        }
+
+
+        updateNotesDisplay();
+
+
+        if (
+            textarea &&
+            textarea.style.display ===
+                "block"
+        ) {
+            displayDiv.style.display =
+                "none";
+
+
+            applyCustomUITheme(
+                savedText
+            );
+        }
+    }
+
+
+    // =========================================================================
+    // NOTES CSS
+    //
+    // This carries over the layout HoRRis got working.
+    //
+    // Colors and skins are still supplied by Illyriad/Core.
     // =========================================================================
 
     function injectNotesStyles() {
@@ -1330,149 +1217,129 @@
 
         style.textContent = `
 
-            /*
-             * Make Notes occupy ALL remaining space inside
-             * the actual DockedFriends box.
-             *
-             * Core's generic panel height is intentionally
-             * overridden for this feature.
-             */
+            /* =============================================================
+               FULL HEIGHT NOTES TAB
+               ============================================================= */
 
             #DockedFriends
             [data-ik-sidebar-panel="notes"] {
-                top:
-                    22px !important;
 
-                bottom:
-                    0 !important;
-
-                height:
-                    auto !important;
-            }
-
-
-            #ikNotesRoot {
-                position:
-                    absolute;
-
-                left:
-                    0;
-
-                right:
-                    0;
-
-                top:
-                    0;
-
-                bottom:
-                    0;
-
-                box-sizing:
-                    border-box;
-
-                overflow:
-                    hidden;
-            }
-
-
-            /*
-             * Static header using Illyriad's real sideTab skin.
-             */
-
-            #ikNotesTitle.sideTab {
                 position:
                     absolute !important;
 
+                top:
+                    25px !important;
+
+                bottom:
+                    0 !important;
+
                 left:
                     0 !important;
 
                 right:
-                    0 !important;
-
-                top:
                     0 !important;
 
                 width:
                     100% !important;
 
-                min-width:
-                    0 !important;
+                height:
+                    auto !important;
 
-                max-width:
-                    none !important;
+                overflow-x:
+                    hidden !important;
 
-                box-sizing:
-                    border-box !important;
-
-                text-align:
-                    center;
-
-                cursor:
-                    default !important;
-
-                margin:
-                    0 !important;
+                overflow-y:
+                    hidden !important;
             }
 
 
-            /*
-             * Body boundaries are filled in dynamically from
-             * the measured native header/footer heights.
-             */
+            /* =============================================================
+               NOTES PANEL
+               ============================================================= */
 
-            #ikNotesBodyWrap {
-                position:
-                    absolute;
+            #ikNotesPanel {
+                display:
+                    flex;
 
-                left:
-                    0;
-
-                right:
-                    0;
-
-                overflow:
-                    hidden;
-
-                box-sizing:
-                    border-box;
-            }
-
-
-            #ikNotesDisplay,
-            #ikNotesTextarea {
-                position:
-                    absolute;
-
-                left:
-                    0;
-
-                right:
-                    0;
-
-                top:
-                    0;
-
-                bottom:
-                    0;
+                flex-direction:
+                    column;
 
                 width:
-                    100%;
+                    calc(100% - 2px) !important;
+
+                margin-left:
+                    2px !important;
 
                 height:
-                    100%;
+                    100% !important;
 
                 box-sizing:
                     border-box;
 
                 padding:
+                    1px;
+            }
+
+
+            /* =============================================================
+               NOTES HEADER
+               ============================================================= */
+
+            #ikNotesHeader {
+                flex:
+                    0 0 auto;
+
+                text-align:
+                    center;
+
+                font-weight:
+                    bold;
+
+                padding:
                     4px;
+
+                margin-bottom:
+                    2px;
+
+                box-sizing:
+                    border-box;
+            }
+
+
+            #cityNotesTitleLabel {
+                cursor:
+                    default;
+            }
+
+
+            /* =============================================================
+               DISPLAY / EDITOR
+               ============================================================= */
+
+            #ikNotesDisplay,
+            #ikNotesTextarea {
+
+                flex:
+                    1 1 auto;
+
+                min-height:
+                    0;
+
+                padding:
+                    4px;
+
+                box-sizing:
+                    border-box;
+
+                width:
+                    100%;
+
+                overflow-y:
+                    auto;
             }
 
 
             #ikNotesDisplay {
-                overflow-y:
-                    auto;
-
                 white-space:
                     pre-wrap;
 
@@ -1482,70 +1349,68 @@
 
 
             #ikNotesTextarea {
-                display:
-                    none;
-
                 resize:
                     none;
-            }
-
-
-            /*
-             * Footer is truly anchored to the bottom.
-             *
-             * Its height is determined naturally by Illyriad's
-             * own native short buttons.
-             */
-
-            #ikNotesFooter {
-                position:
-                    absolute;
-
-                left:
-                    0;
-
-                right:
-                    0;
-
-                bottom:
-                    0;
 
                 display:
-                    flex;
-
-                justify-content:
-                    center;
-
-                align-items:
-                    center;
-
-                gap:
-                    4px;
-
-                box-sizing:
-                    border-box;
-
-                padding:
-                    2px 0;
+                    none;
             }
 
 
-            /*
-             * ONLY geometry behavior is overridden.
-             *
-             * Width, height, background, border, font, sprite,
-             * etc. all remain Illyriad's native .short styling.
-             */
+            /* =============================================================
+               FOOTER
+               ============================================================= */
 
-            #ikNotesFooter .ik-notes-button {
-                position:
-                    static !important;
+            #ikNotesFooter {
 
-                float:
-                    none !important;
+                display:
+                    flex !important;
+
+                flex-direction:
+                    row !important;
+
+                justify-content:
+                    space-between !important;
+
+                align-items:
+                    center !important;
+
+                gap:
+                    4px !important;
+
+                padding-top:
+                    6px !important;
+
+                flex:
+                    0 0 auto !important;
+
+                width:
+                    100% !important;
+
+                box-sizing:
+                    border-box !important;
+
+                /*
+                 * HoRRis's working solution:
+                 *
+                 * Keep the real 158px native button geometry and scale
+                 * the complete footer so both buttons fit in the sidebar.
+                 */
+                zoom:
+                    0.72 !important;
+            }
+
+
+            #ikNotesFooter .ik-game-button {
 
                 margin:
                     0 !important;
+
+                outline:
+                    none !important;
+
+                background-size:
+                    auto !important;
             }
 
         `;
@@ -1558,42 +1423,7 @@
 
 
     // =========================================================================
-    // NATIVE ILLYRIAD BUTTON
-    // =========================================================================
-
-    function createNativeRedButton(
-        text
-    ) {
-        const button =
-            document.createElement(
-                "input"
-            );
-
-
-        button.type =
-            "button";
-
-
-        /*
-         * This is Illyriad's actual native short red button.
-         *
-         * Do NOT add ik-game-button here.
-         * Do NOT resize it.
-         */
-        button.className =
-            "short ik-notes-button";
-
-
-        button.value =
-            text;
-
-
-        return button;
-    }
-
-
-    // =========================================================================
-    // UI CONSTRUCTION
+    // MOUNT NOTES
     // =========================================================================
 
     function mountNotes(
@@ -1602,209 +1432,170 @@
         injectNotesStyles();
 
 
-        panel.innerHTML =
-            "";
+        panel.innerHTML = `
+            <div id="ikNotesPanel">
+
+                <div id="ikNotesHeader">
+                    <span
+                        id="cityNotesTitleLabel"
+                        class="selected"
+                    >
+                        City Notes
+                    </span>
+                </div>
+
+                <div id="ikNotesDisplay"></div>
+
+                <textarea
+                    id="ikNotesTextarea"
+                    placeholder="Enter notes here..."
+                ></textarea>
+
+                <div id="ikNotesFooter">
+
+                    <input
+                        type="button"
+                        id="ikNotesGlobalBtn"
+                        class="ik-game-button"
+                        value="Global"
+                    >
+
+                    <input
+                        type="button"
+                        id="ikNotesEditBtn"
+                        class="ik-game-button"
+                        value="Edit"
+                    >
+
+                </div>
+
+            </div>
+        `;
 
 
-        notesRoot =
-            document.createElement(
-                "div"
+        notesPanel =
+            panel.querySelector(
+                "#ikNotesPanel"
             );
 
 
-        notesRoot.id =
-            "ikNotesRoot";
+        notesHeader =
+            panel.querySelector(
+                "#ikNotesHeader"
+            );
 
-
-        // ---------------------------------------------------------------------
-        // HEADER
-        // ---------------------------------------------------------------------
 
         titleLabel =
-            document.createElement(
-                "div"
+            panel.querySelector(
+                "#cityNotesTitleLabel"
             );
-
-
-        titleLabel.id =
-            "ikNotesTitle";
-
-
-        titleLabel.className =
-            "sideTab selected";
-
-
-        notesRoot.appendChild(
-            titleLabel
-        );
-
-
-        // ---------------------------------------------------------------------
-        // BODY
-        // ---------------------------------------------------------------------
-
-        bodyWrap =
-            document.createElement(
-                "div"
-            );
-
-
-        bodyWrap.id =
-            "ikNotesBodyWrap";
-
-
-        notesRoot.appendChild(
-            bodyWrap
-        );
 
 
         displayDiv =
-            document.createElement(
-                "div"
+            panel.querySelector(
+                "#ikNotesDisplay"
             );
-
-
-        displayDiv.id =
-            "ikNotesDisplay";
-
-
-        bodyWrap.appendChild(
-            displayDiv
-        );
 
 
         textarea =
-            document.createElement(
-                "textarea"
+            panel.querySelector(
+                "#ikNotesTextarea"
             );
 
 
-        textarea.id =
-            "ikNotesTextarea";
-
-
-        textarea.spellcheck =
-            true;
-
-
-        bodyWrap.appendChild(
-            textarea
-        );
-
-
-        // ---------------------------------------------------------------------
-        // FOOTER
-        // ---------------------------------------------------------------------
-
-        footer =
-            document.createElement(
-                "div"
+        globalButton =
+            panel.querySelector(
+                "#ikNotesGlobalBtn"
             );
 
 
-        footer.id =
-            "ikNotesFooter";
-
-
-        modeAction =
-            createNativeRedButton(
-                "Global"
+        editButton =
+            panel.querySelector(
+                "#ikNotesEditBtn"
             );
-
-
-        editAction =
-            createNativeRedButton(
-                "Edit"
-            );
-
-
-        footer.append(
-            modeAction,
-            editAction
-        );
-
-
-        notesRoot.appendChild(
-            footer
-        );
-
-
-        panel.appendChild(
-            notesRoot
-        );
-
-
-        // ---------------------------------------------------------------------
-        // EVENTS
-        // ---------------------------------------------------------------------
-
-        modeAction.addEventListener(
-            "click",
-
-            () => {
-                toggleNotesMode();
-            }
-        );
-
-
-        editAction.addEventListener(
-            "click",
-
-            () => {
-                toggleEditMode();
-            }
-        );
-
-
-        textarea.addEventListener(
-            "input",
-
-            () => {
-                saveCurrentNote(
-                    textarea.value
-                );
-
-
-                applyCustomUITheme(
-                    textarea.value
-                );
-            }
-        );
 
 
         // ---------------------------------------------------------------------
         // INITIAL STATE
         // ---------------------------------------------------------------------
 
-        currentLoadedTown =
+        currentNotesTown =
             getActiveTownId();
 
 
         textarea.value =
-            loadCurrentNote();
+            loadNote();
 
 
         updateNotesDisplay();
 
 
-        startTownPolling();
+        // ---------------------------------------------------------------------
+        // EDIT BUTTON
+        // ---------------------------------------------------------------------
 
+        editButton.addEventListener(
+            "click",
+            toggleEditMode
+        );
+
+
+        // ---------------------------------------------------------------------
+        // GLOBAL BUTTON
+        // ---------------------------------------------------------------------
+
+        globalButton.addEventListener(
+            "click",
+            toggleGlobalMode
+        );
+
+
+        // ---------------------------------------------------------------------
+        // AUTOSAVE
+        // ---------------------------------------------------------------------
+
+        textarea.addEventListener(
+            "input",
+
+            event => {
+
+                saveNote(
+                    event.target.value
+                );
+
+
+                applyCustomUITheme(
+                    event.target.value
+                );
+            }
+        );
+
+
+        // ---------------------------------------------------------------------
+        // TOWN SYNC
+        // ---------------------------------------------------------------------
 
         if (
-            !resizeBound
+            !notesSyncInterval
         ) {
-            resizeBound =
-                true;
-
-
-            window.addEventListener(
-                "resize",
-                scheduleLayoutSync
-            );
+            notesSyncInterval =
+                setInterval(
+                    checkAndSyncTownNotes,
+                    500
+                );
         }
 
 
-        scheduleLayoutSync();
+        /*
+         * Refresh the cloned native Illyriad red button skin.
+         */
+        if (
+            IKTools.ui &&
+            typeof IKTools.ui.refreshNativeButtons ===
+                "function"
+        ) {
+            IKTools.ui.refreshNativeButtons();
+        }
     }
 
 
@@ -1817,18 +1608,17 @@
 
 
         if (
-            !isEditing()
+            IKTools.ui &&
+            typeof IKTools.ui.refreshNativeButtons ===
+                "function"
         ) {
-            updateNotesDisplay();
+            IKTools.ui.refreshNativeButtons();
         }
-
-
-        scheduleLayoutSync();
     }
 
 
     // =========================================================================
-    // REGISTER
+    // REGISTER MODULE
     // =========================================================================
 
     IKTools.registerSidebarTab({
