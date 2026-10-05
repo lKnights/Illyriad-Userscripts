@@ -11,7 +11,6 @@
 (function () {
     "use strict";
 
-
     // =========================================================================
     // LOAD GUARD
     // =========================================================================
@@ -21,7 +20,6 @@
     }
 
     window.__IKTOOLS_NOTES_LOADED__ = true;
-
 
     // =========================================================================
     // CORE CHECK
@@ -38,16 +36,13 @@
         return;
     }
 
-
     const IKTools =
         window.IKTools;
-
 
     const {
         loadJSON,
         saveJSON
     } = IKTools.util;
-
 
     // =========================================================================
     // STORAGE
@@ -61,7 +56,6 @@
             "ikNotes.town.v1."
     };
 
-
     // =========================================================================
     // STATE
     // =========================================================================
@@ -71,13 +65,14 @@
 
     let notesRoot = null;
     let titleLabel = null;
+    let bodyWrap = null;
     let displayDiv = null;
     let textarea = null;
+    let footer = null;
     let modeAction = null;
     let editAction = null;
 
     let notesPollingStarted = false;
-
 
     // =========================================================================
     // TOWN DETECTION
@@ -118,7 +113,6 @@
         if (!rawName) {
             return "";
         }
-
 
         return String(
             rawName
@@ -171,7 +165,6 @@
             );
         }
 
-
         if (
             window.townId
         ) {
@@ -180,10 +173,8 @@
             );
         }
 
-
         const townSelect =
             getTownSelectEl();
-
 
         if (townSelect) {
             if (
@@ -196,7 +187,6 @@
                 );
             }
 
-
             if (
                 townSelect.textContent &&
                 townSelect.textContent.trim()
@@ -207,12 +197,10 @@
             }
         }
 
-
         const selectedOption =
             document.querySelector(
                 "select option:checked"
             );
-
 
         if (
             selectedOption &&
@@ -223,7 +211,6 @@
             );
         }
 
-
         return "default_city";
     }
 
@@ -231,7 +218,6 @@
     function getActiveTownName() {
         let rawName =
             "";
-
 
         try {
             if (
@@ -247,11 +233,9 @@
             error
         ) {}
 
-
         if (!rawName) {
             const townSelect =
                 getTownSelectEl();
-
 
             if (townSelect) {
                 if (
@@ -279,13 +263,11 @@
             }
         }
 
-
         if (!rawName) {
             const selectedOption =
                 document.querySelector(
                     "select option:checked"
                 );
-
 
             if (
                 selectedOption &&
@@ -296,16 +278,14 @@
             }
         }
 
-
         return cleanTownName(
             rawName ||
             getActiveTownId()
         );
     }
 
-
     // =========================================================================
-    // STORAGE
+    // STORAGE HELPERS
     // =========================================================================
 
     function getStorageKey() {
@@ -314,7 +294,6 @@
         ) {
             return STORAGE.GLOBAL;
         }
-
 
         return (
             STORAGE.TOWN_PREFIX +
@@ -341,7 +320,6 @@
             )
         );
     }
-
 
     // =========================================================================
     // TEXT SAFETY
@@ -384,14 +362,12 @@
             return null;
         }
 
-
         const match =
             String(
                 text
             ).match(
                 tagRegex
             );
-
 
         if (
             !match ||
@@ -400,10 +376,8 @@
             return null;
         }
 
-
         const rawHex =
             match[1].trim();
-
 
         if (
             !/^#?([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/
@@ -414,14 +388,12 @@
             return null;
         }
 
-
         return rawHex.startsWith(
             "#"
         )
             ? rawHex
             : "#" + rawHex;
     }
-
 
     // =========================================================================
     // OPTIONAL USER THEME TAGS
@@ -432,7 +404,6 @@
             return;
         }
 
-
         [
             notesRoot,
             titleLabel,
@@ -441,9 +412,7 @@
             modeAction,
             editAction
         ]
-            .filter(
-                Boolean
-            )
+            .filter(Boolean)
             .forEach(
                 element => {
                     element.style.removeProperty(
@@ -459,7 +428,6 @@
                     );
                 }
             );
-
 
         notesRoot.style.removeProperty(
             "border"
@@ -494,9 +462,7 @@
             return;
         }
 
-
         clearThemeOverrides();
-
 
         const textColour =
             parseHexColor(
@@ -504,13 +470,11 @@
                 /!TextColour\(([^)]+)\)/i
             );
 
-
         const uiTextColour =
             parseHexColor(
                 text,
                 /!UITextColour\(([^)]+)\)/i
             );
-
 
         const uiButtonColour =
             parseHexColor(
@@ -518,13 +482,11 @@
                 /!UIButtonColour\(([^)]+)\)/i
             );
 
-
         const uiBodyColour =
             parseHexColor(
                 text,
                 /!UIBodyColour\(([^)]+)\)/i
             );
-
 
         const uiBorderColour =
             parseHexColor(
@@ -532,13 +494,11 @@
                 /!UIBorderColour\(([^)]+)\)/i
             );
 
-
         const uiHeaderColour =
             parseHexColor(
                 text,
                 /!UIHeaderColour\(([^)]+)\)/i
             );
-
 
         if (
             textColour
@@ -555,7 +515,6 @@
                 "important"
             );
         }
-
 
         if (
             uiTextColour
@@ -579,7 +538,6 @@
             );
         }
 
-
         if (
             uiButtonColour
         ) {
@@ -595,7 +553,6 @@
                 "important"
             );
         }
-
 
         if (
             uiBodyColour
@@ -613,7 +570,6 @@
             );
         }
 
-
         if (
             uiHeaderColour
         ) {
@@ -623,7 +579,6 @@
                 "important"
             );
         }
-
 
         if (
             uiBorderColour
@@ -665,7 +620,6 @@
             );
         }
     }
-
 
     // =========================================================================
     // RENDERER
@@ -712,11 +666,9 @@
                 href || ""
             ).trim();
 
-
         if (!result) {
             return "#";
         }
-
 
         if (
             result.startsWith(
@@ -726,7 +678,6 @@
             return result;
         }
 
-
         if (
             /^https?:\/\//i.test(
                 result
@@ -734,7 +685,6 @@
         ) {
             return result;
         }
-
 
         if (
             /^www\./i.test(
@@ -746,7 +696,6 @@
                 result
             );
         }
-
 
         return (
             "https://" +
@@ -763,7 +712,6 @@
                 text || ""
             );
 
-
         if (
             !sourceText.trim()
         ) {
@@ -771,7 +719,6 @@
                 isGlobalMode
                     ? "No global notes yet."
                     : "No city notes yet.";
-
 
             return (
                 "<em>" +
@@ -783,27 +730,22 @@
             );
         }
 
-
         const cleanText =
             stripThemeTags(
                 sourceText
             );
-
 
         let processed =
             escapeHTML(
                 cleanText
             );
 
-
         const linkRegex =
             /\[([^\]]+)\]\(([^)]+)\)(?:\{([^}]+)\})?|((?:https?:\/\/|www\.)[^\s<]+)/gi;
-
 
         processed =
             processed.replace(
                 linkRegex,
-
                 function (
                     match,
                     label,
@@ -814,7 +756,6 @@
                     let href = "";
                     let displayText = "";
                     let linkColour = null;
-
 
                     if (
                         label &&
@@ -828,13 +769,11 @@
                         displayText =
                             label;
 
-
                         if (
                             hexColor
                         ) {
                             const cleanedHex =
                                 hexColor.trim();
-
 
                             if (
                                 /^#?([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/
@@ -867,12 +806,10 @@
                         return match;
                     }
 
-
                     const colourStyle =
                         linkColour
                             ? ` style="color:${linkColour};"`
                             : "";
-
 
                     return (
                         `<a href="${href}" target="_top"${colourStyle}>` +
@@ -882,11 +819,9 @@
                 }
             );
 
-
         processed =
             processed.replace(
                 /&lt;fs\(([^)]+)\)&gt;/gi,
-
                 function (
                     match,
                     size
@@ -899,7 +834,6 @@
                                 ""
                             );
 
-
                     if (
                         /^\d+(\.\d+)?$/
                             .test(
@@ -910,13 +844,11 @@
                             "px";
                     }
 
-
                     if (
                         !cleanSize
                     ) {
                         return "";
                     }
-
 
                     return (
                         `<span style="font-size:${cleanSize};">`
@@ -924,13 +856,11 @@
                 }
             );
 
-
         processed =
             processed.replace(
                 /&lt;\/fs(?:\([^)]+\))?&gt;/gi,
                 "</span>"
             );
-
 
         processed =
             processed.replace(
@@ -938,10 +868,8 @@
                 "<$1>"
             );
 
-
         return processed;
     }
-
 
     // =========================================================================
     // DISPLAY
@@ -953,7 +881,6 @@
         ) {
             return "Global Notes";
         }
-
 
         return (
             "City Notes (" +
@@ -968,7 +895,6 @@
             return;
         }
 
-
         titleLabel.textContent =
             getExpectedTitle();
     }
@@ -978,7 +904,6 @@
         if (!modeAction) {
             return;
         }
-
 
         modeAction.value =
             isGlobalMode
@@ -991,7 +916,6 @@
         if (!textarea) {
             return;
         }
-
 
         textarea.placeholder =
             isGlobalMode
@@ -1007,29 +931,22 @@
             return;
         }
 
-
         const savedText =
             loadCurrentNote();
-
 
         displayDiv.innerHTML =
             renderClickableText(
                 savedText
             );
 
-
         applyCustomUITheme(
             savedText
         );
 
-
         updateTitle();
-
         updateModeAction();
-
         updatePlaceholder();
     }
-
 
     // =========================================================================
     // EDITING
@@ -1053,27 +970,21 @@
             return;
         }
 
-
         textarea.value =
             loadCurrentNote();
-
 
         displayDiv.style.display =
             "none";
 
-
         textarea.style.display =
             "block";
-
 
         editAction.value =
             "Done";
 
-
         applyCustomUITheme(
             textarea.value
         );
-
 
         textarea.focus();
     }
@@ -1088,23 +999,18 @@
             return;
         }
 
-
         saveCurrentNote(
             textarea.value
         );
 
-
         textarea.style.display =
             "none";
-
 
         displayDiv.style.display =
             "block";
 
-
         editAction.value =
             "Edit";
-
 
         updateNotesDisplay();
     }
@@ -1121,9 +1027,8 @@
         }
     }
 
-
     // =========================================================================
-    // GLOBAL / CITY MODE
+    // MODE
     // =========================================================================
 
     function toggleNotesMode() {
@@ -1135,18 +1040,14 @@
             );
         }
 
-
         isGlobalMode =
             !isGlobalMode;
-
 
         currentLoadedTown =
             getActiveTownId();
 
-
         const newText =
             loadCurrentNote();
-
 
         if (
             textarea
@@ -1155,9 +1056,7 @@
                 newText;
         }
 
-
         updateNotesDisplay();
-
 
         if (
             isEditing()
@@ -1177,7 +1076,6 @@
         }
     }
 
-
     // =========================================================================
     // TOWN SYNC
     // =========================================================================
@@ -1186,7 +1084,6 @@
         const activeTownId =
             getActiveTownId();
 
-
         if (
             activeTownId !==
             currentLoadedTown
@@ -1194,13 +1091,11 @@
             currentLoadedTown =
                 activeTownId;
 
-
             if (
                 !isGlobalMode
             ) {
                 const savedText =
                     loadCurrentNote();
-
 
                 if (
                     textarea &&
@@ -1210,11 +1105,9 @@
                         savedText;
                 }
 
-
                 updateNotesDisplay();
             }
         }
-
 
         updateTitle();
     }
@@ -1227,10 +1120,8 @@
             return;
         }
 
-
         notesPollingStarted =
             true;
-
 
         setInterval(
             checkAndSyncTownNotes,
@@ -1238,14 +1129,8 @@
         );
     }
 
-
     // =========================================================================
-    // NOTES LAYOUT
-    //
-    // Geometry only.
-    //
-    // Header uses Illyriad's real sideTab + selected classes.
-    // Footer buttons use Illyriad's real short button class.
+    // STYLES
     // =========================================================================
 
     function injectNotesStyles() {
@@ -1257,190 +1142,117 @@
             return;
         }
 
-
         const style =
             document.createElement(
                 "style"
             );
 
-
         style.id =
             "ikNotesStyles";
-
 
         style.textContent = `
 
             #ikNotesRoot {
-                width:
-                    100%;
-
-                height:
-                    100%;
-
-                display:
-                    flex;
-
-                flex-direction:
-                    column;
-
-                box-sizing:
-                    border-box;
-
-                overflow:
-                    hidden;
-
-                padding:
-                    1px;
+                position: relative;
+                width: 100%;
+                height: 100%;
+                box-sizing: border-box;
+                overflow: hidden;
+                padding: 1px;
             }
 
-
             /*
-             * Native Illyriad tab appearance used as a static header.
-             *
-             * Geometry is overridden because this is not inside
-             * Illyriad's normal sideTabs container.
+             * Native Illyriad selected tab appearance for a static header.
              */
 
             #ikNotesTitle.sideTab {
-                position:
-                    relative !important;
-
-                left:
-                    auto !important;
-
-                right:
-                    auto !important;
-
-                top:
-                    auto !important;
-
-                width:
-                    100% !important;
-
-                min-width:
-                    0 !important;
-
-                max-width:
-                    none !important;
-
-                flex:
-                    0 0 auto;
-
-                box-sizing:
-                    border-box !important;
-
-                text-align:
-                    center;
-
-                cursor:
-                    default !important;
-
-                margin:
-                    0 0 2px 0 !important;
+                position: absolute !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 100% !important;
+                min-width: 0 !important;
+                max-width: none !important;
+                box-sizing: border-box !important;
+                text-align: center;
+                cursor: default !important;
+                margin: 0 !important;
             }
 
+            /*
+             * Note body lives between the header and footer.
+             */
+
+            #ikNotesBodyWrap {
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 24px;
+                bottom: 42px;
+                box-sizing: border-box;
+                overflow: hidden;
+            }
 
             #ikNotesDisplay,
             #ikNotesTextarea {
-                flex:
-                    1 1 0;
-
-                width:
-                    100%;
-
-                min-height:
-                    0;
-
-                box-sizing:
-                    border-box;
-
-                padding:
-                    4px;
+                width: 100%;
+                height: 100%;
+                box-sizing: border-box;
+                padding: 4px;
             }
-
 
             #ikNotesDisplay {
-                overflow-y:
-                    auto;
-
-                white-space:
-                    pre-wrap;
-
-                word-break:
-                    break-word;
+                overflow-y: auto;
+                white-space: pre-wrap;
+                word-break: break-word;
             }
-
 
             #ikNotesTextarea {
-                display:
-                    none;
-
-                resize:
-                    none;
+                display: none;
+                resize: none;
             }
 
-
             /*
-             * Footer stays pinned to the bottom because the note
-             * body above it owns all remaining flex space.
+             * Footer locked to the bottom of the Notes box.
              */
 
             #ikNotesFooter {
-                flex:
-                    0 0 auto;
-
-                width:
-                    100%;
-
-                display:
-                    flex;
-
-                justify-content:
-                    center;
-
-                align-items:
-                    center;
-
-                gap:
-                    4px;
-
-                box-sizing:
-                    border-box;
-
-                padding:
-                    2px 0 0 0;
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                height: 40px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 8px;
+                box-sizing: border-box;
+                padding: 2px 0 3px 0;
             }
 
-
             /*
-             * Illyriad owns .short's appearance.
-             *
-             * Only remove layout behavior that could move the
-             * buttons outside our footer.
+             * Native red button skin via IKTools core.
+             * Width reduced so two fit side-by-side.
              */
 
             #ikNotesFooter .ik-notes-button {
-                position:
-                    static !important;
-
-                float:
-                    none !important;
-
-                margin:
-                    0 !important;
+                position: static !important;
+                float: none !important;
+                margin: 0 !important;
+                width: 76px !important;
+                min-width: 76px !important;
+                max-width: 76px !important;
+                flex: 0 0 76px !important;
             }
 
         `;
-
 
         document.head.appendChild(
             style
         );
     }
 
-
     // =========================================================================
-    // NATIVE UI ELEMENTS
+    // NATIVE BUTTON
     // =========================================================================
 
     function createNativeRedButton(
@@ -1451,25 +1263,17 @@
                 "input"
             );
 
-
         button.type =
             "button";
 
-
-        /*
-         * Native Illyriad red button skin.
-         */
         button.className =
-            "short ik-notes-button";
-
+            "ik-game-button ik-notes-button";
 
         button.value =
             text;
 
-
         return button;
     }
-
 
     // =========================================================================
     // UI CONSTRUCTION
@@ -1480,23 +1284,19 @@
     ) {
         injectNotesStyles();
 
-
         panel.innerHTML =
             "";
-
 
         notesRoot =
             document.createElement(
                 "div"
             );
 
-
         notesRoot.id =
             "ikNotesRoot";
 
-
         // ---------------------------------------------------------------------
-        // STATIC NATIVE HEADER
+        // HEADER
         // ---------------------------------------------------------------------
 
         titleLabel =
@@ -1504,25 +1304,31 @@
                 "div"
             );
 
-
-        /*
-         * Real Illyriad classes.
-         *
-         * selected gives this the same visual state as the currently
-         * selected Friends / Tools / Notes tab.
-         */
         titleLabel.className =
             "sideTab selected";
 
-
         titleLabel.id =
             "ikNotesTitle";
-
 
         notesRoot.appendChild(
             titleLabel
         );
 
+        // ---------------------------------------------------------------------
+        // BODY WRAP
+        // ---------------------------------------------------------------------
+
+        bodyWrap =
+            document.createElement(
+                "div"
+            );
+
+        bodyWrap.id =
+            "ikNotesBodyWrap";
+
+        notesRoot.appendChild(
+            bodyWrap
+        );
 
         // ---------------------------------------------------------------------
         // DISPLAY
@@ -1533,15 +1339,12 @@
                 "div"
             );
 
-
         displayDiv.id =
             "ikNotesDisplay";
 
-
-        notesRoot.appendChild(
+        bodyWrap.appendChild(
             displayDiv
         );
-
 
         // ---------------------------------------------------------------------
         // EDITOR
@@ -1552,61 +1355,57 @@
                 "textarea"
             );
 
-
         textarea.id =
             "ikNotesTextarea";
-
 
         textarea.spellcheck =
             true;
 
-
-        notesRoot.appendChild(
+        bodyWrap.appendChild(
             textarea
         );
 
-
         // ---------------------------------------------------------------------
-        // BOTTOM BUTTONS
+        // FOOTER
         // ---------------------------------------------------------------------
 
-        const footer =
+        footer =
             document.createElement(
                 "div"
             );
 
-
         footer.id =
             "ikNotesFooter";
-
 
         modeAction =
             createNativeRedButton(
                 "Global"
             );
 
-
         editAction =
             createNativeRedButton(
                 "Edit"
             );
-
 
         footer.append(
             modeAction,
             editAction
         );
 
-
         notesRoot.appendChild(
             footer
         );
-
 
         panel.appendChild(
             notesRoot
         );
 
+        if (
+            IKTools.ui &&
+            typeof IKTools.ui.refreshNativeButtons === "function"
+        ) {
+            IKTools.ui.refreshNativeButtons();
+        }
 
         // ---------------------------------------------------------------------
         // EVENTS
@@ -1614,37 +1413,30 @@
 
         modeAction.addEventListener(
             "click",
-
             () => {
                 toggleNotesMode();
             }
         );
 
-
         editAction.addEventListener(
             "click",
-
             () => {
                 toggleEditMode();
             }
         );
 
-
         textarea.addEventListener(
             "input",
-
             () => {
                 saveCurrentNote(
                     textarea.value
                 );
-
 
                 applyCustomUITheme(
                     textarea.value
                 );
             }
         );
-
 
         // ---------------------------------------------------------------------
         // INITIAL STATE
@@ -1653,17 +1445,13 @@
         currentLoadedTown =
             getActiveTownId();
 
-
         textarea.value =
             loadCurrentNote();
 
-
         updateNotesDisplay();
-
 
         startTownPolling();
     }
-
 
     // =========================================================================
     // TAB SHOW
@@ -1672,6 +1460,12 @@
     function onNotesShown() {
         checkAndSyncTownNotes();
 
+        if (
+            IKTools.ui &&
+            typeof IKTools.ui.refreshNativeButtons === "function"
+        ) {
+            IKTools.ui.refreshNativeButtons();
+        }
 
         if (
             !isEditing()
@@ -1679,7 +1473,6 @@
             updateNotesDisplay();
         }
     }
-
 
     // =========================================================================
     // REGISTER
@@ -1701,7 +1494,6 @@
         onShow:
             onNotesShown
     });
-
 
     console.log(
         "IKnights Notes module loaded."
