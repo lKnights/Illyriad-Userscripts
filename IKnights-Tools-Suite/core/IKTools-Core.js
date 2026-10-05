@@ -18,9 +18,12 @@
     // CORE STATE
     // =========================================================================
 
-    let toolsTabSelected = false;
     let coreInitialized = false;
     let coreStarting = false;
+
+    let activeSidebarTab = "friends";
+
+    let sidebarRegistrationCounter = 0;
 
     const initializedTools = new Set();
 
@@ -39,6 +42,9 @@
 
     IKTools.tools =
         IKTools.tools || {};
+
+    IKTools.sidebarTabs =
+        IKTools.sidebarTabs || {};
 
 
     // =========================================================================
@@ -90,12 +96,21 @@
         key,
         value
     ) {
-        localStorage.setItem(
-            key,
-            JSON.stringify(
-                value
-            )
-        );
+        try {
+            localStorage.setItem(
+                key,
+                JSON.stringify(
+                    value
+                )
+            );
+
+        } catch (error) {
+            console.warn(
+                "IKnights Tools could not save:",
+                key,
+                error
+            );
+        }
     }
 
 
@@ -191,7 +206,9 @@
         }
 
         const number =
-            Number(text);
+            Number(
+                text
+            );
 
         if (
             !Number.isFinite(
@@ -255,9 +272,11 @@
                 return;
             }
 
+
             IKTools.tools[
                 tool.id
             ] = tool;
+
 
             if (
                 coreInitialized
@@ -279,6 +298,7 @@
                     id
                 ];
 
+
             if (!tool) {
                 console.warn(
                     "IKTools: Unknown tool:",
@@ -288,9 +308,11 @@
                 return;
             }
 
+
             initializeTool(
                 tool
             );
+
 
             tool.open();
         };
@@ -299,6 +321,7 @@
     IKTools.render =
         function () {
             renderToolsList();
+            ensureSidebar();
         };
 
 
@@ -314,6 +337,7 @@
             return true;
         }
 
+
         if (
             typeof tool.init !==
             "function"
@@ -325,12 +349,14 @@
             return true;
         }
 
+
         try {
             const result =
                 tool.init();
 
+
             /*
-             * A tool can return false if something it needs,
+             * A tool can return false when something it needs,
              * such as jQuery UI, is not ready yet.
              *
              * The core will retry later.
@@ -340,6 +366,7 @@
             ) {
                 return false;
             }
+
 
             initializedTools.add(
                 tool.id
@@ -372,6 +399,601 @@
 
 
     // =========================================================================
+    // SIDEBAR TAB REGISTRY
+    // =========================================================================
+
+    IKTools.registerSidebarTab =
+        function (tab) {
+
+            if (
+                !tab ||
+                !tab.id ||
+                !tab.name
+            ) {
+                console.warn(
+                    "IKTools: Invalid sidebar tab registration.",
+                    tab
+                );
+
+                return;
+            }
+
+
+            if (
+                tab.id ===
+                "friends"
+            ) {
+                console.warn(
+                    'IKTools: "friends" is reserved for Illyriad.'
+                );
+
+                return;
+            }
+
+
+            sidebarRegistrationCounter++;
+
+
+            tab._ikRegistrationVersion =
+                sidebarRegistrationCounter;
+
+
+            IKTools.sidebarTabs[
+                tab.id
+            ] = tab;
+
+
+            if (
+                coreInitialized
+            ) {
+                ensureSidebar();
+            }
+        };
+
+
+    IKTools.showSidebarTab =
+        function (id) {
+            showSidebarTab(
+                id
+            );
+        };
+
+
+    IKTools.getSidebarPanel =
+        function (id) {
+            return getSidebarPanel(
+                id
+            );
+        };
+
+
+    function getRegisteredSidebarTabs() {
+        return Object.values(
+            IKTools.sidebarTabs
+        )
+            .sort(
+                (
+                    a,
+                    b
+                ) => {
+
+                    const orderA =
+                        Number(
+                            a.order ??
+                            999
+                        );
+
+                    const orderB =
+                        Number(
+                            b.order ??
+                            999
+                        );
+
+
+                    if (
+                        orderA !==
+                        orderB
+                    ) {
+                        return (
+                            orderA -
+                            orderB
+                        );
+                    }
+
+
+                    return (
+                        a.name.localeCompare(
+                            b.name
+                        )
+                    );
+                }
+            );
+    }
+
+
+    function getSidebarButton(
+        id
+    ) {
+        if (
+            id ===
+            "friends"
+        ) {
+            return document.querySelector(
+                "#FriendsBtn"
+            );
+        }
+
+
+        if (
+            id ===
+            "tools"
+        ) {
+            return document.querySelector(
+                "#CommunitiesBtn"
+            );
+        }
+
+
+        return document.querySelector(
+            `[data-ik-sidebar-button="${id}"]`
+        );
+    }
+
+
+    function getSidebarPanel(
+        id
+    ) {
+        if (
+            id ===
+            "friends"
+        ) {
+            return document.querySelector(
+                "#FriendsTab"
+            );
+        }
+
+
+        if (
+            id ===
+            "tools"
+        ) {
+            return document.querySelector(
+                "#CommunitiesTab"
+            );
+        }
+
+
+        return document.querySelector(
+            `[data-ik-sidebar-panel="${id}"]`
+        );
+    }
+
+
+    function createSidebarButton(
+        tab,
+        sideTabs
+    ) {
+        let button =
+            getSidebarButton(
+                tab.id
+            );
+
+
+        if (
+            button
+        ) {
+            return button;
+        }
+
+
+        button =
+            document.createElement(
+                "div"
+            );
+
+
+        button.className =
+            "sideTab ik-suite-side-tab";
+
+
+        button.dataset
+            .ikSidebarButton =
+            tab.id;
+
+
+        sideTabs.appendChild(
+            button
+        );
+
+
+        return button;
+    }
+
+
+    function createSidebarPanel(
+        tab,
+        dock
+    ) {
+        let panel =
+            getSidebarPanel(
+                tab.id
+            );
+
+
+        if (
+            panel
+        ) {
+            return panel;
+        }
+
+
+        panel =
+            document.createElement(
+                "div"
+            );
+
+
+        panel.className =
+            "ik-suite-sidebar-panel";
+
+
+        panel.dataset
+            .ikSidebarPanel =
+            tab.id;
+
+
+        panel.style.display =
+            "none";
+
+
+        dock.appendChild(
+            panel
+        );
+
+
+        return panel;
+    }
+
+
+    function mountSidebarPanel(
+        tab,
+        panel
+    ) {
+        if (
+            !panel
+        ) {
+            return;
+        }
+
+
+        const version =
+            String(
+                tab._ikRegistrationVersion ||
+                0
+            );
+
+
+        if (
+            panel.dataset
+                .ikRegistrationVersion ===
+            version
+        ) {
+            return;
+        }
+
+
+        panel.dataset
+            .ikRegistrationVersion =
+            version;
+
+
+        panel.innerHTML =
+            "";
+
+
+        if (
+            typeof tab.mount ===
+            "function"
+        ) {
+            try {
+                tab.mount(
+                    panel
+                );
+
+            } catch (error) {
+                console.error(
+                    `IKTools: Failed to mount sidebar tab ${tab.id}.`,
+                    error
+                );
+            }
+        }
+    }
+
+
+    function bindSidebarButton(
+        id,
+        button
+    ) {
+        if (
+            !button
+        ) {
+            return;
+        }
+
+
+        const key =
+            `ikSidebarBound${id}`;
+
+
+        if (
+            button.dataset[
+                key
+            ] ===
+            "1"
+        ) {
+            return;
+        }
+
+
+        button.dataset[
+            key
+        ] =
+            "1";
+
+
+        button.addEventListener(
+            "click",
+
+            event => {
+                event.preventDefault();
+
+                event.stopImmediatePropagation();
+
+                showSidebarTab(
+                    id
+                );
+            },
+
+            true
+        );
+    }
+
+
+    function layoutSidebarButtons() {
+        const dock =
+            document.querySelector(
+                "#DockedFriends"
+            );
+
+
+        if (!dock) {
+            return;
+        }
+
+
+        const buttons = [
+            getSidebarButton(
+                "friends"
+            ),
+
+            ...getRegisteredSidebarTabs()
+                .map(
+                    tab =>
+                        getSidebarButton(
+                            tab.id
+                        )
+                )
+        ].filter(
+            Boolean
+        );
+
+
+        if (
+            !buttons.length
+        ) {
+            return;
+        }
+
+
+        const totalWidth =
+            dock.clientWidth ||
+            245;
+
+
+        const leftPadding =
+            3;
+
+
+        const rightPadding =
+            3;
+
+
+        const usableWidth =
+            Math.max(
+                1,
+                totalWidth -
+                leftPadding -
+                rightPadding
+            );
+
+
+        const tabWidth =
+            usableWidth /
+            buttons.length;
+
+
+        buttons.forEach(
+            (
+                button,
+                index
+            ) => {
+
+                const left =
+                    leftPadding +
+                    (
+                        index *
+                        tabWidth
+                    );
+
+
+                button.classList.add(
+                    "ik-suite-side-tab"
+                );
+
+
+                button.style.setProperty(
+                    "--ik-sidebar-tab-left",
+                    `${left}px`
+                );
+
+
+                button.style.setProperty(
+                    "--ik-sidebar-tab-width",
+                    `${tabWidth}px`
+                );
+            }
+        );
+    }
+
+
+    function applySidebarState() {
+        const friendsButton =
+            getSidebarButton(
+                "friends"
+            );
+
+
+        const friendsPanel =
+            getSidebarPanel(
+                "friends"
+            );
+
+
+        if (
+            friendsButton
+        ) {
+            friendsButton.classList.toggle(
+                "selected",
+                activeSidebarTab ===
+                    "friends"
+            );
+        }
+
+
+        if (
+            friendsPanel
+        ) {
+            friendsPanel.style.display =
+                activeSidebarTab ===
+                "friends"
+                    ? "block"
+                    : "none";
+        }
+
+
+        getRegisteredSidebarTabs()
+            .forEach(
+                tab => {
+
+                    const button =
+                        getSidebarButton(
+                            tab.id
+                        );
+
+
+                    const panel =
+                        getSidebarPanel(
+                            tab.id
+                        );
+
+
+                    if (
+                        button
+                    ) {
+                        button.classList.toggle(
+                            "selected",
+                            activeSidebarTab ===
+                                tab.id
+                        );
+                    }
+
+
+                    if (
+                        panel
+                    ) {
+                        panel.style.display =
+                            activeSidebarTab ===
+                            tab.id
+                                ? (
+                                    tab.display ||
+                                    "block"
+                                )
+                                : "none";
+                    }
+                }
+            );
+    }
+
+
+    function showSidebarTab(
+        id
+    ) {
+        if (
+            id !==
+                "friends" &&
+            !IKTools.sidebarTabs[
+                id
+            ]
+        ) {
+            id =
+                "friends";
+        }
+
+
+        activeSidebarTab =
+            id;
+
+
+        applySidebarState();
+
+
+        if (
+            id ===
+            "tools"
+        ) {
+            renderToolsList();
+        }
+
+
+        const tab =
+            IKTools.sidebarTabs[
+                id
+            ];
+
+
+        if (
+            tab &&
+            typeof tab.onShow ===
+                "function"
+        ) {
+            try {
+                tab.onShow(
+                    getSidebarPanel(
+                        id
+                    )
+                );
+
+            } catch (error) {
+                console.error(
+                    `IKTools: Failed to show sidebar tab ${id}.`,
+                    error
+                );
+            }
+        }
+    }
+
+
+    // =========================================================================
     // ILLYRIAD BUTTON STYLE
     // =========================================================================
 
@@ -397,6 +1019,7 @@
                     return match;
                 }
 
+
                 try {
                     const absolute =
                         new URL(
@@ -404,6 +1027,7 @@
                             baseUrl ||
                             location.href
                         ).href;
+
 
                     return (
                         `url("${absolute}")`
@@ -427,6 +1051,7 @@
         if (!rules) {
             return;
         }
+
 
         for (
             const rule of
@@ -464,11 +1089,13 @@
                                     )
                             );
 
+
                     if (
                         !selectors.length
                     ) {
                         continue;
                     }
+
 
                     const declaration =
                         absolutizeCssUrls(
@@ -476,9 +1103,11 @@
                             baseUrl
                         );
 
+
                     output.push(
                         `${selectors.join(", ")} { ${declaration} }`
                     );
+
 
                     continue;
                 }
@@ -489,13 +1118,16 @@
                     rule.type ===
                         CSSRule.MEDIA_RULE
                 ) {
-                    const nested = [];
+                    const nested =
+                        [];
+
 
                     collectSendTradeRules(
                         rule.cssRules,
                         baseUrl,
                         nested
                     );
+
 
                     if (
                         nested.length
@@ -526,7 +1158,10 @@
             )
             ?.remove();
 
-        const copiedRules = [];
+
+        const copiedRules =
+            [];
+
 
         for (
             const sheet of
@@ -560,18 +1195,22 @@
                     "style"
                 );
 
+
             style.id =
                 "ikNativeButtonCss";
+
 
             style.textContent =
                 copiedRules.join(
                     "\n"
                 );
 
+
             document.head.appendChild(
                 style
             );
         }
+
 
         captureNativeButtonMeasurements();
     }
@@ -583,6 +1222,7 @@
                 'input.sendTrade[value="Send Trade Mission"]'
             );
 
+
         let temporary =
             false;
 
@@ -593,33 +1233,43 @@
                     "input"
                 );
 
+
             sample.type =
                 "submit";
+
 
             sample.className =
                 "sendTrade";
 
+
             sample.value =
                 "Send Trade Mission";
+
 
             sample.style.position =
                 "fixed";
 
+
             sample.style.left =
                 "-10000px";
+
 
             sample.style.top =
                 "-10000px";
 
+
             sample.style.visibility =
                 "hidden";
+
 
             sample.style.pointerEvents =
                 "none";
 
+
             document.body.appendChild(
                 sample
             );
+
 
             temporary =
                 true;
@@ -628,6 +1278,7 @@
 
         const rect =
             sample.getBoundingClientRect();
+
 
         const computed =
             getComputedStyle(
@@ -640,6 +1291,7 @@
             parseFloat(
                 computed.width
             );
+
 
         const measuredHeight =
             rect.height ||
@@ -782,6 +1434,7 @@
             return;
         }
 
+
         document
             .querySelectorAll(
                 ".ik-game-button"
@@ -800,9 +1453,11 @@
     IKTools.ui =
         IKTools.ui || {};
 
+
     IKTools.ui.refreshNativeButtons =
         function () {
             installNativeButtonCss();
+
             applyFallbackSkinIfNeeded();
         };
 
@@ -820,13 +1475,16 @@
             return;
         }
 
+
         const style =
             document.createElement(
                 "style"
             );
 
+
         style.id =
             "ikToolsCoreStyles";
+
 
         style.textContent = `
 
@@ -886,34 +1544,174 @@
 
 
             /* =============================================================
+               SIDEBAR TABS
+               ============================================================= */
+
+            #DockedFriends .ik-suite-side-tab {
+                left:
+                    var(
+                        --ik-sidebar-tab-left,
+                        0px
+                    ) !important;
+
+                width:
+                    var(
+                        --ik-sidebar-tab-width,
+                        80px
+                    ) !important;
+
+                min-width:
+                    0 !important;
+
+                max-width:
+                    none !important;
+
+                box-sizing:
+                    border-box !important;
+
+                text-align:
+                    center !important;
+
+                padding-left:
+                    0 !important;
+
+                padding-right:
+                    0 !important;
+
+                overflow:
+                    hidden !important;
+
+                white-space:
+                    nowrap !important;
+
+                text-overflow:
+                    clip !important;
+
+                cursor:
+                    pointer !important;
+            }
+
+
+            #DockedFriends .ik-suite-sidebar-panel {
+                position:
+                    absolute !important;
+
+                top:
+                    22px !important;
+
+                left:
+                    0 !important;
+
+                width:
+                    245px !important;
+
+                height:
+                    128px !important;
+
+                box-sizing:
+                    border-box !important;
+
+                overflow:
+                    hidden !important;
+            }
+
+
+            /* =============================================================
                TOOLS PANEL
                ============================================================= */
 
             #ikToolsPanel {
-                width: 245px;
-                box-sizing: border-box;
-                padding: 6px;
+                width:
+                    245px;
+
+                height:
+                    100%;
+
+                box-sizing:
+                    border-box;
+
+                padding:
+                    4px 6px;
             }
+
 
             #ikToolsList {
-                height: 120px;
-                overflow-y: auto;
-                box-sizing: border-box;
-                padding-top: 4px;
+                width:
+                    100%;
+
+                height:
+                    100%;
+
+                overflow-y:
+                    auto;
+
+                box-sizing:
+                    border-box;
+
+                padding-top:
+                    2px;
             }
+
 
             #ikToolsList .iktools-launch-button {
-                display: block !important;
-                margin: 5px auto !important;
+                display:
+                    block !important;
+
+                margin:
+                    5px auto !important;
             }
 
+
             #ikToolsList .iktools-empty {
-                text-align: center;
-                font-style: italic;
-                padding-top: 15px;
+                text-align:
+                    center;
+
+                font-style:
+                    italic;
+
+                padding-top:
+                    15px;
+            }
+
+
+            /* =============================================================
+               PLACEHOLDER FEATURE PANEL
+               ============================================================= */
+
+            .ik-suite-placeholder {
+                width:
+                    100%;
+
+                height:
+                    100%;
+
+                display:
+                    flex;
+
+                align-items:
+                    center;
+
+                justify-content:
+                    center;
+
+                text-align:
+                    center;
+
+                box-sizing:
+                    border-box;
+
+                padding:
+                    10px;
+
+                font-style:
+                    italic;
+
+                opacity:
+                    0.75;
             }
 
         `;
+
 
         document.head.appendChild(
             style
@@ -922,200 +1720,15 @@
 
 
     // =========================================================================
-    // TOOLS TAB
+    // TOOLS LIST
     // =========================================================================
-
-    function showToolsTab() {
-        const friendsBtn =
-            document.querySelector(
-                "#FriendsBtn"
-            );
-
-        const toolsBtn =
-            document.querySelector(
-                "#CommunitiesBtn"
-            );
-
-        const friendsTab =
-            document.querySelector(
-                "#FriendsTab"
-            );
-
-        const toolsTab =
-            document.querySelector(
-                "#CommunitiesTab"
-            );
-
-
-        if (
-            !friendsBtn ||
-            !toolsBtn ||
-            !friendsTab ||
-            !toolsTab
-        ) {
-            return;
-        }
-
-
-        friendsBtn.classList.remove(
-            "selected"
-        );
-
-        toolsBtn.classList.add(
-            "selected"
-        );
-
-
-        friendsTab.style.display =
-            "none";
-
-        toolsTab.style.display =
-            "block";
-
-
-        toolsTabSelected =
-            true;
-
-
-        renderToolsList();
-    }
-
-
-    function showFriendsTab() {
-        const friendsBtn =
-            document.querySelector(
-                "#FriendsBtn"
-            );
-
-        const toolsBtn =
-            document.querySelector(
-                "#CommunitiesBtn"
-            );
-
-        const friendsTab =
-            document.querySelector(
-                "#FriendsTab"
-            );
-
-        const toolsTab =
-            document.querySelector(
-                "#CommunitiesTab"
-            );
-
-
-        if (
-            !friendsBtn ||
-            !toolsBtn ||
-            !friendsTab ||
-            !toolsTab
-        ) {
-            return;
-        }
-
-
-        toolsBtn.classList.remove(
-            "selected"
-        );
-
-        friendsBtn.classList.add(
-            "selected"
-        );
-
-
-        toolsTab.style.display =
-            "none";
-
-        friendsTab.style.display =
-            "block";
-
-
-        toolsTabSelected =
-            false;
-    }
-
-
-    function bindToolsTabs() {
-        const friendsBtn =
-            document.querySelector(
-                "#FriendsBtn"
-            );
-
-        const toolsBtn =
-            document.querySelector(
-                "#CommunitiesBtn"
-            );
-
-
-        if (
-            !friendsBtn ||
-            !toolsBtn
-        ) {
-            return;
-        }
-
-
-        if (
-            toolsBtn.dataset
-                .ikToolsBound !==
-            "1"
-        ) {
-            toolsBtn.dataset
-                .ikToolsBound =
-                "1";
-
-            toolsBtn.addEventListener(
-                "click",
-
-                event => {
-                    event.preventDefault();
-
-                    event.stopImmediatePropagation();
-
-                    showToolsTab();
-                },
-
-                true
-            );
-        }
-
-
-        if (
-            friendsBtn.dataset
-                .ikToolsBound !==
-            "1"
-        ) {
-            friendsBtn.dataset
-                .ikToolsBound =
-                "1";
-
-            friendsBtn.addEventListener(
-                "click",
-
-                event => {
-                    if (
-                        !toolsTabSelected
-                    ) {
-                        return;
-                    }
-
-                    event.preventDefault();
-
-                    event.stopImmediatePropagation();
-
-                    showFriendsTab();
-                },
-
-                true
-            );
-        }
-    }
-
 
     function renderToolsList() {
         const list =
             document.querySelector(
                 "#ikToolsList"
             );
+
 
         if (!list) {
             return;
@@ -1177,15 +1790,19 @@
                     "div"
                 );
 
+
             empty.className =
                 "iktools-empty";
+
 
             empty.textContent =
                 "No tools loaded.";
 
+
             list.appendChild(
                 empty
             );
+
 
             return;
         }
@@ -1199,19 +1816,18 @@
                         "input"
                     );
 
-                /*
-                 * Normal button behavior.
-                 *
-                 * It only LOOKS like an Illyriad button.
-                 */
+
                 button.type =
                     "button";
+
 
                 button.className =
                     "ik-game-button iktools-launch-button";
 
+
                 button.value =
                     tool.name;
+
 
                 button.title =
                     tool.description ||
@@ -1220,6 +1836,7 @@
 
                 button.addEventListener(
                     "click",
+
                     () => {
                         IKTools.openTool(
                             tool.id
@@ -1239,28 +1856,42 @@
     }
 
 
-    function ensureToolsPanel() {
+    // =========================================================================
+    // SIDEBAR CONSTRUCTION
+    // =========================================================================
+
+    function ensureSidebar() {
         const dock =
             document.querySelector(
                 "#DockedFriends"
             );
 
-        const friendsBtn =
+
+        const sideTabs =
+            dock?.querySelector(
+                ".sideTabs"
+            );
+
+
+        const friendsButton =
             document.querySelector(
                 "#FriendsBtn"
             );
 
-        const toolsBtn =
-            document.querySelector(
-                "#CommunitiesBtn"
-            );
 
-        const friendsTab =
+        const friendsPanel =
             document.querySelector(
                 "#FriendsTab"
             );
 
-        const toolsTab =
+
+        const toolsButton =
+            document.querySelector(
+                "#CommunitiesBtn"
+            );
+
+
+        const toolsPanel =
             document.querySelector(
                 "#CommunitiesTab"
             );
@@ -1268,65 +1899,286 @@
 
         if (
             !dock ||
-            !friendsBtn ||
-            !toolsBtn ||
-            !friendsTab ||
-            !toolsTab
+            !sideTabs ||
+            !friendsButton ||
+            !friendsPanel ||
+            !toolsButton ||
+            !toolsPanel
         ) {
             return false;
         }
 
 
-        toolsBtn.textContent =
-            "Tools";
+        /*
+         * Friends is Illyriad's native tab.
+         */
+        friendsButton.textContent =
+            "Friends";
 
-        toolsBtn.style.cursor =
-            "pointer";
 
-        toolsBtn.title =
-            "Tools";
+        friendsButton.classList.add(
+            "ik-suite-side-tab"
+        );
+
+
+        bindSidebarButton(
+            "friends",
+            friendsButton
+        );
+
+
+        /*
+         * Tools reuses Illyriad's dormant Communities tab.
+         */
+        const toolsTab =
+            IKTools.sidebarTabs
+                .tools;
 
 
         if (
-            toolsTab.dataset
-                .ikToolsOwned !==
-                "1" ||
-            !toolsTab.querySelector(
-                "#ikToolsList"
-            )
+            toolsTab
         ) {
-            toolsTab.dataset
-                .ikToolsOwned =
-                "1";
+            toolsButton.textContent =
+                toolsTab.name;
 
-            toolsTab.innerHTML = `
-                <div id="ikToolsPanel">
-                    <div id="ikToolsList"></div>
-                </div>
-            `;
 
-            toolsTab.style.width =
+            toolsButton.title =
+                toolsTab.name;
+
+
+            toolsButton.style.cursor =
+                "pointer";
+
+
+            toolsButton.classList.add(
+                "ik-suite-side-tab"
+            );
+
+
+            bindSidebarButton(
+                "tools",
+                toolsButton
+            );
+
+
+            toolsPanel.style.position =
+                "absolute";
+
+
+            toolsPanel.style.top =
+                "22px";
+
+
+            toolsPanel.style.left =
+                "0";
+
+
+            toolsPanel.style.width =
                 "245px";
 
-            toolsTab.style.overflow =
+
+            toolsPanel.style.height =
+                "128px";
+
+
+            toolsPanel.style.boxSizing =
+                "border-box";
+
+
+            toolsPanel.style.overflow =
                 "hidden";
+
+
+            mountSidebarPanel(
+                toolsTab,
+                toolsPanel
+            );
         }
 
 
-        bindToolsTabs();
+        /*
+         * All additional suite tabs are created by the core.
+         */
+        getRegisteredSidebarTabs()
+            .forEach(
+                tab => {
 
-        renderToolsList();
+                    if (
+                        tab.id ===
+                        "tools"
+                    ) {
+                        return;
+                    }
+
+
+                    const button =
+                        createSidebarButton(
+                            tab,
+                            sideTabs
+                        );
+
+
+                    button.textContent =
+                        tab.name;
+
+
+                    button.title =
+                        tab.name;
+
+
+                    bindSidebarButton(
+                        tab.id,
+                        button
+                    );
+
+
+                    const panel =
+                        createSidebarPanel(
+                            tab,
+                            dock
+                        );
+
+
+                    mountSidebarPanel(
+                        tab,
+                        panel
+                    );
+                }
+            );
+
+
+        /*
+         * Remove old custom tabs that are no longer registered.
+         */
+        document
+            .querySelectorAll(
+                "#DockedFriends [data-ik-sidebar-button]"
+            )
+            .forEach(
+                button => {
+
+                    const id =
+                        button.dataset
+                            .ikSidebarButton;
+
+
+                    if (
+                        !IKTools.sidebarTabs[
+                            id
+                        ]
+                    ) {
+                        button.remove();
+                    }
+                }
+            );
+
+
+        document
+            .querySelectorAll(
+                "#DockedFriends [data-ik-sidebar-panel]"
+            )
+            .forEach(
+                panel => {
+
+                    const id =
+                        panel.dataset
+                            .ikSidebarPanel;
+
+
+                    if (
+                        !IKTools.sidebarTabs[
+                            id
+                        ]
+                    ) {
+                        panel.remove();
+                    }
+                }
+            );
+
+
+        layoutSidebarButtons();
 
 
         if (
-            toolsTabSelected
+            activeSidebarTab !==
+                "friends" &&
+            !IKTools.sidebarTabs[
+                activeSidebarTab
+            ]
         ) {
-            showToolsTab();
+            activeSidebarTab =
+                "friends";
         }
+
+
+        applySidebarState();
 
 
         return true;
     }
+
+
+    // =========================================================================
+    // BUILT-IN SIDEBAR TABS
+    // =========================================================================
+
+    IKTools.registerSidebarTab({
+        id:
+            "tools",
+
+        name:
+            "Tools",
+
+        order:
+            10,
+
+        mount:
+            function (panel) {
+
+                panel.innerHTML = `
+                    <div id="ikToolsPanel">
+                        <div id="ikToolsList"></div>
+                    </div>
+                `;
+
+
+                renderToolsList();
+            },
+
+        onShow:
+            function () {
+                renderToolsList();
+            }
+    });
+
+
+    /*
+     * Notes lives in its own feature module.
+     *
+     * For now the core provides its permanent sidebar location.
+     * Notes.js will replace this registration with the actual
+     * Notes interface.
+     */
+    IKTools.registerSidebarTab({
+        id:
+            "notes",
+
+        name:
+            "Notes",
+
+        order:
+            20,
+
+        mount:
+            function (panel) {
+
+                panel.innerHTML = `
+                    <div class="ik-suite-placeholder">
+                        Notes module not loaded yet.
+                    </div>
+                `;
+            }
+    });
 
 
     // =========================================================================
@@ -1351,11 +2203,19 @@
 
         injectCoreStyles();
 
+
         installNativeButtonCss();
 
-        ensureToolsPanel();
+
+        if (
+            !ensureSidebar()
+        ) {
+            return false;
+        }
+
 
         initializeRegisteredTools();
+
 
         coreInitialized =
             true;
@@ -1363,11 +2223,15 @@
 
         setInterval(
             () => {
-                ensureToolsPanel();
+
+                ensureSidebar();
+
 
                 initializeRegisteredTools();
 
+
                 applyFallbackSkinIfNeeded();
+
             },
 
             750
@@ -1416,6 +2280,7 @@
                             clearInterval(
                                 startup
                             );
+
 
                             coreStarting =
                                 false;
