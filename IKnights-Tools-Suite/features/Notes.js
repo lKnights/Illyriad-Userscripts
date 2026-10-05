@@ -62,12 +62,6 @@
     };
 
 
-    /*
-     * HoRRis's integrated version used these keys.
-     *
-     * We recognize them so notes created with that version
-     * are automatically brought into the modular version.
-     */
     const LEGACY_STORAGE = {
         GLOBAL:
             "ikNotes_global",
@@ -341,9 +335,6 @@
         }
 
 
-        /*
-         * Import HoRRis's earlier localStorage format if found.
-         */
         const legacy =
             localStorage.getItem(
                 getLegacyStorageKey()
@@ -634,12 +625,6 @@
             );
 
 
-        /*
-         * Font size:
-         *
-         * <fs(14)>Text</fs>
-         * <fs(1.2em)>Text</fs>
-         */
         processed =
             processed.replace(
                 /&lt;fs\(([^)]+)\)&gt;/gi,
@@ -688,9 +673,6 @@
             );
 
 
-        /*
-         * Original LuperNotes formatting.
-         */
         processed =
             processed.replace(
                 /&lt;(\/?[bui])&gt;/gi,
@@ -726,9 +708,6 @@
 
     // =========================================================================
     // OPTIONAL LUPERNOTES THEME TAGS
-    //
-    // No colors are supplied by this module itself.
-    // Overrides only occur when the user explicitly uses a theme tag.
     // =========================================================================
 
     function clearThemeOverrides() {
@@ -1189,10 +1168,6 @@
 
     // =========================================================================
     // NOTES CSS
-    //
-    // This carries over the layout HoRRis got working.
-    //
-    // Colors and skins are still supplied by Illyriad/Core.
     // =========================================================================
 
     function injectNotesStyles() {
@@ -1295,6 +1270,15 @@
                 font-weight:
                     bold;
 
+                font-family:
+                    "Palatino Linotype",
+                    "Book Antiqua",
+                    Palatino,
+                    serif;
+
+                font-size:
+                    13px;
+
                 padding:
                     4px;
 
@@ -1390,12 +1374,6 @@
                 box-sizing:
                     border-box !important;
 
-                /*
-                 * HoRRis's working solution:
-                 *
-                 * Keep the real 158px native button geometry and scale
-                 * the complete footer so both buttons fit in the sidebar.
-                 */
                 zoom:
                     0.72 !important;
             }
@@ -1515,10 +1493,6 @@
             );
 
 
-        // ---------------------------------------------------------------------
-        // INITIAL STATE
-        // ---------------------------------------------------------------------
-
         currentNotesTown =
             getActiveTownId();
 
@@ -1530,29 +1504,17 @@
         updateNotesDisplay();
 
 
-        // ---------------------------------------------------------------------
-        // EDIT BUTTON
-        // ---------------------------------------------------------------------
-
         editButton.addEventListener(
             "click",
             toggleEditMode
         );
 
 
-        // ---------------------------------------------------------------------
-        // GLOBAL BUTTON
-        // ---------------------------------------------------------------------
-
         globalButton.addEventListener(
             "click",
             toggleGlobalMode
         );
 
-
-        // ---------------------------------------------------------------------
-        // AUTOSAVE
-        // ---------------------------------------------------------------------
 
         textarea.addEventListener(
             "input",
@@ -1571,10 +1533,6 @@
         );
 
 
-        // ---------------------------------------------------------------------
-        // TOWN SYNC
-        // ---------------------------------------------------------------------
-
         if (
             !notesSyncInterval
         ) {
@@ -1586,9 +1544,6 @@
         }
 
 
-        /*
-         * Refresh the cloned native Illyriad red button skin.
-         */
         if (
             IKTools.ui &&
             typeof IKTools.ui.refreshNativeButtons ===
