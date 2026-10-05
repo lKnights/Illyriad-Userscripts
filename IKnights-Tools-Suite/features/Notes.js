@@ -6,9 +6,6 @@
  * Original creation assistance: Google Gemini
  *
  * Suite integration and modifications: IKnights
- *
- * Original LuperNotes functionality adapted to operate as a native
- * IKnights Tools Suite sidebar feature.
  */
 
 (function () {
@@ -69,32 +66,17 @@
     // STATE
     // =========================================================================
 
-    let currentLoadedTown =
-        null;
+    let currentLoadedTown = null;
+    let isGlobalMode = false;
 
-    let isGlobalMode =
-        false;
+    let notesRoot = null;
+    let titleLabel = null;
+    let displayDiv = null;
+    let textarea = null;
+    let modeAction = null;
+    let editAction = null;
 
-    let notesRoot =
-        null;
-
-    let titleLabel =
-        null;
-
-    let displayDiv =
-        null;
-
-    let textarea =
-        null;
-
-    let modeAction =
-        null;
-
-    let editAction =
-        null;
-
-    let notesPollingStarted =
-        false;
+    let notesPollingStarted = false;
 
 
     // =========================================================================
@@ -121,12 +103,10 @@
                     selector
                 );
 
-
             if (element) {
                 return element;
             }
         }
-
 
         return null;
     }
@@ -325,7 +305,7 @@
 
 
     // =========================================================================
-    // STORAGE HELPERS
+    // STORAGE
     // =========================================================================
 
     function getStorageKey() {
@@ -422,8 +402,7 @@
 
 
         const rawHex =
-            match[1]
-                .trim();
+            match[1].trim();
 
 
         if (
@@ -446,14 +425,6 @@
 
     // =========================================================================
     // OPTIONAL USER THEME TAGS
-    //
-    // IMPORTANT:
-    //
-    // No custom colors are applied by default.
-    // The normal interface inherits Illyriad.
-    //
-    // These overrides happen ONLY when the user explicitly includes
-    // the corresponding tag in their note.
     // =========================================================================
 
     function clearThemeOverrides() {
@@ -495,7 +466,7 @@
         );
 
         titleLabel?.style.removeProperty(
-            "background-color"
+            "border"
         );
 
         displayDiv?.style.removeProperty(
@@ -663,6 +634,12 @@
                 "important"
             );
 
+            titleLabel?.style.setProperty(
+                "border",
+                `1px solid ${uiBorderColour}`,
+                "important"
+            );
+
             displayDiv?.style.setProperty(
                 "border",
                 `1px solid ${uiBorderColour}`,
@@ -691,7 +668,7 @@
 
 
     // =========================================================================
-    // NOTE RENDERER
+    // RENDERER
     // =========================================================================
 
     function stripThemeTags(
@@ -771,10 +748,6 @@
         }
 
 
-        /*
-         * Anything else becomes a normal HTTPS destination.
-         * This prevents javascript: and similar schemes from executing.
-         */
         return (
             "https://" +
             result
@@ -823,18 +796,6 @@
             );
 
 
-        /*
-         * Markdown:
-         *
-         * [Label](URL)
-         * [Label](URL){#hex}
-         *
-         * Bare:
-         *
-         * https://...
-         * http://...
-         * www....
-         */
         const linkRegex =
             /\[([^\]]+)\]\(([^)]+)\)(?:\{([^}]+)\})?|((?:https?:\/\/|www\.)[^\s<]+)/gi;
 
@@ -850,14 +811,9 @@
                     hexColor,
                     bareUrl
                 ) {
-                    let href =
-                        "";
-
-                    let displayText =
-                        "";
-
-                    let linkColour =
-                        null;
+                    let href = "";
+                    let displayText = "";
+                    let linkColour = null;
 
 
                     if (
@@ -927,10 +883,6 @@
             );
 
 
-        /*
-         * <fs(14)>Text</fs>
-         * <fs(1.2em)>Text</fs>
-         */
         processed =
             processed.replace(
                 /&lt;fs\(([^)]+)\)&gt;/gi,
@@ -980,9 +932,6 @@
             );
 
 
-        /*
-         * Allow only the formatting tags that LuperNotes supported.
-         */
         processed =
             processed.replace(
                 /&lt;(\/?[bui])&gt;/gi,
@@ -1031,7 +980,7 @@
         }
 
 
-        modeAction.textContent =
+        modeAction.value =
             isGlobalMode
                 ? "City"
                 : "Global";
@@ -1117,7 +1066,7 @@
             "block";
 
 
-        editAction.textContent =
+        editAction.value =
             "Done";
 
 
@@ -1153,7 +1102,7 @@
             "block";
 
 
-        editAction.textContent =
+        editAction.value =
             "Edit";
 
 
@@ -1174,14 +1123,10 @@
 
 
     // =========================================================================
-    // CITY / GLOBAL MODE
+    // GLOBAL / CITY MODE
     // =========================================================================
 
     function toggleNotesMode() {
-        /*
-         * Input already autosaves, but save again here
-         * so switching modes can never lose the current text.
-         */
         if (
             isEditing()
         ) {
@@ -1223,7 +1168,7 @@
             textarea.style.display =
                 "block";
 
-            editAction.textContent =
+            editAction.value =
                 "Done";
 
             applyCustomUITheme(
@@ -1234,7 +1179,7 @@
 
 
     // =========================================================================
-    // TOWN CHANGE SYNC
+    // TOWN SYNC
     // =========================================================================
 
     function checkAndSyncTownNotes() {
@@ -1295,14 +1240,12 @@
 
 
     // =========================================================================
-    // STYLES
+    // NOTES LAYOUT
     //
-    // LAYOUT ONLY.
+    // Geometry only.
     //
-    // There are deliberately NO default custom colors, fake backgrounds,
-    // custom borders or replacement fonts here.
-    //
-    // Illyriad remains responsible for the visual appearance.
+    // Header uses Illyriad's real sideTab + selected classes.
+    // Footer buttons use Illyriad's real short button class.
     // =========================================================================
 
     function injectNotesStyles() {
@@ -1351,27 +1294,49 @@
             }
 
 
-            #ikNotesTitle {
+            /*
+             * Native Illyriad tab appearance used as a static header.
+             *
+             * Geometry is overridden because this is not inside
+             * Illyriad's normal sideTabs container.
+             */
+
+            #ikNotesTitle.sideTab {
+                position:
+                    relative !important;
+
+                left:
+                    auto !important;
+
+                right:
+                    auto !important;
+
+                top:
+                    auto !important;
+
+                width:
+                    100% !important;
+
+                min-width:
+                    0 !important;
+
+                max-width:
+                    none !important;
+
                 flex:
                     0 0 auto;
+
+                box-sizing:
+                    border-box !important;
 
                 text-align:
                     center;
 
-                box-sizing:
-                    border-box;
+                cursor:
+                    default !important;
 
-                padding:
-                    2px;
-
-                overflow:
-                    hidden;
-
-                white-space:
-                    nowrap;
-
-                text-overflow:
-                    ellipsis;
+                margin:
+                    0 0 2px 0 !important;
             }
 
 
@@ -1415,9 +1380,17 @@
             }
 
 
+            /*
+             * Footer stays pinned to the bottom because the note
+             * body above it owns all remaining flex space.
+             */
+
             #ikNotesFooter {
                 flex:
                     0 0 auto;
+
+                width:
+                    100%;
 
                 display:
                     flex;
@@ -1429,19 +1402,32 @@
                     center;
 
                 gap:
-                    6px;
+                    4px;
 
                 box-sizing:
                     border-box;
 
                 padding:
-                    2px;
+                    2px 0 0 0;
             }
 
 
-            #ikNotesFooter .ik-notes-action {
-                cursor:
-                    pointer;
+            /*
+             * Illyriad owns .short's appearance.
+             *
+             * Only remove layout behavior that could move the
+             * buttons outside our footer.
+             */
+
+            #ikNotesFooter .ik-notes-button {
+                position:
+                    static !important;
+
+                float:
+                    none !important;
+
+                margin:
+                    0 !important;
             }
 
         `;
@@ -1454,33 +1440,40 @@
 
 
     // =========================================================================
-    // UI CONSTRUCTION
+    // NATIVE UI ELEMENTS
     // =========================================================================
 
-    function createActionLink(
+    function createNativeRedButton(
         text
     ) {
-        const action =
+        const button =
             document.createElement(
-                "a"
+                "input"
             );
 
 
-        action.href =
-            "#";
+        button.type =
+            "button";
 
 
-        action.className =
-            "ik-notes-action";
+        /*
+         * Native Illyriad red button skin.
+         */
+        button.className =
+            "short ik-notes-button";
 
 
-        action.textContent =
+        button.value =
             text;
 
 
-        return action;
+        return button;
     }
 
+
+    // =========================================================================
+    // UI CONSTRUCTION
+    // =========================================================================
 
     function mountNotes(
         panel
@@ -1503,13 +1496,23 @@
 
 
         // ---------------------------------------------------------------------
-        // TITLE
+        // STATIC NATIVE HEADER
         // ---------------------------------------------------------------------
 
         titleLabel =
             document.createElement(
                 "div"
             );
+
+
+        /*
+         * Real Illyriad classes.
+         *
+         * selected gives this the same visual state as the currently
+         * selected Friends / Tools / Notes tab.
+         */
+        titleLabel.className =
+            "sideTab selected";
 
 
         titleLabel.id =
@@ -1541,7 +1544,7 @@
 
 
         // ---------------------------------------------------------------------
-        // TEXTAREA
+        // EDITOR
         // ---------------------------------------------------------------------
 
         textarea =
@@ -1564,7 +1567,7 @@
 
 
         // ---------------------------------------------------------------------
-        // FOOTER
+        // BOTTOM BUTTONS
         // ---------------------------------------------------------------------
 
         const footer =
@@ -1578,30 +1581,19 @@
 
 
         modeAction =
-            createActionLink(
+            createNativeRedButton(
                 "Global"
             );
 
 
         editAction =
-            createActionLink(
+            createNativeRedButton(
                 "Edit"
             );
 
 
-        const separator =
-            document.createElement(
-                "span"
-            );
-
-
-        separator.textContent =
-            "|";
-
-
         footer.append(
             modeAction,
-            separator,
             editAction
         );
 
@@ -1623,9 +1615,7 @@
         modeAction.addEventListener(
             "click",
 
-            event => {
-                event.preventDefault();
-
+            () => {
                 toggleNotesMode();
             }
         );
@@ -1634,9 +1624,7 @@
         editAction.addEventListener(
             "click",
 
-            event => {
-                event.preventDefault();
-
+            () => {
                 toggleEditMode();
             }
         );
@@ -1694,7 +1682,7 @@
 
 
     // =========================================================================
-    // REGISTER WITH IKNIGHTS TOOLS SUITE
+    // REGISTER
     // =========================================================================
 
     IKTools.registerSidebarTab({
