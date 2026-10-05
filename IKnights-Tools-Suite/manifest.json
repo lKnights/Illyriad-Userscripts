@@ -3,7 +3,7 @@
     "manifestVersion": 1,
 
     "core": {
-        "version": "1.0.0",
+        "version": "1.1.0",
         "file": "core/IKTools-Core.js"
     },
 
@@ -13,6 +13,13 @@
             "name": "Quartermaster",
             "version": "1.0.0",
             "file": "tools/Quartermaster.js",
+            "enabled": true
+        },
+        {
+            "id": "notes",
+            "name": "Notes",
+            "version": "1.0.0",
+            "file": "features/Notes.js",
             "enabled": true
         }
     ]
