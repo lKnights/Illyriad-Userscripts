@@ -1,0 +1,19 @@
+{
+    "suite": "IKnights Tools Suite",
+    "manifestVersion": 1,
+
+    "core": {
+        "version": "1.0.0",
+        "file": "core/IKTools-Core.js"
+    },
+
+    "modules": [
+        {
+            "id": "quartermaster",
+            "name": "Quartermaster",
+            "version": "1.0.0",
+            "file": "tools/Quartermaster.js",
+            "enabled": true
+        }
+    ]
+}
