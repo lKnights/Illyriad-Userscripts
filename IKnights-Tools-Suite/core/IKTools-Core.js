@@ -52,11 +52,7 @@
 
     function wait(ms) {
         return new Promise(
-            resolve =>
-                setTimeout(
-                    resolve,
-                    ms
-                )
+            resolve => setTimeout(resolve, ms)
         );
     }
 
@@ -64,17 +60,13 @@
     function loadJSON(key, fallback) {
         try {
             const raw =
-                localStorage.getItem(
-                    key
-                );
+                localStorage.getItem(key);
 
             if (!raw) {
                 return fallback;
             }
 
-            return JSON.parse(
-                raw
-            );
+            return JSON.parse(raw);
 
         } catch (error) {
             console.warn(
@@ -92,9 +84,7 @@
         try {
             localStorage.setItem(
                 key,
-                JSON.stringify(
-                    value
-                )
+                JSON.stringify(value)
             );
 
         } catch (error) {
@@ -108,15 +98,10 @@
 
 
     function parseHumanNumber(value) {
-        if (
-            typeof value ===
-            "number"
-        ) {
+        if (typeof value === "number") {
             return Math.max(
                 0,
-                Math.floor(
-                    value
-                )
+                Math.floor(value)
             );
         }
 
@@ -124,14 +109,8 @@
             String(value || "")
                 .trim()
                 .toLowerCase()
-                .replace(
-                    /,/g,
-                    ""
-                )
-                .replace(
-                    /\s+/g,
-                    ""
-                );
+                .replace(/,/g, "")
+                .replace(/\s+/g, "");
 
         if (!text) {
             return 0;
@@ -139,80 +118,34 @@
 
         let multiplier = 1;
 
-        if (
-            text.endsWith(
-                "bn"
-            )
-        ) {
+        if (text.endsWith("bn")) {
             multiplier = 1000000000;
+            text = text.slice(0, -2);
 
-            text =
-                text.slice(
-                    0,
-                    -2
-                );
-
-        } else if (
-            text.endsWith(
-                "b"
-            )
-        ) {
+        } else if (text.endsWith("b")) {
             multiplier = 1000000000;
+            text = text.slice(0, -1);
 
-            text =
-                text.slice(
-                    0,
-                    -1
-                );
-
-        } else if (
-            text.endsWith(
-                "m"
-            )
-        ) {
+        } else if (text.endsWith("m")) {
             multiplier = 1000000;
+            text = text.slice(0, -1);
 
-            text =
-                text.slice(
-                    0,
-                    -1
-                );
-
-        } else if (
-            text.endsWith(
-                "k"
-            )
-        ) {
+        } else if (text.endsWith("k")) {
             multiplier = 1000;
-
-            text =
-                text.slice(
-                    0,
-                    -1
-                );
+            text = text.slice(0, -1);
         }
-
 
         const number =
-            Number(
-                text
-            );
+            Number(text);
 
-
-        if (
-            !Number.isFinite(
-                number
-            )
-        ) {
+        if (!Number.isFinite(number)) {
             return 0;
         }
-
 
         return Math.max(
             0,
             Math.floor(
-                number *
-                multiplier
+                number * multiplier
             )
         );
     }
@@ -222,8 +155,7 @@
         return Math.max(
             0,
             Math.floor(
-                Number(value) ||
-                0
+                Number(value) || 0
             )
         ).toLocaleString();
     }
@@ -249,8 +181,7 @@
                 !tool ||
                 !tool.id ||
                 !tool.name ||
-                typeof tool.open !==
-                    "function"
+                typeof tool.open !== "function"
             ) {
                 console.warn(
                     "IKTools: Invalid tool registration.",
@@ -260,19 +191,12 @@
                 return;
             }
 
-
             IKTools.tools[
                 tool.id
             ] = tool;
 
-
-            if (
-                coreInitialized
-            ) {
-                initializeTool(
-                    tool
-                );
-
+            if (coreInitialized) {
+                initializeTool(tool);
                 renderToolsList();
             }
         };
@@ -282,10 +206,7 @@
         function (id) {
 
             const tool =
-                IKTools.tools[
-                    id
-                ];
-
+                IKTools.tools[id];
 
             if (!tool) {
                 console.warn(
@@ -296,11 +217,7 @@
                 return;
             }
 
-
-            initializeTool(
-                tool
-            );
-
+            initializeTool(tool);
 
             tool.open();
         };
@@ -309,17 +226,13 @@
     function initializeTool(tool) {
         if (
             !tool ||
-            initializedTools.has(
-                tool.id
-            )
+            initializedTools.has(tool.id)
         ) {
             return true;
         }
 
-
         if (
-            typeof tool.init !==
-            "function"
+            typeof tool.init !== "function"
         ) {
             initializedTools.add(
                 tool.id
@@ -328,18 +241,13 @@
             return true;
         }
 
-
         try {
             const result =
                 tool.init();
 
-
-            if (
-                result === false
-            ) {
+            if (result === false) {
                 return false;
             }
-
 
             initializedTools.add(
                 tool.id
@@ -362,17 +270,13 @@
         Object.values(
             IKTools.tools
         ).forEach(
-            tool => {
-                initializeTool(
-                    tool
-                );
-            }
+            tool => initializeTool(tool)
         );
     }
 
 
     // =========================================================================
-    // SIDEBAR REGISTRY
+    // SIDEBAR TAB REGISTRY
     // =========================================================================
 
     IKTools.registerSidebarTab =
@@ -391,11 +295,7 @@
                 return;
             }
 
-
-            if (
-                tab.id ===
-                "friends"
-            ) {
+            if (tab.id === "friends") {
                 console.warn(
                     'IKTools: "friends" is reserved for Illyriad.'
                 );
@@ -403,22 +303,16 @@
                 return;
             }
 
-
             sidebarRegistrationCounter++;
-
 
             tab._ikRegistrationVersion =
                 sidebarRegistrationCounter;
-
 
             IKTools.sidebarTabs[
                 tab.id
             ] = tab;
 
-
-            if (
-                coreInitialized
-            ) {
+            if (coreInitialized) {
                 ensureSidebar();
             }
         };
@@ -426,17 +320,13 @@
 
     IKTools.showSidebarTab =
         function (id) {
-            showSidebarTab(
-                id
-            );
+            showSidebarTab(id);
         };
 
 
     IKTools.getSidebarPanel =
         function (id) {
-            return getSidebarPanel(
-                id
-            );
+            return getSidebarPanel(id);
         };
 
 
@@ -450,41 +340,309 @@
     function getRegisteredSidebarTabs() {
         return Object.values(
             IKTools.sidebarTabs
-        )
-            .sort(
-                (a, b) => {
+        ).sort(
+            (a, b) => {
 
-                    const orderA =
-                        Number(
-                            a.order ??
-                            999
-                        );
-
-                    const orderB =
-                        Number(
-                            b.order ??
-                            999
-                        );
-
-
-                    if (
-                        orderA !==
-                        orderB
-                    ) {
-                        return (
-                            orderA -
-                            orderB
-                        );
-                    }
-
-
-                    return (
-                        a.name.localeCompare(
-                            b.name
-                        )
+                const orderA =
+                    Number(
+                        a.order ?? 999
                     );
+
+                const orderB =
+                    Number(
+                        b.order ?? 999
+                    );
+
+                if (orderA !== orderB) {
+                    return orderA - orderB;
                 }
+
+                return a.name.localeCompare(
+                    b.name
+                );
+            }
+        );
+    }
+
+
+    // =========================================================================
+    // SIDEBAR BUTTONS
+    // =========================================================================
+
+    function getSidebarButton(id) {
+        if (id === "friends") {
+            return document.querySelector(
+                "#FriendsBtn"
             );
+        }
+
+        if (id === "tools") {
+            return document.querySelector(
+                "#CommunitiesBtn"
+            );
+        }
+
+        return document.querySelector(
+            `[data-ik-sidebar-button="${id}"]`
+        );
+    }
+
+
+    function createSidebarButton(
+        tab,
+        sideTabs
+    ) {
+        let button =
+            getSidebarButton(tab.id);
+
+        if (button) {
+            return button;
+        }
+
+        button =
+            document.createElement("div");
+
+        /*
+         * IMPORTANT:
+         * sideTab is Illyriad's own native class.
+         *
+         * We are not recreating its appearance.
+         */
+        button.className =
+            "sideTab ik-suite-managed-tab";
+
+        button.dataset
+            .ikSidebarButton =
+            tab.id;
+
+        button.textContent =
+            tab.name;
+
+        button.title =
+            tab.name;
+
+        sideTabs.appendChild(
+            button
+        );
+
+        return button;
+    }
+
+
+    function bindSidebarButton(
+        id,
+        button
+    ) {
+        if (!button) {
+            return;
+        }
+
+        const bindingKey =
+            `ikSidebarBound${id}`;
+
+        if (
+            button.dataset[
+                bindingKey
+            ] === "1"
+        ) {
+            return;
+        }
+
+        button.dataset[
+            bindingKey
+        ] = "1";
+
+        button.addEventListener(
+            "click",
+
+            event => {
+                event.preventDefault();
+
+                /*
+                 * Especially important for CommunitiesBtn.
+                 * Illyriad still has its dormant Communities
+                 * behavior attached to that native element.
+                 */
+                event.stopImmediatePropagation();
+
+                showSidebarTab(id);
+            },
+
+            true
+        );
+    }
+
+
+    // =========================================================================
+    // NATIVE SIDEBAR TAB LAYOUT
+    // =========================================================================
+
+    function layoutSidebarButtons() {
+        const dock =
+            document.querySelector(
+                "#DockedFriends"
+            );
+
+        const sideTabs =
+            dock?.querySelector(
+                ".sideTabs"
+            );
+
+        if (
+            !dock ||
+            !sideTabs
+        ) {
+            return;
+        }
+
+
+        /*
+         * Normalize the native tab container's geometry.
+         *
+         * We are NOT changing its visual styling.
+         */
+        sideTabs.classList.add(
+            "ik-suite-native-tabs"
+        );
+
+
+        const entries = [
+            {
+                id:
+                    "friends",
+
+                name:
+                    "Friends",
+
+                button:
+                    getSidebarButton(
+                        "friends"
+                    )
+            },
+
+            ...getRegisteredSidebarTabs()
+                .map(
+                    tab => ({
+                        id:
+                            tab.id,
+
+                        name:
+                            tab.name,
+
+                        button:
+                            getSidebarButton(
+                                tab.id
+                            )
+                    })
+                )
+        ].filter(
+            entry => !!entry.button
+        );
+
+
+        if (!entries.length) {
+            return;
+        }
+
+
+        /*
+         * Illyriad's original Friends tab begins at 6px.
+         * We preserve that native inset on both sides.
+         *
+         * The old problem was that the parent tab container itself
+         * was also positioned for Illyriad's two-tab layout.
+         * The core now normalizes the parent first.
+         */
+        const dockWidth =
+            dock.clientWidth || 245;
+
+        const leftInset =
+            6;
+
+        const rightInset =
+            6;
+
+        const usableWidth =
+            Math.max(
+                1,
+                dockWidth -
+                leftInset -
+                rightInset
+            );
+
+        const tabWidth =
+            usableWidth /
+            entries.length;
+
+
+        entries.forEach(
+            (entry, index) => {
+
+                const button =
+                    entry.button;
+
+                const left =
+                    leftInset +
+                    (
+                        index *
+                        tabWidth
+                    );
+
+
+                button.classList.add(
+                    "ik-suite-managed-tab"
+                );
+
+
+                /*
+                 * Geometry only.
+                 *
+                 * Colors, backgrounds, borders, fonts, hover styling,
+                 * selected styling, etc. still come from Illyriad.
+                 */
+                button.style.setProperty(
+                    "position",
+                    "absolute",
+                    "important"
+                );
+
+                button.style.setProperty(
+                    "left",
+                    `${left}px`,
+                    "important"
+                );
+
+                button.style.setProperty(
+                    "width",
+                    `${tabWidth}px`,
+                    "important"
+                );
+
+                button.style.setProperty(
+                    "min-width",
+                    "0",
+                    "important"
+                );
+
+                button.style.setProperty(
+                    "max-width",
+                    "none",
+                    "important"
+                );
+
+                button.style.setProperty(
+                    "box-sizing",
+                    "border-box",
+                    "important"
+                );
+
+                button.style.setProperty(
+                    "cursor",
+                    "pointer",
+                    "important"
+                );
+            }
+        );
     }
 
 
@@ -493,25 +651,17 @@
     // =========================================================================
 
     function getSidebarPanel(id) {
-        if (
-            id ===
-            "friends"
-        ) {
+        if (id === "friends") {
             return document.querySelector(
                 "#FriendsTab"
             );
         }
 
-
-        if (
-            id ===
-            "tools"
-        ) {
+        if (id === "tools") {
             return document.querySelector(
                 "#CommunitiesTab"
             );
         }
-
 
         return document.querySelector(
             `[data-ik-sidebar-panel="${id}"]`
@@ -519,62 +669,51 @@
     }
 
 
-    function createSidebarPanel(tab, dock) {
+    function createSidebarPanel(
+        tab,
+        dock
+    ) {
         let panel =
-            getSidebarPanel(
-                tab.id
-            );
+            getSidebarPanel(tab.id);
 
-
-        if (
-            panel
-        ) {
+        if (panel) {
             return panel;
         }
 
-
         panel =
-            document.createElement(
-                "div"
-            );
-
+            document.createElement("div");
 
         panel.className =
             "ik-suite-sidebar-panel";
-
 
         panel.dataset
             .ikSidebarPanel =
             tab.id;
 
-
         panel.style.display =
             "none";
-
 
         dock.appendChild(
             panel
         );
 
-
         return panel;
     }
 
 
-    function mountSidebarPanel(tab, panel) {
-        if (
-            !panel
-        ) {
+    function mountSidebarPanel(
+        tab,
+        panel
+    ) {
+        if (!panel) {
             return;
         }
-
 
         const version =
             String(
                 tab._ikRegistrationVersion ||
                 0
             );
-
 
         if (
             panel.dataset
@@ -584,24 +723,18 @@
             return;
         }
 
-
         panel.dataset
             .ikRegistrationVersion =
             version;
 
-
         panel.innerHTML =
             "";
 
-
         if (
-            typeof tab.mount ===
-            "function"
+            typeof tab.mount === "function"
         ) {
             try {
-                tab.mount(
-                    panel
-                );
+                tab.mount(panel);
 
             } catch (error) {
                 console.error(
@@ -614,202 +747,32 @@
 
 
     // =========================================================================
-    // CUSTOM THREE-TAB HEADER
-    // =========================================================================
-
-    function createSidebarHeader(dock) {
-        let header =
-            document.querySelector(
-                "#ikSidebarTabs"
-            );
-
-
-        if (
-            header
-        ) {
-            return header;
-        }
-
-
-        header =
-            document.createElement(
-                "div"
-            );
-
-
-        header.id =
-            "ikSidebarTabs";
-
-
-        /*
-         * Put our header inside the same widget,
-         * but do not use Illyriad's sideTab class.
-         */
-        dock.appendChild(
-            header
-        );
-
-
-        return header;
-    }
-
-
-    function createSidebarHeaderButton(
-        id,
-        name
-    ) {
-        const button =
-            document.createElement(
-                "div"
-            );
-
-
-        button.className =
-            "ik-sidebar-tab";
-
-
-        button.dataset
-            .ikSidebarTab =
-            id;
-
-
-        button.textContent =
-            name;
-
-
-        button.title =
-            name;
-
-
-        button.addEventListener(
-            "click",
-
-            event => {
-                event.preventDefault();
-
-                event.stopPropagation();
-
-                showSidebarTab(
-                    id
-                );
-            }
-        );
-
-
-        return button;
-    }
-
-
-    function renderSidebarHeader() {
-        const dock =
-            document.querySelector(
-                "#DockedFriends"
-            );
-
-
-        if (!dock) {
-            return;
-        }
-
-
-        const header =
-            createSidebarHeader(
-                dock
-            );
-
-
-        const desiredTabs = [
-            {
-                id:
-                    "friends",
-
-                name:
-                    "Friends",
-
-                order:
-                    0
-            },
-
-            ...getRegisteredSidebarTabs()
-        ];
-
-
-        const currentSignature =
-            desiredTabs
-                .map(
-                    tab =>
-                        `${tab.id}:${tab.name}`
-                )
-                .join(
-                    "|"
-                );
-
-
-        if (
-            header.dataset
-                .ikSignature !==
-            currentSignature
-        ) {
-            header.dataset
-                .ikSignature =
-                currentSignature;
-
-
-            header.innerHTML =
-                "";
-
-
-            desiredTabs.forEach(
-                tab => {
-
-                    header.appendChild(
-                        createSidebarHeaderButton(
-                            tab.id,
-                            tab.name
-                        )
-                    );
-
-                }
-            );
-        }
-
-
-        header
-            .querySelectorAll(
-                ".ik-sidebar-tab"
-            )
-            .forEach(
-                button => {
-
-                    button.classList.toggle(
-                        "selected",
-                        button.dataset
-                            .ikSidebarTab ===
-                            activeSidebarTab
-                    );
-
-                }
-            );
-    }
-
-
-    // =========================================================================
     // SIDEBAR STATE
     // =========================================================================
 
     function applySidebarState() {
+        const friendsButton =
+            getSidebarButton(
+                "friends"
+            );
+
         const friendsPanel =
             getSidebarPanel(
                 "friends"
             );
 
 
-        if (
-            friendsPanel
-        ) {
+        if (friendsButton) {
+            friendsButton.classList.toggle(
+                "selected",
+                activeSidebarTab === "friends"
+            );
+        }
+
+
+        if (friendsPanel) {
             friendsPanel.style.display =
-                activeSidebarTab ===
-                "friends"
+                activeSidebarTab === "friends"
                     ? "block"
                     : "none";
         }
@@ -819,78 +782,68 @@
             .forEach(
                 tab => {
 
+                    const button =
+                        getSidebarButton(
+                            tab.id
+                        );
+
                     const panel =
                         getSidebarPanel(
                             tab.id
                         );
 
 
-                    if (!panel) {
-                        return;
+                    if (button) {
+                        button.classList.toggle(
+                            "selected",
+                            activeSidebarTab ===
+                                tab.id
+                        );
                     }
 
 
-                    panel.style.display =
-                        activeSidebarTab ===
-                        tab.id
-                            ? (
-                                tab.display ||
-                                "block"
-                            )
-                            : "none";
-
+                    if (panel) {
+                        panel.style.display =
+                            activeSidebarTab ===
+                            tab.id
+                                ? (
+                                    tab.display ||
+                                    "block"
+                                )
+                                : "none";
+                    }
                 }
             );
-
-
-        renderSidebarHeader();
     }
 
 
     function showSidebarTab(id) {
         if (
-            id !==
-                "friends" &&
-            !IKTools.sidebarTabs[
-                id
-            ]
+            id !== "friends" &&
+            !IKTools.sidebarTabs[id]
         ) {
-            id =
-                "friends";
+            id = "friends";
         }
-
 
         activeSidebarTab =
             id;
 
-
         applySidebarState();
 
-
-        if (
-            id ===
-            "tools"
-        ) {
+        if (id === "tools") {
             renderToolsList();
         }
 
-
         const tab =
-            IKTools.sidebarTabs[
-                id
-            ];
-
+            IKTools.sidebarTabs[id];
 
         if (
             tab &&
-            typeof tab.onShow ===
-                "function"
+            typeof tab.onShow === "function"
         ) {
             try {
                 tab.onShow(
-                    getSidebarPanel(
-                        id
-                    )
+                    getSidebarPanel(id)
                 );
 
             } catch (error) {
@@ -919,26 +872,21 @@
                 quote,
                 url
             ) {
-
                 if (
                     !url ||
                     /^(?:data:|https?:|\/\/|#)/i
-                        .test(
-                            url
-                        )
+                        .test(url)
                 ) {
                     return match;
                 }
-
 
                 try {
                     const absolute =
                         new URL(
                             url,
                             baseUrl ||
-                            location.href
+                                location.href
                         ).href;
-
 
                     return (
                         `url("${absolute}")`
@@ -961,12 +909,9 @@
             return;
         }
 
-
         for (
             const rule of
-            Array.from(
-                rules
-            )
+            Array.from(rules)
         ) {
             try {
                 if (
@@ -998,13 +943,9 @@
                                     )
                             );
 
-
-                    if (
-                        !selectors.length
-                    ) {
+                    if (!selectors.length) {
                         continue;
                     }
-
 
                     const declaration =
                         absolutizeCssUrls(
@@ -1012,11 +953,9 @@
                             baseUrl
                         );
 
-
                     output.push(
                         `${selectors.join(", ")} { ${declaration} }`
                     );
-
 
                     continue;
                 }
@@ -1030,17 +969,13 @@
                     const nested =
                         [];
 
-
                     collectSendTradeRules(
                         rule.cssRules,
                         baseUrl,
                         nested
                     );
 
-
-                    if (
-                        nested.length
-                    ) {
+                    if (nested.length) {
                         output.push(
                             `@media ${rule.conditionText} {
                                 ${nested.join("\n")}
@@ -1049,7 +984,11 @@
                     }
                 }
 
-            } catch (error) {}
+            } catch (error) {
+                /*
+                 * Ignore inaccessible stylesheet rules.
+                 */
+            }
         }
     }
 
@@ -1061,10 +1000,8 @@
             )
             ?.remove();
 
-
         const copiedRules =
             [];
-
 
         for (
             const sheet of
@@ -1080,28 +1017,25 @@
                     copiedRules
                 );
 
-            } catch (error) {}
+            } catch (error) {
+                /*
+                 * Cross-origin stylesheet.
+                 */
+            }
         }
 
 
-        if (
-            copiedRules.length
-        ) {
+        if (copiedRules.length) {
             const style =
                 document.createElement(
                     "style"
                 );
 
-
             style.id =
                 "ikNativeButtonCss";
 
-
             style.textContent =
-                copiedRules.join(
-                    "\n"
-                );
-
+                copiedRules.join("\n");
 
             document.head.appendChild(
                 style
@@ -1119,7 +1053,6 @@
                 'input.sendTrade[value="Send Trade Mission"]'
             );
 
-
         let temporary =
             false;
 
@@ -1130,43 +1063,33 @@
                     "input"
                 );
 
-
             sample.type =
                 "submit";
-
 
             sample.className =
                 "sendTrade";
 
-
             sample.value =
                 "Send Trade Mission";
-
 
             sample.style.position =
                 "fixed";
 
-
             sample.style.left =
                 "-10000px";
-
 
             sample.style.top =
                 "-10000px";
 
-
             sample.style.visibility =
                 "hidden";
-
 
             sample.style.pointerEvents =
                 "none";
 
-
             document.body.appendChild(
                 sample
             );
-
 
             temporary =
                 true;
@@ -1176,11 +1099,8 @@
         const rect =
             sample.getBoundingClientRect();
 
-
         const computed =
-            getComputedStyle(
-                sample
-            );
+            getComputedStyle(sample);
 
 
         const measuredWidth =
@@ -1188,7 +1108,6 @@
             parseFloat(
                 computed.width
             );
-
 
         const measuredHeight =
             rect.height ||
@@ -1308,9 +1227,7 @@
             );
 
 
-        if (
-            temporary
-        ) {
+        if (temporary) {
             sample.remove();
         }
 
@@ -1329,19 +1246,16 @@
             return;
         }
 
-
         document
             .querySelectorAll(
                 ".ik-game-button"
             )
             .forEach(
                 button => {
-
                     Object.assign(
                         button.style,
                         nativeFallbackSkin
                     );
-
                 }
             );
     }
@@ -1353,11 +1267,8 @@
 
     IKTools.ui.refreshNativeButtons =
         function () {
-
             installNativeButtonCss();
-
             applyFallbackSkinIfNeeded();
-
         };
 
 
@@ -1374,25 +1285,25 @@
             return;
         }
 
-
         const style =
             document.createElement(
                 "style"
             );
 
-
         style.id =
             "ikToolsCoreStyles";
 
-
         style.textContent = `
 
-            /* =============================================================
-               SAFE ILLYRIAD-STYLE BUTTONS
-               ============================================================= */
+            /*
+             * =============================================================
+             * SAFE ILLYRIAD-STYLE BUTTONS
+             * =============================================================
+             */
 
             .ik-game-button {
-                box-sizing: border-box !important;
+                box-sizing:
+                    border-box !important;
 
                 width:
                     var(
@@ -1445,168 +1356,66 @@
             }
 
 
-            /* =============================================================
-               HIDE ILLYRIAD'S TWO-TAB HEADER
-               ============================================================= */
+            /*
+             * =============================================================
+             * NATIVE ILLYRIAD SIDEBAR TABS
+             * =============================================================
+             *
+             * NO visual styling here.
+             *
+             * All visual appearance comes from Illyriad's own .sideTab
+             * and .sideTab.selected rules.
+             *
+             * We only override geometry so Illyriad's two-tab layout
+             * can hold three or more tabs.
+             * =============================================================
+             */
 
-            #DockedFriends > .sideTabs {
-                display:
-                    none !important;
-            }
-
-
-            /* =============================================================
-               OUR THREE-TAB HEADER
-               ============================================================= */
-
-            #ikSidebarTabs {
-                position:
-                    absolute;
-
+            #DockedFriends > .sideTabs.ik-suite-native-tabs {
                 left:
-                    6px;
+                    0 !important;
 
                 right:
-                    6px;
+                    auto !important;
 
-                top:
-                    0;
-
-                height:
-                    22px;
-
-                display:
-                    flex;
-
-                align-items:
-                    stretch;
+                width:
+                    100% !important;
 
                 box-sizing:
-                    border-box;
-
-                z-index:
-                    20;
+                    border-box !important;
             }
 
 
-            #ikSidebarTabs .ik-sidebar-tab {
-                flex:
-                    1 1 0;
+            #DockedFriends
+            > .sideTabs.ik-suite-native-tabs
+            > .ik-suite-managed-tab {
 
                 min-width:
-                    0;
+                    0 !important;
 
-                height:
-                    21px;
-
-                line-height:
-                    21px;
+                max-width:
+                    none !important;
 
                 box-sizing:
-                    border-box;
-
-                text-align:
-                    center;
-
-                cursor:
-                    pointer;
-
-                overflow:
-                    hidden;
-
-                white-space:
-                    nowrap;
-
-                font-family:
-                    Georgia,
-                    "Times New Roman",
-                    serif;
-
-                font-size:
-                    13px;
-
-                color:
-                    #786452;
-
-                background:
-                    rgba(
-                        232,
-                        211,
-                        157,
-                        0.35
-                    );
-
-                border:
-                    1px solid
-                    rgba(
-                        137,
-                        80,
-                        28,
-                        0.45
-                    );
-
-                border-bottom:
-                    1px solid
-                    rgba(
-                        137,
-                        80,
-                        28,
-                        0.65
-                    );
-
-                opacity:
-                    0.85;
+                    border-box !important;
             }
 
 
-            #ikSidebarTabs .ik-sidebar-tab + .ik-sidebar-tab {
-                border-left:
-                    0;
-            }
+            /*
+             * =============================================================
+             * SIDEBAR PANELS
+             * =============================================================
+             */
 
-
-            #ikSidebarTabs .ik-sidebar-tab:hover {
-                color:
-                    #8b0000;
-
-                opacity:
-                    1;
-            }
-
-
-            #ikSidebarTabs .ik-sidebar-tab.selected {
-                color:
-                    #8b0000;
-
-                font-weight:
-                    bold;
-
-                background:
-                    #ead59c;
-
-                opacity:
-                    1;
-
-                border-bottom-color:
-                    #ead59c;
-            }
-
-
-            /* =============================================================
-               SIDEBAR PANELS
-               ============================================================= */
-
-            #DockedFriends #FriendsTab,
-            #DockedFriends #CommunitiesTab,
             #DockedFriends .ik-suite-sidebar-panel {
                 position:
                     absolute !important;
 
-                left:
-                    0 !important;
-
                 top:
                     22px !important;
+
+                left:
+                    0 !important;
 
                 width:
                     245px !important;
@@ -1616,18 +1425,17 @@
 
                 box-sizing:
                     border-box !important;
-            }
 
-
-            #DockedFriends .ik-suite-sidebar-panel {
                 overflow:
                     hidden !important;
             }
 
 
-            /* =============================================================
-               TOOLS PANEL
-               ============================================================= */
+            /*
+             * =============================================================
+             * TOOLS PANEL
+             * =============================================================
+             */
 
             #ikToolsPanel {
                 width:
@@ -1683,9 +1491,11 @@
             }
 
 
-            /* =============================================================
-               PLACEHOLDER
-               ============================================================= */
+            /*
+             * =============================================================
+             * TEMPORARY NOTES PLACEHOLDER
+             * =============================================================
+             */
 
             .ik-suite-placeholder {
                 width:
@@ -1711,16 +1521,9 @@
 
                 padding:
                     10px;
-
-                font-style:
-                    italic;
-
-                opacity:
-                    0.75;
             }
 
         `;
-
 
         document.head.appendChild(
             style
@@ -1738,77 +1541,63 @@
                 "#ikToolsList"
             );
 
-
         if (!list) {
             return;
         }
 
-
         list.innerHTML =
             "";
-
 
         const tools =
             Object.values(
                 IKTools.tools
-            )
-                .sort(
-                    (a, b) => {
+            ).sort(
+                (a, b) => {
 
-                        const orderA =
-                            Number(
-                                a.order ??
-                                999
-                            );
+                    const orderA =
+                        Number(
+                            a.order ?? 999
+                        );
 
-                        const orderB =
-                            Number(
-                                b.order ??
-                                999
-                            );
+                    const orderB =
+                        Number(
+                            b.order ?? 999
+                        );
 
-
-                        if (
-                            orderA !==
-                            orderB
-                        ) {
-                            return (
-                                orderA -
-                                orderB
-                            );
-                        }
-
-
+                    if (
+                        orderA !==
+                        orderB
+                    ) {
                         return (
-                            a.name.localeCompare(
-                                b.name
-                            )
+                            orderA -
+                            orderB
                         );
                     }
-                );
+
+                    return (
+                        a.name.localeCompare(
+                            b.name
+                        )
+                    );
+                }
+            );
 
 
-        if (
-            !tools.length
-        ) {
+        if (!tools.length) {
             const empty =
                 document.createElement(
                     "div"
                 );
 
-
             empty.className =
                 "iktools-empty";
-
 
             empty.textContent =
                 "No tools loaded.";
 
-
             list.appendChild(
                 empty
             );
-
 
             return;
         }
@@ -1822,23 +1611,18 @@
                         "input"
                     );
 
-
                 button.type =
                     "button";
-
 
                 button.className =
                     "ik-game-button iktools-launch-button";
 
-
                 button.value =
                     tool.name;
-
 
                 button.title =
                     tool.description ||
                     tool.name;
-
 
                 button.addEventListener(
                     "click",
@@ -1850,11 +1634,9 @@
                     }
                 );
 
-
                 list.appendChild(
                     button
                 );
-
             }
         );
 
@@ -1873,12 +1655,25 @@
                 "#DockedFriends"
             );
 
+        const sideTabs =
+            dock?.querySelector(
+                ".sideTabs"
+            );
+
+        const friendsButton =
+            document.querySelector(
+                "#FriendsBtn"
+            );
 
         const friendsPanel =
             document.querySelector(
                 "#FriendsTab"
             );
 
+        const toolsButton =
+            document.querySelector(
+                "#CommunitiesBtn"
+            );
 
         const toolsPanel =
             document.querySelector(
@@ -1888,7 +1683,10 @@
 
         if (
             !dock ||
+            !sideTabs ||
+            !friendsButton ||
             !friendsPanel ||
+            !toolsButton ||
             !toolsPanel
         ) {
             return false;
@@ -1896,20 +1694,79 @@
 
 
         /*
-         * Tools continues to use Illyriad's dormant Communities panel,
-         * but the original Communities button is no longer used.
+         * Remove the temporary custom header from 0.12.4
+         * if it is still present in the live page.
+         */
+        document
+            .querySelector(
+                "#ikSidebarTabs"
+            )
+            ?.remove();
+
+
+        /*
+         * FRIENDS
+         *
+         * Keep Illyriad's original native element.
+         */
+        friendsButton.textContent =
+            "Friends";
+
+        friendsButton.classList.add(
+            "ik-suite-managed-tab"
+        );
+
+        bindSidebarButton(
+            "friends",
+            friendsButton
+        );
+
+
+        /*
+         * TOOLS
+         *
+         * Reuse Illyriad's dormant Communities tab.
+         * It keeps the real .sideTab class and native skin.
          */
         const toolsTab =
-            IKTools.sidebarTabs
-                .tools;
+            IKTools.sidebarTabs.tools;
 
+        if (toolsTab) {
+            toolsButton.textContent =
+                toolsTab.name;
 
-        if (
-            toolsTab
-        ) {
+            toolsButton.title =
+                toolsTab.name;
+
+            toolsButton.classList.add(
+                "ik-suite-managed-tab"
+            );
+
+            bindSidebarButton(
+                "tools",
+                toolsButton
+            );
+
+            toolsPanel.style.position =
+                "absolute";
+
+            toolsPanel.style.top =
+                "22px";
+
+            toolsPanel.style.left =
+                "0";
+
+            toolsPanel.style.width =
+                "245px";
+
+            toolsPanel.style.height =
+                "128px";
+
+            toolsPanel.style.boxSizing =
+                "border-box";
+
             toolsPanel.style.overflow =
                 "hidden";
-
 
             mountSidebarPanel(
                 toolsTab,
@@ -1919,18 +1776,36 @@
 
 
         /*
-         * Additional suite sidebar panels.
+         * ALL ADDITIONAL TABS
+         *
+         * These receive Illyriad's real sideTab class too.
          */
         getRegisteredSidebarTabs()
             .forEach(
                 tab => {
 
                     if (
-                        tab.id ===
-                        "tools"
+                        tab.id === "tools"
                     ) {
                         return;
                     }
+
+                    const button =
+                        createSidebarButton(
+                            tab,
+                            sideTabs
+                        );
+
+                    button.textContent =
+                        tab.name;
+
+                    button.title =
+                        tab.name;
+
+                    bindSidebarButton(
+                        tab.id,
+                        button
+                    );
 
 
                     const panel =
@@ -1939,18 +1814,40 @@
                             dock
                         );
 
-
                     mountSidebarPanel(
                         tab,
                         panel
                     );
-
                 }
             );
 
 
         /*
-         * Clean up panels for features that are no longer registered.
+         * Remove custom suite buttons that no longer
+         * correspond to registered tabs.
+         */
+        sideTabs
+            .querySelectorAll(
+                "[data-ik-sidebar-button]"
+            )
+            .forEach(
+                button => {
+
+                    const id =
+                        button.dataset
+                            .ikSidebarButton;
+
+                    if (
+                        !IKTools.sidebarTabs[id]
+                    ) {
+                        button.remove();
+                    }
+                }
+            );
+
+
+        /*
+         * Remove abandoned custom panels.
          */
         dock
             .querySelectorAll(
@@ -1963,17 +1860,16 @@
                         panel.dataset
                             .ikSidebarPanel;
 
-
                     if (
-                        !IKTools.sidebarTabs[
-                            id
-                        ]
+                        !IKTools.sidebarTabs[id]
                     ) {
                         panel.remove();
                     }
-
                 }
             );
+
+
+        layoutSidebarButtons();
 
 
         if (
@@ -1988,10 +1884,7 @@
         }
 
 
-        renderSidebarHeader();
-
         applySidebarState();
-
 
         return true;
     }
@@ -2020,7 +1913,6 @@
                     </div>
                 `;
 
-
                 renderToolsList();
             },
 
@@ -2032,7 +1924,10 @@
 
 
     /*
-     * Placeholder until features/Notes.js is loaded.
+     * Temporary registration.
+     *
+     * features/Notes.js will replace this with
+     * the real Notes implementation.
      */
     IKTools.registerSidebarTab({
         id:
@@ -2052,7 +1947,6 @@
                         Notes module not loaded yet.
                     </div>
                 `;
-
             }
     });
 
@@ -2062,12 +1956,9 @@
     // =========================================================================
 
     function initializeCoreNow() {
-        if (
-            coreInitialized
-        ) {
+        if (coreInitialized) {
             return true;
         }
-
 
         if (
             !document.body ||
@@ -2079,19 +1970,15 @@
 
         injectCoreStyles();
 
-
         installNativeButtonCss();
 
 
-        if (
-            !ensureSidebar()
-        ) {
+        if (!ensureSidebar()) {
             return false;
         }
 
 
         initializeRegisteredTools();
-
 
         coreInitialized =
             true;
@@ -2116,7 +2003,6 @@
             "IKnights Tools Core loaded."
         );
 
-
         return true;
     }
 
@@ -2134,7 +2020,6 @@
 
             coreStarting =
                 true;
-
 
             let tries =
                 0;
@@ -2154,7 +2039,6 @@
                             clearInterval(
                                 startup
                             );
-
 
                             coreStarting =
                                 false;
