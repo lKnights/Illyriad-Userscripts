@@ -17,7 +17,6 @@
     let plotLabelsEnabled = saved ? saved.plotLabels === true : false;
     
     let dialog = null;
-    let timer = null;
     let observer = null;
     
     const levels = { I: 1, II: 2, III: 3, IIII: 4, IV: 4, V: 5 };
@@ -52,6 +51,26 @@
         return `hsl(${hue}, 90%, 40%)`;
     }
 
+    function refreshSov() {
+        if (!enabled) {
+            document.querySelectorAll("#sovAccordion a.ik-sov-imbalance").forEach(link => {
+                link.classList.remove("ik-sov-imbalance");
+            });
+            return;
+        }
+        document.querySelectorAll("#sovAccordion h3").forEach(header => {
+            const link = header.querySelector("a");
+            if (!link) return;
+            const spans = link.querySelectorAll("span");
+            const claim = spans[0]?.textContent || "";
+            const structure = spans[1]?.textContent || "";
+            const mismatch = spans.length >= 2 &&
+                (/No Structure Present/i.test(structure) ||
+                    (level(structure) > 0 && level(structure) < level(claim)));
+            link.classList.toggle("ik-sov-imbalance", mismatch);
+        });
+    }
+
     function refreshPlotLabels() {
         const mapImg = document.querySelector('img[usemap="#townMapOutline"]');
         if (!mapImg) {
@@ -72,7 +91,8 @@
             container.style.width = "100%";
             container.style.height = "100%";
             container.style.pointerEvents = "none";
-            container.style.zIndex = "100";
+            // Set z-index to 1 so labels stay under popups, tooltips, and dropdown menus like #citiesMenu
+            container.style.zIndex = "1";
             
             if (window.getComputedStyle(mapContainer).position === "static") {
                 mapContainer.style.position = "relative";
@@ -80,7 +100,6 @@
             mapContainer.appendChild(container);
         }
 
-        // Avoid unnecessary re-rendering if labels are already present for this view
         const areas = document.querySelectorAll('map[name="townMapOutline"] area');
         if (container.children.length === areas.length) return;
 
@@ -130,13 +149,13 @@
     function initObserver() {
         if (observer) return;
         observer = new MutationObserver(() => {
-            if (!plotLabelsEnabled) {
-                removePlotLabels();
-                return;
-            }
-            // Instantly check and render when DOM updates (e.g. tab switches)
-            if (document.querySelector('img[usemap="#townMapOutline"]')) {
-                refreshPlotLabels();
+            refreshSov();
+            if (plotLabelsEnabled) {
+                if (document.querySelector('img[usemap="#townMapOutline"]')) {
+                    refreshPlotLabels();
+                } else {
+                    removePlotLabels();
+                }
             } else {
                 removePlotLabels();
             }
@@ -144,42 +163,21 @@
         observer.observe(document.body, { childList: true, subtree: true });
     }
 
-    function refresh() {
-        document.querySelectorAll("#sovAccordion h3").forEach(header => {
-            const link = header.querySelector("a");
-            if (!link) return;
-            const spans = link.querySelectorAll("span");
-            const claim = spans[0]?.textContent || "";
-            const structure = spans[1]?.textContent || "";
-            const mismatch = spans.length >= 2 &&
-                (/No Structure Present/i.test(structure) ||
-                    (level(structure) > 0 && level(structure) < level(claim)));
-            link.classList.toggle("ik-sov-imbalance", enabled && mismatch);
-        });
-        
-        if (plotLabelsEnabled) {
-            refreshPlotLabels();
-        } else {
-            removePlotLabels();
-        }
-    }
-
     function apply() {
-        if (timer !== null) clearInterval(timer);
-        // Only use interval for sovereignty accordion checks if enabled; plot labels are now observer-driven.
-        timer = enabled ? setInterval(refresh, 1000) : null;
-        
-        if (plotLabelsEnabled) {
+        if (enabled || plotLabelsEnabled) {
             initObserver();
-            refreshPlotLabels();
         } else {
             if (observer) {
                 observer.disconnect();
                 observer = null;
             }
+        }
+        refreshSov();
+        if (plotLabelsEnabled) {
+            refreshPlotLabels();
+        } else {
             removePlotLabels();
         }
-        refresh();
     }
 
     function init() {
