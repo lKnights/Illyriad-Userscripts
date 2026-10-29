@@ -184,13 +184,18 @@
 
 
     function loadSettings() {
+        // Import HoRRis's preference only when no Customizer settings exist.
+        const existing = loadJSON(STORAGE_KEY, null);
+        const legacy = loadJSON("ikLuperTweaks.settings.v1", null);
+        const fallback = !existing && legacy && legacy.darkMode === true
+            ? { ...DEFAULT_SETTINGS, interfaceTheme: "luper-dark" }
+            : DEFAULT_SETTINGS;
         settings =
             normalizeSettings(
-                loadJSON(
-                    STORAGE_KEY,
-                    DEFAULT_SETTINGS
-                )
+                existing || fallback
             );
+
+        if (!existing && fallback !== DEFAULT_SETTINGS) saveSettings();
 
 
         return settings;
