@@ -18,6 +18,7 @@
     
     let dialog = null;
     let timer = null;
+    let observer = null;
     
     const levels = { I: 1, II: 2, III: 3, IIII: 4, IV: 4, V: 5 };
     function level(text) {
@@ -26,15 +27,12 @@
     }
     
     function parseBuildingLevel(titleText) {
-        // Match numbers in square brackets like [Wall 13] or [10]
         const matchBracketNum = titleText.match(/\[(?:.*?\s+)?(\d+)\]/);
         if (matchBracketNum) return parseInt(matchBracketNum[1], 10);
 
-        // Match numbers in parentheses like (10)
         const matchParenNum = titleText.match(/\((\d+)\)/);
         if (matchParenNum) return parseInt(matchParenNum[1], 10);
 
-        // Match Roman numerals in brackets or parentheses
         const matchRoman = titleText.match(/[\[\(]([IVXLCDM]+)[\]\)]/i);
         if (matchRoman) return level(matchRoman[1]);
 
@@ -82,11 +80,14 @@
             mapContainer.appendChild(container);
         }
 
+        // Avoid unnecessary re-rendering if labels are already present for this view
+        const areas = document.querySelectorAll('map[name="townMapOutline"] area');
+        if (container.children.length === areas.length) return;
+
         container.innerHTML = "";
 
         if (!plotLabelsEnabled) return;
 
-        const areas = document.querySelectorAll('map[name="townMapOutline"] area');
         areas.forEach(area => {
             const title = area.getAttribute("title") || "";
             const coordsStr = area.getAttribute("coords");
@@ -126,6 +127,23 @@
         if (container) container.remove();
     }
 
+    function initObserver() {
+        if (observer) return;
+        observer = new MutationObserver(() => {
+            if (!plotLabelsEnabled) {
+                removePlotLabels();
+                return;
+            }
+            // Instantly check and render when DOM updates (e.g. tab switches)
+            if (document.querySelector('img[usemap="#townMapOutline"]')) {
+                refreshPlotLabels();
+            } else {
+                removePlotLabels();
+            }
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+    }
+
     function refresh() {
         document.querySelectorAll("#sovAccordion h3").forEach(header => {
             const link = header.querySelector("a");
@@ -139,12 +157,28 @@
             link.classList.toggle("ik-sov-imbalance", enabled && mismatch);
         });
         
-        refreshPlotLabels();
+        if (plotLabelsEnabled) {
+            refreshPlotLabels();
+        } else {
+            removePlotLabels();
+        }
     }
 
     function apply() {
         if (timer !== null) clearInterval(timer);
-        timer = (enabled || plotLabelsEnabled) ? setInterval(refresh, 1000) : null;
+        // Only use interval for sovereignty accordion checks if enabled; plot labels are now observer-driven.
+        timer = enabled ? setInterval(refresh, 1000) : null;
+        
+        if (plotLabelsEnabled) {
+            initObserver();
+            refreshPlotLabels();
+        } else {
+            if (observer) {
+                observer.disconnect();
+                observer = null;
+            }
+            removePlotLabels();
+        }
         refresh();
     }
 
