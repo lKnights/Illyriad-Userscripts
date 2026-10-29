@@ -26,10 +26,18 @@
     }
     
     function parseBuildingLevel(titleText) {
-        const matchNum = titleText.match(/\((\d+)\)/);
-        if (matchNum) return parseInt(matchNum[1], 10);
-        const matchRoman = titleText.match(/\(([IVXLCDM]+)\)/i);
+        // Match numbers in square brackets like [Wall 13] or [10]
+        const matchBracketNum = titleText.match(/\[(?:.*?\s+)?(\d+)\]/);
+        if (matchBracketNum) return parseInt(matchBracketNum[1], 10);
+
+        // Match numbers in parentheses like (10)
+        const matchParenNum = titleText.match(/\((\d+)\)/);
+        if (matchParenNum) return parseInt(matchParenNum[1], 10);
+
+        // Match Roman numerals in brackets or parentheses
+        const matchRoman = titleText.match(/[\[\(]([IVXLCDM]+)[\]\)]/i);
         if (matchRoman) return level(matchRoman[1]);
+
         return 0;
     }
 
@@ -47,37 +55,38 @@
     }
 
     function refreshPlotLabels() {
-        const mapImg = document.querySelector('img[usemap="#townBuildingArea"]');
+        const mapImg = document.querySelector('img[usemap="#townMapOutline"]');
         if (!mapImg) {
             removePlotLabels();
             return;
         }
+
+        const mapContainer = document.getElementById("mapZoomMove") || mapImg.parentNode;
+        if (!mapContainer) return;
 
         let container = document.getElementById("ikTownPlotLabelsContainer");
         if (!container) {
             container = document.createElement("div");
             container.id = "ikTownPlotLabelsContainer";
             container.style.position = "absolute";
+            container.style.left = "0px";
+            container.style.top = "0px";
+            container.style.width = "100%";
+            container.style.height = "100%";
             container.style.pointerEvents = "none";
             container.style.zIndex = "100";
             
-            if (mapImg.parentNode) {
-                if (window.getComputedStyle(mapImg.parentNode).position === "static") {
-                    mapImg.parentNode.style.position = "relative";
-                }
-                mapImg.parentNode.appendChild(container);
+            if (window.getComputedStyle(mapContainer).position === "static") {
+                mapContainer.style.position = "relative";
             }
+            mapContainer.appendChild(container);
         }
 
-        container.style.left = mapImg.offsetLeft + "px";
-        container.style.top = mapImg.offsetTop + "px";
-        container.style.width = mapImg.width + "px";
-        container.style.height = mapImg.height + "px";
         container.innerHTML = "";
 
         if (!plotLabelsEnabled) return;
 
-        const areas = document.querySelectorAll('map[name="townBuildingArea"] area');
+        const areas = document.querySelectorAll('map[name="townMapOutline"] area');
         areas.forEach(area => {
             const title = area.getAttribute("title") || "";
             const coordsStr = area.getAttribute("coords");
@@ -106,7 +115,7 @@
             badge.style.borderRadius = "3px";
             badge.style.border = "1px solid rgba(0,0,0,0.6)";
             badge.style.boxShadow = "0 1px 3px rgba(0,0,0,0.4)";
-            badge.style.pointerEvents = "auto";
+            badge.style.pointerEvents = "none";
 
             container.appendChild(badge);
         });
@@ -130,11 +139,7 @@
             link.classList.toggle("ik-sov-imbalance", enabled && mismatch);
         });
         
-        if (plotLabelsEnabled) {
-            refreshPlotLabels();
-        } else {
-            removePlotLabels();
-        }
+        refreshPlotLabels();
     }
 
     function apply() {
