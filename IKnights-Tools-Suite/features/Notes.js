@@ -1584,7 +1584,7 @@
             "Notes",
 
         order:
-            20,
+            10,
 
         mount:
             mountNotes,

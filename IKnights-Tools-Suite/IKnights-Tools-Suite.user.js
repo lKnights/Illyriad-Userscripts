@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         IKnights Tools Suite
+// @name         Illyriad Tools Suite
 // @namespace    IKnights
-// @version      0.14.0
-// @description  IKnights' integrated Illyriad tools suite.
+// @version      0.14.1
+// @description  Integrated tools and interface customization for Illyriad.
 // @author       IKnights
 //
 // @match        https://elgea.illyriad.co.uk/*
@@ -113,10 +113,10 @@
                 }
             }
             window.IKTools.init();
-            console.log("IKnights Tools Suite started.", status);
+            console.log("Illyriad Tools Suite started.", status);
         } catch (error) {
             status.boot = {state:"failed", error:String(error)};
-            console.error("IKnights Tools Suite failed to start:", error);
+            console.error("Illyriad Tools Suite failed to start:", error);
         }
     }
     bootSuite();

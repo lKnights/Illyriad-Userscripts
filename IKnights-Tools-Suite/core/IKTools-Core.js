@@ -1453,6 +1453,33 @@
 
                 margin:
                     0 !important;
+
+                transition:
+                    filter 90ms ease,
+                    transform 70ms ease;
+            }
+
+            /* Match native red-button shine and movement without changing layout. */
+            .ik-game-button:not(:disabled):not([aria-disabled="true"]):hover,
+            #ikCatCopyBtn:not(:disabled):hover {
+                filter: brightness(1.18) !important;
+                transform: translate(1px, 0) !important;
+            }
+
+            .ik-game-button:not(:disabled):not([aria-disabled="true"]):active,
+            #ikCatCopyBtn:not(:disabled):active {
+                filter: brightness(1.08) !important;
+                transform: translate(1px, 2px) !important;
+            }
+
+            .ik-game-button:focus-visible,
+            #ikCatCopyBtn:focus-visible {
+                outline: 2px solid #e5b420 !important;
+                outline-offset: 2px !important;
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                .ik-game-button { transition: none; }
             }
 
 
@@ -1508,10 +1535,13 @@
                     0 !important;
 
                 width:
-                    245px !important;
+                    100% !important;
 
                 height:
-                    128px !important;
+                    auto !important;
+
+                bottom:
+                    0 !important;
 
                 box-sizing:
                     border-box !important;
@@ -1527,7 +1557,7 @@
 
             #ikToolsPanel {
                 width:
-                    245px;
+                    100%;
 
                 height:
                     100%;
@@ -1555,6 +1585,10 @@
 
                 padding-top:
                     2px;
+
+                /* Leave room for the native-style hover and pressed offsets. */
+                padding-bottom:
+                    4px;
             }
 
 
@@ -1835,26 +1869,8 @@
                 toolsButton
             );
 
-            toolsPanel.style.position =
-                "absolute";
-
-            toolsPanel.style.top =
-                "22px";
-
-            toolsPanel.style.left =
-                "0";
-
-            toolsPanel.style.width =
-                "245px";
-
-            toolsPanel.style.height =
-                "128px";
-
-            toolsPanel.style.boxSizing =
-                "border-box";
-
-            toolsPanel.style.overflow =
-                "hidden";
+            // Use the same full-height panel layout as registered sidebar tabs.
+            toolsPanel.classList.add("ik-suite-sidebar-panel");
 
             mountSidebarPanel(
                 toolsTab,
@@ -1986,7 +2002,7 @@
             "Tools",
 
         order:
-            10,
+            20,
 
         mount:
             function (panel) {
@@ -2020,7 +2036,7 @@
             "Notes",
 
         order:
-            20,
+            10,
 
         mount:
             function (panel) {
