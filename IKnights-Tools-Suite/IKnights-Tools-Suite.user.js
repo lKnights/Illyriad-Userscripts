@@ -8,8 +8,8 @@
 // @match        https://elgea.illyriad.co.uk/*
 // @match        http://elgea.illyriad.co.uk/*
 //
-// @updateURL    https://raw.githubusercontent.com/lKnights/Illyriad-Userscripts/main/IKnights-Tools-Suite/IKnights-Tools-Suite.user.js
-// @downloadURL  https://raw.githubusercontent.com/lKnights/Illyriad-Userscripts/main/IKnights-Tools-Suite/IKnights-Tools-Suite.user.js
+// @updateURL    https://raw.githubusercontent.com/lKnights/Illyriad-Userscripts/HoRRis_Test_Branch/IKnights-Tools-Suite/IKnights-Tools-Suite.user.js
+// @downloadURL  https://raw.githubusercontent.com/lKnights/Illyriad-Userscripts/HoRRis_Test_Branch/IKnights-Tools-Suite/IKnights-Tools-Suite.user.js
 //
 // @grant        none
 // @run-at       document-idle
@@ -22,7 +22,7 @@
     if (window.__IKTOOLS_BOOT_STARTED__) return;
     window.__IKTOOLS_BOOT_STARTED__ = true;
 
-    const SUITE_BASE = "https://raw.githubusercontent.com/lKnights/Illyriad-Userscripts/main/IKnights-Tools-Suite/";
+    const SUITE_BASE = "https://raw.githubusercontent.com/lKnights/Illyriad-Userscripts/HoRRis_Test_Branch/IKnights-Tools-Suite/";
     const status = window.IKToolsLoadStatus = Object.create(null);
 
     function resolveSuiteFile(file) {
