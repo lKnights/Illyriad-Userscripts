@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Illyriad Tools Suite
+// @name         Illyriad Tools Suite (HoRRis Test Version)
 // @namespace    IKnights
 // @version      0.14.1
 // @description  Integrated tools and interface customization for Illyriad.
