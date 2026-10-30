@@ -1505,7 +1505,7 @@
         injectNotesStyles();
 
 
-        panel.innerHTML = `
+    panel.innerHTML = `
             <div id="ikNotesPanel">
 
                 <div id="ikNotesHeader">
@@ -1527,14 +1527,14 @@
                 <div id="ikNotesFooter">
 
                     <input
-                        type="button"
+                        type="submit"
                         id="ikNotesGlobalBtn"
                         class="ik-game-button"
                         value="Global"
                     >
 
                     <input
-                        type="button"
+                        type="submit"
                         id="ikNotesEditBtn"
                         class="ik-game-button"
                         value="Edit"
