@@ -1455,20 +1455,11 @@
             }
 
 
-            .ik-game-button:active,
-            .ik-game-button:focus {
+            #ikNotesFooter .ik-game-button:active,
+            #ikNotesFooter .ik-game-button:focus {
 
                 background-image:
-                    url("https://assets.illyriad.net/img/buttons/regular_off_rev.png") !important;
-
-                background-size:
-                    100% 100% !important;
-
-                background-position:
-                    center !important;
-
-                background-repeat:
-                    no-repeat !important;
+                    inherit !important;
 
                 outline:
                     none !important;
