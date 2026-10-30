@@ -1494,9 +1494,15 @@
                 left:
                     0 !important;
 
+	            margin-left:
+	                0px !important;
+
                 right:
                     auto !important;
-
+                
+                margin-right:
+                    0px !important;
+                    
                 width:
                     100% !important;
 
