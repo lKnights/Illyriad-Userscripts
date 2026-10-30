@@ -1,11 +1,11 @@
 /*
- * IKnights Tools Suite - Notes
+ * Illyriad Tools Suite - LuperNotes V2.0
  *
  * Based on LuperNotes v1.0
  * Original author: HoRRis Lupercal
  * Original creation assistance: Google Gemini
  *
- * Suite integration and modifications: IKnights
+ * Suite integration: IKnights
  */
 
 (function () {
@@ -527,7 +527,7 @@
 
 
             return (
-                "<span style=\"font-style:italic;opacity:0.7;\">" +
+                '<span style="font-style:italic;opacity:0.7;display:block;width:100%;height:100%;">' +
                 escapeHTML(
                     emptyLabel +
                     ' Click "Edit" to add notes.'
@@ -617,7 +617,7 @@
 
 
                     return (
-                        `<a href="${href}" target="_top"${style}>` +
+                        `<a href="${href}" target="_top"${style} onclick="event.stopPropagation();">` +
                         displayText +
                         "</a>"
                     );
@@ -691,7 +691,7 @@
             textColor
         ) {
             return (
-                `<span style="color:${textColor};">` +
+                `<span style="color:${textColor};display:block;width:100%;height:100%;">` +
                 processed +
                 "</span>"
             );
@@ -699,7 +699,7 @@
 
 
         return (
-            "<span>" +
+            '<span style="display:block;width:100%;height:100%;">' +
             processed +
             "</span>"
         );
@@ -1320,6 +1320,30 @@
 
                 overflow-y:
                     auto;
+
+                background:
+                    transparent !important;
+
+                border:
+                    none !important;
+
+                font-family:
+                    monospace;
+
+                font-size:
+                    10.5px;
+
+                line-height:
+                    1.35;
+
+                color:
+                    inherit !important;
+
+                white-space:
+                    pre-wrap !important;
+
+                word-break:
+                    break-word !important;
             }
 
 
@@ -1338,11 +1362,14 @@
 
                 display:
                     none;
+
+                border:
+                    1px inset rgba(0,0,0,0.2) !important;
             }
 
 
             /* =============================================================
-               FOOTER
+               FOOTER (50% Split & Button Fixes)
                ============================================================= */
 
             #ikNotesFooter {
@@ -1381,14 +1408,64 @@
 
             #ikNotesFooter .ik-game-button {
 
+                flex:
+                    0 0 calc(50% - 2px) !important;
+
+                width:
+                    calc(50% - 2px) !important;
+
+                min-width:
+                    0 !important;
+
+                max-width:
+                    none !important;
+
+                height:
+                    38px !important;
+
+                min-height:
+                    38px !important;
+
+                max-height:
+                    38px !important;
+
                 margin:
                     0 !important;
 
                 outline:
                     none !important;
 
+                border:
+                    none !important;
+
                 background-size:
-                    auto !important;
+                    100% 100% !important;
+            }
+
+
+            .ik-game-button:active,
+            .ik-game-button:focus {
+
+                background-image:
+                    url("https://assets.illyriad.net/img/buttons/regular_off_rev.png") !important;
+
+                background-size:
+                    100% 100% !important;
+
+                background-position:
+                    center !important;
+
+                background-repeat:
+                    no-repeat !important;
+
+                outline:
+                    none !important;
+
+                box-shadow:
+                    none !important;
+
+                border:
+                    none !important;
             }
 
         `;
