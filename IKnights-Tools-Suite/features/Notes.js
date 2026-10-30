@@ -1438,8 +1438,20 @@
                 border:
                     none !important;
 
+                -webkit-appearance:
+                    none !important;
+
+                appearance:
+                    none !important;
+
                 background-size:
                     100% 100% !important;
+            }
+
+
+            #ikNotesFooter .ik-game-button::-moz-focus-inner {
+                border:
+                    0 !important;
             }
 
 
@@ -1465,6 +1477,12 @@
                     none !important;
 
                 border:
+                    none !important;
+
+                -webkit-appearance:
+                    none !important;
+
+                appearance:
                     none !important;
             }
 
