@@ -1,15 +1,15 @@
 // ==UserScript==
-// @name         Illyriad Tools Suite
+// @name         Illyriad Tools Suite (HoRRis Test Version)
 // @namespace    IKnights
-// @version      0.14.13
+// @version      0.14.16
 // @description  Integrated tools and interface customization for Illyriad.
 // @author       IKnights
 //
 // @match        https://elgea.illyriad.co.uk/*
 // @match        http://elgea.illyriad.co.uk/*
 //
-// @updateURL    https://raw.githubusercontent.com/lKnights/Illyriad-Userscripts/main/IKnights-Tools-Suite/IKnights-Tools-Suite.user.js
-// @downloadURL  https://raw.githubusercontent.com/lKnights/Illyriad-Userscripts/main/IKnights-Tools-Suite/IKnights-Tools-Suite.user.js
+// @updateURL    https://raw.githubusercontent.com/lKnights/Illyriad-Userscripts/HoRRis_Test_Branch/IKnights-Tools-Suite/IKnights-Tools-Suite.user.js
+// @downloadURL  https://raw.githubusercontent.com/lKnights/Illyriad-Userscripts/HoRRis_Test_Branch/IKnights-Tools-Suite/IKnights-Tools-Suite.user.js
 //
 // @grant        none
 // @run-at       document-idle
