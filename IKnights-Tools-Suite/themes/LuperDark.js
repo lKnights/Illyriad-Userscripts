@@ -32,123 +32,123 @@
     "--ik-theme-warning-highlight": "#ff000042",
     "--ik-theme-border-color": "#515252",
     "--ik-theme-alt-border-color": "#515252",
-    "--ik-theme-texture": "url(\"https://i.imgur.com/bVPeeR1.jpeg\")",
-    "--ik-theme-headerP-texture": "url(\"https://i.imgur.com/pd2Fk0k.jpeg\")",
-    "--ik-theme-headerO-texture": "url(\"https://i.imgur.com/56MuJba.png\")",
-    "--ik-theme-header-texture": "url(\"https://i.imgur.com/yLBHkHn.jpeg\")",
-    "--ik-theme-headermain-texture": "url(\"https://i.imgur.com/4uN1QEX.png\")",
-    "--ik-theme-popup-top": "url(\"https://i.imgur.com/IpJ1c9a.png\")",
-    "--ik-theme-popup-mid": "url(\"https://i.imgur.com/Ze6w7Ao.png\")",
-    "--ik-theme-popup-bot": "url(\"https://i.imgur.com/IWDUzGv.png\")",
-    "--ik-theme-herald-right": "url(\"https://i.imgur.com/euSGpqg.jpeg\")",
-    "--ik-theme-herald-left": "url(\"https://i.imgur.com/2kpFWov.jpeg\")",
-    "--ik-theme-herald-title": "url(\"https://i.imgur.com/Wk5bDRK.jpeg\")",
-    "--ik-theme-herald-book": "url(\"https://i.imgur.com/qQOXNaQ.jpeg\")",
-    "--ik-theme-darkmode-credits": "url(\"https://i.imgur.com/Ht3gA2r.png\")",
+    "--ik-theme-texture": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408003/darkpaper2_V2.jpg\")",
+    "--ik-theme-headerP-texture": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407986/darkheader_banner5p_v3.jpg\")",
+    "--ik-theme-headerO-texture": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407985/darkheader_banner5o_v3.png\")",
+    "--ik-theme-header-texture": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407987/darkheader_banner5_v3.jpg\")",
+    "--ik-theme-headermain-texture": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407987/darkheader_clean.png\")",
+    "--ik-theme-popup-top": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408015/darkscroll_header3.png\")",
+    "--ik-theme-popup-mid": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408015/darkscroll_body5.png\")",
+    "--ik-theme-popup-bot": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408015/darkscroll_footer4.png\")",
+    "--ik-theme-herald-right": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408012/darkright_shadow.jpg\")",
+    "--ik-theme-herald-left": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407992/darkleft_shadow.jpg\")",
+    "--ik-theme-herald-title": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408002/darkpage1a.jpg\")",
+    "--ik-theme-herald-book": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407967/darkbook-with-pages4.jpg\")",
+    "--ik-theme-darkmode-credits": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407976/darkcredits_small.png\")",
     "--ik-theme-border-image": "url(\"https://assets.illyriad.net/img/backgrounds/borderclasps3.png\")",
     "--ik-theme-small-border-image": "url(\"https://assets.illyriad.net/img/backgrounds/border_tiny.png\")",
     "--ik-theme-button-short-off": "url(\"https://assets.illyriad.net/img/buttons/short_off_rev.png\")",
     "--ik-theme-button-short-on": "url(\"https://assets.illyriad.net/img/buttons/short_on_rev.png\")",
-    "--ik-theme-button-world-off": "url(\"https://i.imgur.com/8mweI6h.png\")",
-    "--ik-theme-button-world-on": "url(\"https://i.imgur.com/mSotCKt.png\")",
-    "--ik-theme-button-region-off": "url(\"https://i.imgur.com/8hmh66k.png\")",
-    "--ik-theme-button-region-on": "url(\"https://i.imgur.com/JSpZkQi.png\")",
-    "--ik-theme-button-quest-off": "url(\"https://i.imgur.com/kBsMx99.png\")",
-    "--ik-theme-button-quest-on": "url(\"https://i.imgur.com/bBFao58.png\")",
-    "--ik-theme-button-tourney-off": "url(\"https://i.imgur.com/7I9CM8R.png\")",
-    "--ik-theme-button-tourney-on": "url(\"https://i.imgur.com/yoYSmkj.png\")",
-    "--ik-theme-button-stats-off": "url(\"https://i.imgur.com/E2nlgAF.png\")",
-    "--ik-theme-button-stats-on": "url(\"https://i.imgur.com/4SMAfuv.png\")",
-    "--ik-theme-button-herald-off": "url(\"https://i.imgur.com/fDAh0lu.png\")",
-    "--ik-theme-button-herald-on": "url(\"https://i.imgur.com/ZfNx7ZY.png\")",
-    "--ik-theme-button-city-off": "url(\"https://i.imgur.com/NI96uz6.png\")",
-    "--ik-theme-button-city-on": "url(\"https://i.imgur.com/m3IXU7a.png\")",
-    "--ik-theme-button-castle-off": "url(\"https://i.imgur.com/D7S3ncV.png\")",
-    "--ik-theme-button-castle-on": "url(\"https://i.imgur.com/6k3TEsF.png\")",
-    "--ik-theme-button-res-off": "url(\"https://i.imgur.com/zCkxEC8.png\")",
-    "--ik-theme-button-res-on": "url(\"https://i.imgur.com/VxbDdzw.png\")",
-    "--ik-theme-button-prod-off": "url(\"https://i.imgur.com/if9Uvfx.png\")",
-    "--ik-theme-button-prod-on": "url(\"https://i.imgur.com/Z1m0l06.png\")",
-    "--ik-theme-button-sov-off": "url(\"https://i.imgur.com/Ta50rJ3.png\")",
-    "--ik-theme-button-sov-on": "url(\"https://i.imgur.com/drtdYhI.png\")",
-    "--ik-theme-button-inv-off": "url(\"https://i.imgur.com/LlsKBd8.png\")",
-    "--ik-theme-button-inv-on": "url(\"https://i.imgur.com/eQeHEby.png\")",
-    "--ik-theme-button-diplomacy-off": "url(\"https://i.imgur.com/ul2sv1x.png\")",
-    "--ik-theme-button-diplomacy-on": "url(\"https://i.imgur.com/T8scZ4B.png\")",
-    "--ik-theme-button-diplo-off": "url(\"https://i.imgur.com/Sr3xtbJ.png\")",
-    "--ik-theme-button-diplo-on": "url(\"https://i.imgur.com/RpLIYH7.png\")",
-    "--ik-theme-button-military-off": "url(\"https://i.imgur.com/nUHR9Zs.png\")",
-    "--ik-theme-button-military-on": "url(\"https://i.imgur.com/NoFisYj.png\")",
-    "--ik-theme-button-moves-off": "url(\"https://i.imgur.com/XC4e1ka.png\")",
-    "--ik-theme-button-moves-on": "url(\"https://i.imgur.com/HOKhSS6.png\")",
-    "--ik-theme-button-orders-off": "url(\"https://i.imgur.com/logTL0i.png\")",
-    "--ik-theme-button-orders-on": "url(\"https://i.imgur.com/Xpc2fSO.png\")",
-    "--ik-theme-button-armies-off": "url(\"https://i.imgur.com/kE3aSOL.png\")",
-    "--ik-theme-button-armies-on": "url(\"https://i.imgur.com/M7gmlqd.png\")",
-    "--ik-theme-button-command-off": "url(\"https://i.imgur.com/qMammF8.png\")",
-    "--ik-theme-button-command-on": "url(\"https://i.imgur.com/zzVar3k.png\")",
-    "--ik-theme-button-troops-off": "url(\"https://i.imgur.com/g02QXcU.png\")",
-    "--ik-theme-button-troops-on": "url(\"https://i.imgur.com/Woe7jJv.png\")",
-    "--ik-theme-button-trade-off": "url(\"https://i.imgur.com/sowIrLS.png\")",
-    "--ik-theme-button-trade-on": "url(\"https://i.imgur.com/y9rb9e7.png\")",
-    "--ik-theme-button-markets-off": "url(\"https://i.imgur.com/tbQkDnx.png\")",
-    "--ik-theme-button-markets-on": "url(\"https://i.imgur.com/aF84qpi.png\")",
-    "--ik-theme-button-factions-off": "url(\"https://i.imgur.com/smVbw5w.png\")",
-    "--ik-theme-button-factions-on": "url(\"https://i.imgur.com/2zOGkbb.png\")",
-    "--ik-theme-button-tradeunits-off": "url(\"https://i.imgur.com/oCCnrSn.png\")",
-    "--ik-theme-button-tradeunits-on": "url(\"https://i.imgur.com/W2AWeda.png\")",
-    "--ik-theme-button-research-off": "url(\"https://i.imgur.com/rdvsb5U.png\")",
-    "--ik-theme-button-research-on": "url(\"https://i.imgur.com/owlPuMu.png\")",
-    "--ik-theme-button-available-off": "url(\"https://i.imgur.com/epab08T.png\")",
-    "--ik-theme-button-available-on": "url(\"https://i.imgur.com/Hje9TdQ.png\")",
-    "--ik-theme-button-tree-off": "url(\"https://i.imgur.com/mThyqL6.png\")",
-    "--ik-theme-button-tree-on": "url(\"https://i.imgur.com/CCpizKp.png\")",
-    "--ik-theme-button-discovery-off": "url(\"https://i.imgur.com/rWgow5u.png\")",
-    "--ik-theme-button-discovery-on": "url(\"https://i.imgur.com/wEU1snc.png\")",
-    "--ik-theme-button-reading-off": "url(\"https://i.imgur.com/IzzuKX1.png\")",
-    "--ik-theme-button-reading-on": "url(\"https://i.imgur.com/vFwluJb.png\")",
-    "--ik-theme-button-magic-off": "url(\"https://i.imgur.com/XWUSHyi.png\")",
-    "--ik-theme-button-magic-on": "url(\"https://i.imgur.com/Tkcm4xa.png\")",
-    "--ik-theme-button-active-off": "url(\"https://i.imgur.com/anfgwrq.png\")",
-    "--ik-theme-button-active-on": "url(\"https://i.imgur.com/9ZIMLzd.png\")",
-    "--ik-theme-button-cast-off": "url(\"https://i.imgur.com/ai5l18g.png\")",
-    "--ik-theme-button-cast-on": "url(\"https://i.imgur.com/QTms7k7.png\")",
-    "--ik-theme-button-transmog-off": "url(\"https://i.imgur.com/ljoFk8E.png\")",
-    "--ik-theme-button-transmog-on": "url(\"https://i.imgur.com/QGCIuTF.png\")",
-    "--ik-theme-char-ring2-off": "url(\"https://i.imgur.com/BymSTQB.png\")",
-    "--ik-theme-char-ring2-on": "url(\"https://i.imgur.com/eqpzQBm.png\")",
-    "--ik-theme-button-darkbg-off": "url(\"https://i.imgur.com/0JECVbh.png\")",
-    "--ik-theme-button-darkbg-on": "url(\"https://i.imgur.com/kwVBQAB.png\")",
-    "--ik-theme-button-favourites-off": "url(\"https://i.imgur.com/1g3vtDX.png\")",
-    "--ik-theme-button-favourites-on": "url(\"https://i.imgur.com/8FxgR7U.png\")",
-    "--ik-theme-button-leaderboard-off": "url(\"https://i.imgur.com/XxebsgF.png\")",
-    "--ik-theme-button-leaderboard-on": "url(\"https://i.imgur.com/RFNqMcH.png\")",
-    "--ik-theme-button-account-off": "url(\"https://i.imgur.com/LMzosvT.png\")",
-    "--ik-theme-button-account-on": "url(\"https://i.imgur.com/3EfWJ4S.png\")",
-    "--ik-theme-button-support-off": "url(\"https://i.imgur.com/f0k69Kz.png\")",
-    "--ik-theme-button-support-on": "url(\"https://i.imgur.com/Rhc1Qby.png\")",
-    "--ik-theme-button-alliance-off": "url(\"https://i.imgur.com/7uzcST8.png\")",
-    "--ik-theme-button-alliance-on": "url(\"https://i.imgur.com/ID9pQhs.png\")",
-    "--ik-theme-button-recruit-off": "url(\"https://i.imgur.com/Y5hmywH.png\")",
-    "--ik-theme-button-recruit-on": "url(\"https://i.imgur.com/jtWx47t.png\")",
-    "--ik-theme-button-standings-off": "url(\"https://i.imgur.com/jWDFmqp.png\")",
-    "--ik-theme-button-standings-on": "url(\"https://i.imgur.com/6KymOzB.png\")",
-    "--ik-theme-button-prestige-off": "url(\"https://i.imgur.com/E1VkYZl.png\")",
-    "--ik-theme-button-prestige-on": "url(\"https://i.imgur.com/I4JKA2b.png\")",
-    "--ik-theme-button-medal-off": "url(\"https://i.imgur.com/sh4Du4L.png\")",
-    "--ik-theme-button-medal-on": "url(\"https://i.imgur.com/Dr6X4uR.png\")",
-    "--ik-theme-button-buy-off": "url(\"https://i.imgur.com/mECO02L.png\")",
-    "--ik-theme-button-buy-on": "url(\"https://i.imgur.com/kSsFxRu.png\")",
-    "--ik-theme-button-history-off": "url(\"https://i.imgur.com/kKc9fMn.png\")",
-    "--ik-theme-button-history-on": "url(\"https://i.imgur.com/AeyDNIA.png\")",
-    "--ik-theme-button-mail-off": "url(\"https://i.imgur.com/v7JqGC4.png\")",
-    "--ik-theme-button-mail-on": "url(\"https://i.imgur.com/WDrnrTn.png\")",
-    "--ik-theme-button-notif-off": "url(\"https://i.imgur.com/ch3iAHC.png\")",
-    "--ik-theme-button-notif-on": "url(\"https://i.imgur.com/3oupSsE.png\")",
-    "--ik-theme-button-forum-off": "url(\"https://i.imgur.com/sQYWiNd.png\")",
-    "--ik-theme-button-forum-on": "url(\"https://i.imgur.com/aQ0C6Dt.png\")",
-    "--ik-theme-button-chat-off": "url(\"https://i.imgur.com/nmgSnr3.png\")",
-    "--ik-theme-button-chat-on": "url(\"https://i.imgur.com/5rQtAzt.png\")"
+    "--ik-theme-button-world-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408026/darkworld_64x64_off.png\")",
+    "--ik-theme-button-world-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408026/darkworld_64x64_on.png\")",
+    "--ik-theme-button-region-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408010/darkregionalbonus_32x32_off.png\")",
+    "--ik-theme-button-region-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408011/darkregionalbonus_32x32_on.png\")",
+    "--ik-theme-button-quest-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408007/darkquests_32x32_off.png\")",
+    "--ik-theme-button-quest-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408007/darkquests_32x32_on.png\")",
+    "--ik-theme-button-tourney-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408018/darktournaments_32x32_off.png\")",
+    "--ik-theme-button-tourney-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408019/darktournaments_32x32_on.png\")",
+    "--ik-theme-button-stats-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407999/darknotes2_32x32_off.png\")",
+    "--ik-theme-button-stats-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407999/darknotes2_32x32_on.png\")",
+    "--ik-theme-button-herald-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407988/darkherald_32x32_off.png\")",
+    "--ik-theme-button-herald-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407988/darkherald_32x32_on.png\")",
+    "--ik-theme-button-city-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407972/darkcity_64x64_off.png\")",
+    "--ik-theme-button-city-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407973/darkcity_64x64_on.png\")",
+    "--ik-theme-button-castle-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407968/darkcastle_32x32_off.png\")",
+    "--ik-theme-button-castle-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407969/darkcastle_32x32_on.png\")",
+    "--ik-theme-button-res-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408019/darktown_summary_32x32_off.png\")",
+    "--ik-theme-button-res-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408020/darktown_summary_32x32_on.png\")",
+    "--ik-theme-button-prod-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408005/darkproduction_summary_32x32_off.png\")",
+    "--ik-theme-button-prod-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408006/darkproduction_summary_32x32_on.png\")",
+    "--ik-theme-button-sov-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408016/darksovereignty_32x32_off.png\")",
+    "--ik-theme-button-sov-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408016/darksovereignty_32x32_on.png\")",
+    "--ik-theme-button-inv-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407990/darkinventory_32x32_off.png\")",
+    "--ik-theme-button-inv-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407991/darkinventory_32x32_on.png\")",
+    "--ik-theme-button-diplomacy-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407977/darkdiplomacy_64x64_off.png\")",
+    "--ik-theme-button-diplomacy-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407978/darkdiplomacy_64x64_on.png\")",
+    "--ik-theme-button-diplo-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407976/darkdiplo_32x32_off.png\")",
+    "--ik-theme-button-diplo-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407977/darkdiplo_32x32_on.png\")",
+    "--ik-theme-button-military-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407996/darkmilitary_64x64_off.png\")",
+    "--ik-theme-button-military-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407997/darkmilitary_64x64_on.png\")",
+    "--ik-theme-button-moves-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407997/darkmovements_32x32_off.png\")",
+    "--ik-theme-button-moves-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407998/darkmovements_32x32_on.png\")",
+    "--ik-theme-button-orders-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408001/darkorders_32x32_off.png\")",
+    "--ik-theme-button-orders-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408001/darkorders_32x32_on.png\")",
+    "--ik-theme-button-armies-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407963/darkarmies_32x32_off.png\")",
+    "--ik-theme-button-armies-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407964/darkarmies_32x32_on.png\")",
+    "--ik-theme-button-command-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407973/darkcommanders_32x32_off.png\")",
+    "--ik-theme-button-command-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407974/darkcommanders_32x32_on.png\")",
+    "--ik-theme-button-troops-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408024/darktroops_32x32_off.png\")",
+    "--ik-theme-button-troops-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408025/darktroops_32x32_on.png\")",
+    "--ik-theme-button-trade-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408022/darktrade_64x64_off.png\")",
+    "--ik-theme-button-trade-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408022/darktrade_64x64_on.png\")",
+    "--ik-theme-button-markets-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408004/darkprices_32x32_off.png\")",
+    "--ik-theme-button-markets-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408005/darkprices_32x32_on.png\")",
+    "--ik-theme-button-factions-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407980/darkfactionmarket_32x32_off.png\")",
+    "--ik-theme-button-factions-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407981/darkfactionmarket_32x32_on.png\")",
+    "--ik-theme-button-tradeunits-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408020/darktrade_32x32_off.png\")",
+    "--ik-theme-button-tradeunits-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408021/darktrade_32x32_on.png\")",
+    "--ik-theme-button-research-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408011/darkresearch_64x64_off.png\")",
+    "--ik-theme-button-research-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408012/darkresearch_64x64_on.png\")",
+    "--ik-theme-button-available-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407964/darkavailable_32x32_off.png\")",
+    "--ik-theme-button-available-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407965/darkavailable_32x32_on.png\")",
+    "--ik-theme-button-tree-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407975/darkcomplete_research_tree_32x32_off.png\")",
+    "--ik-theme-button-tree-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407975/darkcomplete_research_tree_32x32_on.png\")",
+    "--ik-theme-button-discovery-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407979/darkdiscovery_32x32_off.png\")",
+    "--ik-theme-button-discovery-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407980/darkdiscovery_32x32_on.png\")",
+    "--ik-theme-button-reading-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408009/darkreading_32x32_off.png\")",
+    "--ik-theme-button-reading-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408010/darkreading_32x32_on.png\")",
+    "--ik-theme-button-magic-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407992/darkmagic_64x64_off.png\")",
+    "--ik-theme-button-magic-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407993/darkmagic_64x64_on.png\")",
+    "--ik-theme-button-active-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408017/darkspells_in_progress_32x32_off.png\")",
+    "--ik-theme-button-active-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408017/darkspells_in_progress_32x32_on.png\")",
+    "--ik-theme-button-cast-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407970/darkcast_spell_32x32_off.png\")",
+    "--ik-theme-button-cast-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407970/darkcast_spell_32x32_on.png\")",
+    "--ik-theme-button-transmog-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408023/darktransmogrification_32x32_off.png\")",
+    "--ik-theme-button-transmog-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408024/darktransmogrification_32x32_on.png\")",
+    "--ik-theme-char-ring2-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408013/darkring2_off.png\")",
+    "--ik-theme-char-ring2-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408014/darkring2_on.png\")",
+    "--ik-theme-button-darkbg-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407965/darkbg_off.png\")",
+    "--ik-theme-button-darkbg-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407966/darkbg_on.png\")",
+    "--ik-theme-button-favourites-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407983/darkfavourites_32x32_off.png\")",
+    "--ik-theme-button-favourites-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407984/darkfavourites_32x32_on.png\")",
+    "--ik-theme-button-leaderboard-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408008/darkrankings_32x32_off.png\")",
+    "--ik-theme-button-leaderboard-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408008/darkrankings_32x32_on.png\")",
+    "--ik-theme-button-account-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407960/darkaccount_preferences_32x32_off.png\")",
+    "--ik-theme-button-account-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407960/darkaccount_preferences_32x32_on.png\")",
+    "--ik-theme-button-support-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407959/darkabout_32x32_off.png\")",
+    "--ik-theme-button-support-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407960/darkabout_32x32_on.png\")",
+    "--ik-theme-button-alliance-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407962/darkalliances_64x64_off.png\")",
+    "--ik-theme-button-alliance-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407963/darkalliances_64x64_on.png\")",
+    "--ik-theme-button-recruit-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407961/darkalliance_32x32_off.png\")",
+    "--ik-theme-button-recruit-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407962/darkalliance_32x32_on.png\")",
+    "--ik-theme-button-standings-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407982/darkfactions_standings_32x32_off.png\")",
+    "--ik-theme-button-standings-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407982/darkfactions_standings_32x32_on.png\")",
+    "--ik-theme-button-prestige-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408003/darkprestige_64x64_off.png\")",
+    "--ik-theme-button-prestige-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408004/darkprestige_64x64_on.png\")",
+    "--ik-theme-button-medal-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407995/darkmedal_32x32_off.png\")",
+    "--ik-theme-button-medal-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407995/darkmedal_32x32_on.png\")",
+    "--ik-theme-button-buy-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407967/darkbuy_prestige_32x32_off.png\")",
+    "--ik-theme-button-buy-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407968/darkbuy_prestige_32x32_on.png\")",
+    "--ik-theme-button-history-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407989/darkhistory_32x32_off.png\")",
+    "--ik-theme-button-history-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407990/darkhistory_32x32_on.png\")",
+    "--ik-theme-button-mail-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407994/darkmail_64x64_off.png\")",
+    "--ik-theme-button-mail-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407994/darkmail_64x64_on.png\")",
+    "--ik-theme-button-notif-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408000/darknotifications_32x32_off.png\")",
+    "--ik-theme-button-notif-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793408000/darknotifications_32x32_on.png\")",
+    "--ik-theme-button-forum-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407984/darkforum_32x32_off.png\")",
+    "--ik-theme-button-forum-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407985/darkforum_32x32_on.png\")",
+    "--ik-theme-button-chat-off": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407971/darkchat_32x32_off.png\")",
+    "--ik-theme-button-chat-on": "url(\"https://res.cloudinary.com/uzoacdfm/image/upload/v1793407972/darkchat_32x32_on.png\")"
 };
     let observer = null;
     let pending = null;
@@ -332,123 +332,123 @@
 --ik-theme-warning-highlight: #ff000042;
 --ik-theme-border-color: #515252;
 --ik-theme-alt-border-color: #515252;
---ik-theme-texture: url("https://i.imgur.com/bVPeeR1.jpeg");
---ik-theme-headerP-texture: url("https://i.imgur.com/pd2Fk0k.jpeg");
---ik-theme-headerO-texture: url("https://i.imgur.com/56MuJba.png");
---ik-theme-header-texture: url("https://i.imgur.com/yLBHkHn.jpeg");
---ik-theme-headermain-texture: url("https://i.imgur.com/4uN1QEX.png");
---ik-theme-popup-top: url("https://i.imgur.com/IpJ1c9a.png");
---ik-theme-popup-mid: url("https://i.imgur.com/Ze6w7Ao.png");
---ik-theme-popup-bot: url("https://i.imgur.com/IWDUzGv.png");
---ik-theme-herald-right: url("https://i.imgur.com/euSGpqg.jpeg");
---ik-theme-herald-left: url("https://i.imgur.com/2kpFWov.jpeg");
---ik-theme-herald-title: url("https://i.imgur.com/Wk5bDRK.jpeg");
---ik-theme-herald-book: url("https://i.imgur.com/qQOXNaQ.jpeg");
---ik-theme-darkmode-credits: url("https://i.imgur.com/Ht3gA2r.png");
+--ik-theme-texture: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408003/darkpaper2_V2.jpg");
+--ik-theme-headerP-texture: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407986/darkheader_banner5p_v3.jpg");
+--ik-theme-headerO-texture: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407985/darkheader_banner5o_v3.png");
+--ik-theme-header-texture: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407987/darkheader_banner5_v3.jpg");
+--ik-theme-headermain-texture: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407987/darkheader_clean.png");
+--ik-theme-popup-top: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408015/darkscroll_header3.png");
+--ik-theme-popup-mid: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408015/darkscroll_body5.png");
+--ik-theme-popup-bot: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408015/darkscroll_footer4.png");
+--ik-theme-herald-right: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408012/darkright_shadow.jpg");
+--ik-theme-herald-left: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407992/darkleft_shadow.jpg");
+--ik-theme-herald-title: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408002/darkpage1a.jpg");
+--ik-theme-herald-book: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407967/darkbook-with-pages4.jpg");
+--ik-theme-darkmode-credits: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407976/darkcredits_small.png");
 --ik-theme-border-image: url("https://assets.illyriad.net/img/backgrounds/borderclasps3.png");
 --ik-theme-small-border-image: url("https://assets.illyriad.net/img/backgrounds/border_tiny.png");
 --ik-theme-button-short-off: url("https://assets.illyriad.net/img/buttons/short_off_rev.png");
 --ik-theme-button-short-on: url("https://assets.illyriad.net/img/buttons/short_on_rev.png");
---ik-theme-button-world-off: url("https://i.imgur.com/8mweI6h.png");
---ik-theme-button-world-on: url("https://i.imgur.com/mSotCKt.png");
---ik-theme-button-region-off: url("https://i.imgur.com/8hmh66k.png");
---ik-theme-button-region-on: url("https://i.imgur.com/JSpZkQi.png");
---ik-theme-button-quest-off: url("https://i.imgur.com/kBsMx99.png");
---ik-theme-button-quest-on: url("https://i.imgur.com/bBFao58.png");
---ik-theme-button-tourney-off: url("https://i.imgur.com/7I9CM8R.png");
---ik-theme-button-tourney-on: url("https://i.imgur.com/yoYSmkj.png");
---ik-theme-button-stats-off: url("https://i.imgur.com/E2nlgAF.png");
---ik-theme-button-stats-on: url("https://i.imgur.com/4SMAfuv.png");
---ik-theme-button-herald-off: url("https://i.imgur.com/fDAh0lu.png");
---ik-theme-button-herald-on: url("https://i.imgur.com/ZfNx7ZY.png");
---ik-theme-button-city-off: url("https://i.imgur.com/NI96uz6.png");
---ik-theme-button-city-on: url("https://i.imgur.com/m3IXU7a.png");
---ik-theme-button-castle-off: url("https://i.imgur.com/D7S3ncV.png");
---ik-theme-button-castle-on: url("https://i.imgur.com/6k3TEsF.png");
---ik-theme-button-res-off: url("https://i.imgur.com/zCkxEC8.png");
---ik-theme-button-res-on: url("https://i.imgur.com/VxbDdzw.png");
---ik-theme-button-prod-off: url("https://i.imgur.com/if9Uvfx.png");
---ik-theme-button-prod-on: url("https://i.imgur.com/Z1m0l06.png");
---ik-theme-button-sov-off: url("https://i.imgur.com/Ta50rJ3.png");
---ik-theme-button-sov-on: url("https://i.imgur.com/drtdYhI.png");
---ik-theme-button-inv-off: url("https://i.imgur.com/LlsKBd8.png");
---ik-theme-button-inv-on: url("https://i.imgur.com/eQeHEby.png");
---ik-theme-button-diplomacy-off: url("https://i.imgur.com/ul2sv1x.png");
---ik-theme-button-diplomacy-on: url("https://i.imgur.com/T8scZ4B.png");
---ik-theme-button-diplo-off: url("https://i.imgur.com/Sr3xtbJ.png");
---ik-theme-button-diplo-on: url("https://i.imgur.com/RpLIYH7.png");
---ik-theme-button-military-off: url("https://i.imgur.com/nUHR9Zs.png");
---ik-theme-button-military-on: url("https://i.imgur.com/NoFisYj.png");
---ik-theme-button-moves-off: url("https://i.imgur.com/XC4e1ka.png");
---ik-theme-button-moves-on: url("https://i.imgur.com/HOKhSS6.png");
---ik-theme-button-orders-off: url("https://i.imgur.com/logTL0i.png");
---ik-theme-button-orders-on: url("https://i.imgur.com/Xpc2fSO.png");
---ik-theme-button-armies-off: url("https://i.imgur.com/kE3aSOL.png");
---ik-theme-button-armies-on: url("https://i.imgur.com/M7gmlqd.png");
---ik-theme-button-command-off: url("https://i.imgur.com/qMammF8.png");
---ik-theme-button-command-on: url("https://i.imgur.com/zzVar3k.png");
---ik-theme-button-troops-off: url("https://i.imgur.com/g02QXcU.png");
---ik-theme-button-troops-on: url("https://i.imgur.com/Woe7jJv.png");
---ik-theme-button-trade-off: url("https://i.imgur.com/sowIrLS.png");
---ik-theme-button-trade-on: url("https://i.imgur.com/y9rb9e7.png");
---ik-theme-button-markets-off: url("https://i.imgur.com/tbQkDnx.png");
---ik-theme-button-markets-on: url("https://i.imgur.com/aF84qpi.png");
---ik-theme-button-factions-off: url("https://i.imgur.com/smVbw5w.png");
---ik-theme-button-factions-on: url("https://i.imgur.com/2zOGkbb.png");
---ik-theme-button-tradeunits-off: url("https://i.imgur.com/oCCnrSn.png");
---ik-theme-button-tradeunits-on: url("https://i.imgur.com/W2AWeda.png");
---ik-theme-button-research-off: url("https://i.imgur.com/rdvsb5U.png");
---ik-theme-button-research-on: url("https://i.imgur.com/owlPuMu.png");
---ik-theme-button-available-off: url("https://i.imgur.com/epab08T.png");
---ik-theme-button-available-on: url("https://i.imgur.com/Hje9TdQ.png");
---ik-theme-button-tree-off: url("https://i.imgur.com/mThyqL6.png");
---ik-theme-button-tree-on: url("https://i.imgur.com/CCpizKp.png");
---ik-theme-button-discovery-off: url("https://i.imgur.com/rWgow5u.png");
---ik-theme-button-discovery-on: url("https://i.imgur.com/wEU1snc.png");
---ik-theme-button-reading-off: url("https://i.imgur.com/IzzuKX1.png");
---ik-theme-button-reading-on: url("https://i.imgur.com/vFwluJb.png");
---ik-theme-button-magic-off: url("https://i.imgur.com/XWUSHyi.png");
---ik-theme-button-magic-on: url("https://i.imgur.com/Tkcm4xa.png");
---ik-theme-button-active-off: url("https://i.imgur.com/anfgwrq.png");
---ik-theme-button-active-on: url("https://i.imgur.com/9ZIMLzd.png");
---ik-theme-button-cast-off: url("https://i.imgur.com/ai5l18g.png");
---ik-theme-button-cast-on: url("https://i.imgur.com/QTms7k7.png");
---ik-theme-button-transmog-off: url("https://i.imgur.com/ljoFk8E.png");
---ik-theme-button-transmog-on: url("https://i.imgur.com/QGCIuTF.png");
---ik-theme-char-ring2-off: url("https://i.imgur.com/BymSTQB.png");
---ik-theme-char-ring2-on: url("https://i.imgur.com/eqpzQBm.png");
---ik-theme-button-darkbg-off: url("https://i.imgur.com/0JECVbh.png");
---ik-theme-button-darkbg-on: url("https://i.imgur.com/kwVBQAB.png");
---ik-theme-button-favourites-off: url("https://i.imgur.com/1g3vtDX.png");
---ik-theme-button-favourites-on: url("https://i.imgur.com/8FxgR7U.png");
---ik-theme-button-leaderboard-off: url("https://i.imgur.com/XxebsgF.png");
---ik-theme-button-leaderboard-on: url("https://i.imgur.com/RFNqMcH.png");
---ik-theme-button-account-off: url("https://i.imgur.com/LMzosvT.png");
---ik-theme-button-account-on: url("https://i.imgur.com/3EfWJ4S.png");
---ik-theme-button-support-off: url("https://i.imgur.com/f0k69Kz.png");
---ik-theme-button-support-on: url("https://i.imgur.com/Rhc1Qby.png");
---ik-theme-button-alliance-off: url("https://i.imgur.com/7uzcST8.png");
---ik-theme-button-alliance-on: url("https://i.imgur.com/ID9pQhs.png");
---ik-theme-button-recruit-off: url("https://i.imgur.com/Y5hmywH.png");
---ik-theme-button-recruit-on: url("https://i.imgur.com/jtWx47t.png");
---ik-theme-button-standings-off: url("https://i.imgur.com/jWDFmqp.png");
---ik-theme-button-standings-on: url("https://i.imgur.com/6KymOzB.png");
---ik-theme-button-prestige-off: url("https://i.imgur.com/E1VkYZl.png");
---ik-theme-button-prestige-on: url("https://i.imgur.com/I4JKA2b.png");
---ik-theme-button-medal-off: url("https://i.imgur.com/sh4Du4L.png");
---ik-theme-button-medal-on: url("https://i.imgur.com/Dr6X4uR.png");
---ik-theme-button-buy-off: url("https://i.imgur.com/mECO02L.png");
---ik-theme-button-buy-on: url("https://i.imgur.com/kSsFxRu.png");
---ik-theme-button-history-off: url("https://i.imgur.com/kKc9fMn.png");
---ik-theme-button-history-on: url("https://i.imgur.com/AeyDNIA.png");
---ik-theme-button-mail-off: url("https://i.imgur.com/v7JqGC4.png");
---ik-theme-button-mail-on: url("https://i.imgur.com/WDrnrTn.png");
---ik-theme-button-notif-off: url("https://i.imgur.com/ch3iAHC.png");
---ik-theme-button-notif-on: url("https://i.imgur.com/3oupSsE.png");
---ik-theme-button-forum-off: url("https://i.imgur.com/sQYWiNd.png");
---ik-theme-button-forum-on: url("https://i.imgur.com/aQ0C6Dt.png");
---ik-theme-button-chat-off: url("https://i.imgur.com/nmgSnr3.png");
---ik-theme-button-chat-on: url("https://i.imgur.com/5rQtAzt.png");
+--ik-theme-button-world-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408026/darkworld_64x64_off.png");
+--ik-theme-button-world-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408026/darkworld_64x64_on.png");
+--ik-theme-button-region-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408010/darkregionalbonus_32x32_off.png");
+--ik-theme-button-region-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408011/darkregionalbonus_32x32_on.png");
+--ik-theme-button-quest-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408007/darkquests_32x32_off.png");
+--ik-theme-button-quest-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408007/darkquests_32x32_on.png");
+--ik-theme-button-tourney-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408018/darktournaments_32x32_off.png");
+--ik-theme-button-tourney-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408019/darktournaments_32x32_on.png");
+--ik-theme-button-stats-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407999/darknotes2_32x32_off.png");
+--ik-theme-button-stats-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407999/darknotes2_32x32_on.png");
+--ik-theme-button-herald-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407988/darkherald_32x32_off.png");
+--ik-theme-button-herald-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407988/darkherald_32x32_on.png");
+--ik-theme-button-city-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407972/darkcity_64x64_off.png");
+--ik-theme-button-city-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407973/darkcity_64x64_on.png");
+--ik-theme-button-castle-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407968/darkcastle_32x32_off.png");
+--ik-theme-button-castle-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407969/darkcastle_32x32_on.png");
+--ik-theme-button-res-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408019/darktown_summary_32x32_off.png");
+--ik-theme-button-res-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408020/darktown_summary_32x32_on.png");
+--ik-theme-button-prod-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408005/darkproduction_summary_32x32_off.png");
+--ik-theme-button-prod-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408006/darkproduction_summary_32x32_on.png");
+--ik-theme-button-sov-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408016/darksovereignty_32x32_off.png");
+--ik-theme-button-sov-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408016/darksovereignty_32x32_on.png");
+--ik-theme-button-inv-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407990/darkinventory_32x32_off.png");
+--ik-theme-button-inv-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407991/darkinventory_32x32_on.png");
+--ik-theme-button-diplomacy-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407977/darkdiplomacy_64x64_off.png");
+--ik-theme-button-diplomacy-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407978/darkdiplomacy_64x64_on.png");
+--ik-theme-button-diplo-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407976/darkdiplo_32x32_off.png");
+--ik-theme-button-diplo-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407977/darkdiplo_32x32_on.png");
+--ik-theme-button-military-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407996/darkmilitary_64x64_off.png");
+--ik-theme-button-military-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407997/darkmilitary_64x64_on.png");
+--ik-theme-button-moves-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407997/darkmovements_32x32_off.png");
+--ik-theme-button-moves-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407998/darkmovements_32x32_on.png");
+--ik-theme-button-orders-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408001/darkorders_32x32_off.png");
+--ik-theme-button-orders-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408001/darkorders_32x32_on.png");
+--ik-theme-button-armies-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407963/darkarmies_32x32_off.png");
+--ik-theme-button-armies-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407964/darkarmies_32x32_on.png");
+--ik-theme-button-command-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407973/darkcommanders_32x32_off.png");
+--ik-theme-button-command-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407974/darkcommanders_32x32_on.png");
+--ik-theme-button-troops-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408024/darktroops_32x32_off.png");
+--ik-theme-button-troops-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408025/darktroops_32x32_on.png");
+--ik-theme-button-trade-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408022/darktrade_64x64_off.png");
+--ik-theme-button-trade-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408022/darktrade_64x64_on.png");
+--ik-theme-button-markets-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408004/darkprices_32x32_off.png");
+--ik-theme-button-markets-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408005/darkprices_32x32_on.png");
+--ik-theme-button-factions-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407980/darkfactionmarket_32x32_off.png");
+--ik-theme-button-factions-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407981/darkfactionmarket_32x32_on.png");
+--ik-theme-button-tradeunits-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408020/darktrade_32x32_off.png");
+--ik-theme-button-tradeunits-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408021/darktrade_32x32_on.png");
+--ik-theme-button-research-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408011/darkresearch_64x64_off.png");
+--ik-theme-button-research-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408012/darkresearch_64x64_on.png");
+--ik-theme-button-available-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407964/darkavailable_32x32_off.png");
+--ik-theme-button-available-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407965/darkavailable_32x32_on.png");
+--ik-theme-button-tree-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407975/darkcomplete_research_tree_32x32_off.png");
+--ik-theme-button-tree-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407975/darkcomplete_research_tree_32x32_on.png");
+--ik-theme-button-discovery-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407979/darkdiscovery_32x32_off.png");
+--ik-theme-button-discovery-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407979/darkdiscovery_32x32_on.png");
+--ik-theme-button-reading-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408009/darkreading_32x32_off.png");
+--ik-theme-button-reading-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408010/darkreading_32x32_on.png");
+--ik-theme-button-magic-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407992/darkmagic_64x64_off.png");
+--ik-theme-button-magic-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407993/darkmagic_64x64_on.png");
+--ik-theme-button-active-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408017/darkspells_in_progress_32x32_off.png");
+--ik-theme-button-active-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408017/darkspells_in_progress_32x32_on.png");
+--ik-theme-button-cast-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407970/darkcast_spell_32x32_off.png");
+--ik-theme-button-cast-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407970/darkcast_spell_32x32_on.png");
+--ik-theme-button-transmog-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408023/darktransmogrification_32x32_off.png");
+--ik-theme-button-transmog-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408024/darktransmogrification_32x32_on.png");
+--ik-theme-char-ring2-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408013/darkring2_off.png");
+--ik-theme-char-ring2-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408014/darkring2_on.png");
+--ik-theme-button-darkbg-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407965/darkbg_off.png");
+--ik-theme-button-darkbg-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407966/darkbg_on.png");
+--ik-theme-button-favourites-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407983/darkfavourites_32x32_off.png");
+--ik-theme-button-favourites-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407984/darkfavourites_32x32_on.png");
+--ik-theme-button-leaderboard-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408008/darkrankings_32x32_off.png");
+--ik-theme-button-leaderboard-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408008/darkrankings_32x32_on.png");
+--ik-theme-button-account-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407960/darkaccount_preferences_32x32_off.png");
+--ik-theme-button-account-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407960/darkaccount_preferences_32x32_on.png");
+--ik-theme-button-support-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407959/darkabout_32x32_off.png");
+--ik-theme-button-support-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407960/darkabout_32x32_on.png");
+--ik-theme-button-alliance-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407962/darkalliances_64x64_off.png");
+--ik-theme-button-alliance-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407963/darkalliances_64x64_on.png");
+--ik-theme-button-recruit-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407961/darkalliance_32x32_off.png");
+--ik-theme-button-recruit-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407962/darkalliance_32x32_on.png");
+--ik-theme-button-standings-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407982/darkfactions_standings_32x32_off.png");
+--ik-theme-button-standings-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407982/darkfactions_standings_32x32_on.png");
+--ik-theme-button-prestige-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408003/darkprestige_64x64_off.png");
+--ik-theme-button-prestige-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408004/darkprestige_64x64_on.png");
+--ik-theme-button-medal-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407995/darkmedal_32x32_off.png");
+--ik-theme-button-medal-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407995/darkmedal_32x32_on.png");
+--ik-theme-button-buy-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407967/darkbuy_prestige_32x32_off.png");
+--ik-theme-button-buy-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407968/darkbuy_prestige_32x32_on.png");
+--ik-theme-button-history-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407989/darkhistory_32x32_off.png");
+--ik-theme-button-history-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407990/darkhistory_32x32_on.png");
+--ik-theme-button-mail-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407994/darkmail_64x64_off.png");
+--ik-theme-button-mail-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407994/darkmail_64x64_on.png");
+--ik-theme-button-notif-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408000/darknotifications_32x32_off.png");
+--ik-theme-button-notif-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408000/darknotifications_32x32_on.png");
+--ik-theme-button-forum-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407984/darkforum_32x32_off.png");
+--ik-theme-button-forum-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407985/darkforum_32x32_on.png");
+--ik-theme-button-chat-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407971/darkchat_32x32_off.png");
+--ik-theme-button-chat-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407972/darkchat_32x32_on.png");
 }
 body.ik-dark-mode p:not([id*="Notes"] *),
 body.ik-dark-mode td:not([id*="Notes"] *),
@@ -970,7 +970,7 @@ body.ik-dark-mode div.iconBox.ib8.top a:hover img.sIcon.sIcon1 { content: var(--
 body.ik-dark-mode div.iconBox.ib8.top a img.sIcon.sIcon2 { content: var(--ik-theme-button-leaderboard-off) !important; }
 body.ik-dark-mode div.iconBox.ib8.top a:hover img.sIcon.sIcon2 { content: var(--ik-theme-button-leaderboard-on) !important; }
 body.ik-dark-mode div.iconBox.ib8.top a img.sIcon.sIcon3 { content: var(--ik-theme-button-account-off) !important; }
-body.ik-dark-mode div.iconBox.ib8.top a:hover img.sIcon.sIcon3 { content: var(--ik-theme-account-diplo-on) !important; }
+body.ik-dark-mode div.iconBox.ib8.top a:hover img.sIcon.sIcon3 { content: var(--ik-theme-button-account-on) !important; }
 body.ik-dark-mode div.iconBox.ib8.top a img.sIcon.sIcon4 { content: var(--ik-theme-button-support-off) !important; }
 body.ik-dark-mode div.iconBox.ib8.top a:hover img.sIcon.sIcon4 { content: var(--ik-theme-button-support-on) !important; }
 
