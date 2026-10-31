@@ -362,7 +362,7 @@
 --ik-theme-button-herald-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407988/darkherald_32x32_off.png");
 --ik-theme-button-herald-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407988/darkherald_32x32_on.png");
 --ik-theme-button-city-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407972/darkcity_64x64_off.png");
---ik-theme-button-city-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407972/darkcity_64x64_off.png");
+--ik-theme-button-city-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407973/darkcity_64x64_on.png");
 --ik-theme-button-castle-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407968/darkcastle_32x32_off.png");
 --ik-theme-button-castle-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407969/darkcastle_32x32_on.png");
 --ik-theme-button-res-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408019/darktown_summary_32x32_off.png");
@@ -390,7 +390,7 @@
 --ik-theme-button-troops-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408024/darktroops_32x32_off.png");
 --ik-theme-button-troops-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408025/darktroops_32x32_on.png");
 --ik-theme-button-trade-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408022/darktrade_64x64_off.png");
---ik-theme-button-trade-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408022/darktrade_64x64_off.png");
+--ik-theme-button-trade-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408022/darktrade_64x64_on.png");
 --ik-theme-button-markets-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408004/darkprices_32x32_off.png");
 --ik-theme-button-markets-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408005/darkprices_32x32_on.png");
 --ik-theme-button-factions-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407980/darkfactionmarket_32x32_off.png");
