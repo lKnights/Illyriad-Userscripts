@@ -643,7 +643,8 @@ body.ik-dark-mode span.ikcat-dialog-tab:not([id*="Notes"] *) {
 
 body.ik-dark-mode .sideTab.selected,
 body.ik-dark-mode span.ikcat-dialog-tab.data-tab:not([id*="Notes"] *),
-body.ik-dark-mode span.ikcat-dialog-tab.selected:not([id*="Notes"] *) {
+body.ik-dark-mode span.ikcat-dialog-tab.selected:not([id*="Notes"] *),
+body.ik-dark-mode span.ikcat-dialog-tab.active:not([id*="Notes"] *) {
     background-image: var(--ik-theme-texture) !important;
     background-repeat: repeat !important;
     color: var(--ik-theme-special-text5) !important;
