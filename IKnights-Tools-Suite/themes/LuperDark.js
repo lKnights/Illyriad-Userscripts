@@ -970,7 +970,7 @@ body.ik-dark-mode div.iconBox.ib8.top a:hover img.sIcon.sIcon1 { content: var(--
 body.ik-dark-mode div.iconBox.ib8.top a img.sIcon.sIcon2 { content: var(--ik-theme-button-leaderboard-off) !important; }
 body.ik-dark-mode div.iconBox.ib8.top a:hover img.sIcon.sIcon2 { content: var(--ik-theme-button-leaderboard-on) !important; }
 body.ik-dark-mode div.iconBox.ib8.top a img.sIcon.sIcon3 { content: var(--ik-theme-button-account-off) !important; }
-body.ik-dark-mode div.iconBox.ib8.top a:hover img.sIcon.sIcon3 { content: var(--ik-theme-account-diplo-on) !important; }
+body.ik-dark-mode div.iconBox.ib8.top a:hover img.sIcon.sIcon3 { content: var(--ik-theme-button-account-on) !important; }
 body.ik-dark-mode div.iconBox.ib8.top a img.sIcon.sIcon4 { content: var(--ik-theme-button-support-off) !important; }
 body.ik-dark-mode div.iconBox.ib8.top a:hover img.sIcon.sIcon4 { content: var(--ik-theme-button-support-on) !important; }
 
