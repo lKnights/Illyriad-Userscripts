@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Illyriad Tools Suite
 // @namespace    IKnights
-// @version      0.14.11
+// @version      0.14.12
 // @description  Integrated tools and interface customization for Illyriad.
 // @author       IKnights
 //
