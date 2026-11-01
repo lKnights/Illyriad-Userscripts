@@ -347,8 +347,8 @@
 --ik-theme-darkmode-credits: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793407976/darkcredits_small.png");
 --ik-theme-border-image: url("https://assets.illyriad.net/img/backgrounds/borderclasps3.png");
 --ik-theme-small-border-image: url("https://assets.illyriad.net/img/backgrounds/border_tiny.png");
---ik-theme-button-short-off: url("https://assets.illyriad.net/img/buttons/short_off_rev.png");
---ik-theme-button-short-on: url("https://assets.illyriad.net/img/buttons/short_on_rev.png");
+--ik-theme-button-short-off: url("https://i.imgur.com/nuQOHDJ.png");
+--ik-theme-button-short-on: url("https://i.imgur.com/YN73zxB.png");
 --ik-theme-button-world-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408026/darkworld_64x64_off.png");
 --ik-theme-button-world-on: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408026/darkworld_64x64_on.png");
 --ik-theme-button-region-off: url("https://res.cloudinary.com/uzoacdfm/image/upload/v1793408010/darkregionalbonus_32x32_off.png");
