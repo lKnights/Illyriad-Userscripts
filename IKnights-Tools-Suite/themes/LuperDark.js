@@ -739,7 +739,7 @@ body.ik-dark-mode .headLinks {
     background-image: var(--ik-theme-headerO-texture) !important;
 }
 
-body.ik-dark-mode .logout {
+body.ik-dark-mode img.logout {
     content: var(--ik-theme-logout) !important;
 }
 
@@ -749,7 +749,7 @@ body.ik-dark-mode .vid {
 
 body.ik-dark-mode #ctrlCompass { content: var(--ik-theme-compass) !important; }
 
-body.ik-dark-mode div[src*="mapscale.png"] { background-image: var(--ik-theme-scale) !important; }
+body.ik-dark-mode div[style*="mapscale.png"] { background-image: var(--ik-theme-scale) !important; }
 
 body.ik-dark-mode div.iconBox.ib1 a img.icon { content: var(--ik-theme-button-world-off) !important; }
 body.ik-dark-mode div.iconBox.ib1 a:hover img.icon { content: var(--ik-theme-button-world-on) !important; }
