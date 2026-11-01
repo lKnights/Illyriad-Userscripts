@@ -747,11 +747,9 @@ body.ik-dark-mode .vid {
     background-image: var(--ik-theme-tutorial) !important;
 }
 
-body.ik-dark-mode #ctrlCompass {
-    background-image: var(--ik-theme-compass) !important;
-}
+body.ik-dark-mode #ctrlCompass { content: var(--ik-theme-compass) !important; }
 
-body.ik-dark-mode div[src*="world_64x64_off.png"] { content: var(--ik-theme-scale) !important; }
+body.ik-dark-mode div[src*="mapscale.png"] { content: var(--ik-theme-scale) !important; }
 
 body.ik-dark-mode div.iconBox.ib1 a img.icon { content: var(--ik-theme-button-world-off) !important; }
 body.ik-dark-mode div.iconBox.ib1 a:hover img.icon { content: var(--ik-theme-button-world-on) !important; }
