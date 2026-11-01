@@ -6,7 +6,7 @@
  */
 (function () {
     "use strict";
-    if (window.__IKTOOLS_LUPER_DARK_LOADED__) return;
+    if (window.__IKTOOLS_LUPER_DARK_BLACK_LOADED__) return;
     if (!window.IKTools?.customizer) throw new Error("Luper Dark requires Customizer.");
 
     // 1. SINGLE SOURCE OF TRUTH: All variables defined once here.
@@ -1056,5 +1056,5 @@ body.ik-dark-mode div.iconBox img.sIcon {
         remove
     });
 
-    window.__IKTOOLS_LUPER_DARK_LOADED__ = true;
+    window.__IKTOOLS_LUPER_DARK_BLACK_LOADED__ = true;
 })();
