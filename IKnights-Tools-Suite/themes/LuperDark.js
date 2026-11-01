@@ -1075,6 +1075,16 @@ body.ik-dark-mode input[type="submit"]:hover.medium {
     background-repeat: repeat !important;
 }
 
+body.ik-dark-mode input.short[type="submit"] {
+    background-image: var(--ik-theme-button-short-off) !important;
+    background-repeat: repeat !important;
+}
+
+body.ik-dark-mode input[type="submit"]:hover.short {
+    background-image: var(--ik-theme-button-short-on) !important;
+    background-repeat: repeat !important;
+}
+
 body.ik-dark-mode div#WzTtDiV div#WzBoDy table tbody tr td#WzBoDyI div.popup div.t { background-image: var(--ik-theme-popup-top) !important; }
 body.ik-dark-mode div#WzTtDiV div#WzBoDy table tbody tr td#WzBoDyI div.popup div.m { background-image: var(--ik-theme-popup-mid) !important; }
 body.ik-dark-mode div#WzTtDiV div#WzBoDy table tbody tr td#WzBoDyI div.popup div.b { background-image: var(--ik-theme-popup-bot) !important; }
