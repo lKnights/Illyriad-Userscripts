@@ -45,10 +45,10 @@
             "enabled": true
         },
         {
-            "id": "luper-dark",
-            "name": "Luper Dark Interface Theme",
+            "id": "luper-dark-warm",
+            "name": "LuperDark (Warm) Interface Theme",
             "version": "1.0.0",
-            "file": "themes/LuperDark.js",
+            "file": "themes/LuperDark_Warm.js",
             "requires": [
                 "customizer"
             ],
