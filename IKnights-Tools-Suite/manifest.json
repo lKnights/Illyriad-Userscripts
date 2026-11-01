@@ -55,6 +55,16 @@
             "enabled": true
         },
         {
+            "id": "luper-dark-black",
+            "name": "LuperDark (Blackout) Interface Theme",
+            "version": "1.0.0",
+            "file": "themes/LuperDark_Blackout.js",
+            "requires": [
+                "customizer"
+            ],
+            "enabled": true
+        },
+        {
             "id": "ui-tweaks",
             "name": "UI Tweaks",
             "version": "1.0.0",
