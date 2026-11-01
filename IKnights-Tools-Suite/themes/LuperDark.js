@@ -1060,7 +1060,7 @@ body.ik-dark-mode input[type="submit"] {
     background-repeat: repeat !important;
 }
 
-body.ik-dark-mode input[type="submit"].ui-state-hover {
+body.ik-dark-mode input[type="submit"]:hover {
     background-image: var(--ik-theme-button-reg-on) !important;
     background-repeat: repeat !important;
 }
@@ -1070,7 +1070,7 @@ body.ik-dark-mode input.medium[type="submit"] {
     background-repeat: repeat !important;
 }
 
-body.ik-dark-mode input.medium[type="submit"].ui-state-hover {
+body.ik-dark-mode input[type="submit"]:hover.medium {
     background-image: var(--ik-theme-button-med-on) !important;
     background-repeat: repeat !important;
 }
