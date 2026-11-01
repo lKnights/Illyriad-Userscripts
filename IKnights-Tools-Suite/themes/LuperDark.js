@@ -350,8 +350,8 @@
 --ik-theme-button-short-off: url("https://i.imgur.com/nuQOHDJ.png");
 --ik-theme-button-short-on: url("https://i.imgur.com/YN73zxB.png");
 /* New Button Variables */
---ik-theme-button-reg-off: url("https://i.imgur.com/jBaWKfZ.png");
---ik-theme-button-reg-on: url("https://i.imgur.com/FhGpJ0A.png");
+--ik-theme-button-reg-off: url("https://i.imgur.com/FhGpJ0A.png");
+--ik-theme-button-reg-on: url("https://i.imgur.com/jBaWKfZ.png");
 --ik-theme-button-med-off: url("https://i.imgur.com/8xTzrCm.png");
 --ik-theme-button-med-on: url("https://i.imgur.com/vZvgdzo.png");
 /*         END          */
@@ -1060,8 +1060,18 @@ body.ik-dark-mode input[type="submit"] {
     background-repeat: repeat !important;
 }
 
+body.ik-dark-mode input[type="submit"]:hover {
+    background-image: var(--ik-theme-button-reg-on) !important;
+    background-repeat: repeat !important;
+}
+
 body.ik-dark-mode input.medium[type="submit"] {
     background-image: var(--ik-theme-button-med-off) !important;
+    background-repeat: repeat !important;
+}
+
+body.ik-dark-mode input.medium[type="submit"]:hover {
+    background-image: var(--ik-theme-button-med-on) !important;
     background-repeat: repeat !important;
 }
 
