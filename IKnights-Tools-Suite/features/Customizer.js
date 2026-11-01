@@ -188,7 +188,7 @@
         const existing = loadJSON(STORAGE_KEY, null);
         const legacy = loadJSON("ikLuperTweaks.settings.v1", null);
         const fallback = !existing && legacy && legacy.darkMode === true
-            ? { ...DEFAULT_SETTINGS, interfaceTheme: "luper-dark" }
+            ? { ...DEFAULT_SETTINGS, interfaceTheme: "luper-dark-warm" }
             : DEFAULT_SETTINGS;
         settings =
             normalizeSettings(
