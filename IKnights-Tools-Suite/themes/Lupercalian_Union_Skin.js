@@ -51,6 +51,9 @@
     body.ik-city-lupercalian-union img[src*="03-wall_upper.png"] {
         content: var(--ik-theme-city-wall-top) !important;
     }
+    body.ik-city-lupercalian-union img[src*="03-wall_lower.png"] {
+        background-image: var(--ik-theme-city-wall-bottom) !important;
+    }
     body.ik-city-lupercalian-union div[style*="03-wall_upper.png"] {
         background-image: var(--ik-theme-city-wall-top) !important;
         background-size: 1050px !important;
@@ -60,11 +63,11 @@
         background-image: var(--ik-theme-city-wall-bottom) !important;
         background-size: 1030px !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-wall_lower.png"] {
-        background-image: var(--ik-theme-city-wall-bottom) !important;
+    body.ik-city-lupercalian-union div[style*="03-wall_lower.png"] fieldset:nth-of-type(2) {
+        margin-left: 125px !important;
     }
 
-    
+    /* ====================== CASTLE =========================== */
     body.ik-city-lupercalian-union img[src*="03-castle_off.png"] {
         content: var(--ik-theme-city-castle-off) !important;
     }
