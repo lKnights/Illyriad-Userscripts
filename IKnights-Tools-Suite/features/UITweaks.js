@@ -189,10 +189,40 @@
             
             #ikUITweaksAccordion > h3 {
                 display: block !important;
+                position: relative !important;
+                box-sizing: border-box !important;
+            
+                /* Header spacing */
+                padding: 10px 12px 10px 34px !important;
+                min-height: 38px !important;
+                line-height: 18px !important;
+            
+                /* Text styling */
+                font-size: 13px !important;
                 cursor: pointer;
-                padding: 6px 10px;
-                font-size: 13px;
-                margin-bottom: 2px;
+                margin: 0 0 3px 0 !important;
+            }
+
+            #ikUITweaksAccordion > h3::before {
+                content: "";
+                position: absolute;
+                left: 12px;
+                top: 50%;
+            
+                width: 0;
+                height: 0;
+            
+                border-top: 5px solid transparent;
+                border-bottom: 5px solid transparent;
+                border-left: 6px solid currentColor;
+            
+                transform: translateY(-50%);
+                pointer-events: none;
+            }
+            
+            /* Expanded accordion arrow */
+            #ikUITweaksAccordion > h3.ui-state-active::before {
+                transform: translateY(-50%) rotate(90deg);
             }
             
             #ikUITweaksAccordion label {
@@ -201,6 +231,10 @@
                 gap: 8px;
                 font-size: 12px;
                 cursor: pointer;
+            }
+
+            #ikUITweaksAccordion > .ui-accordion-content {
+                padding: 12px 12px 12px 34px !important;
             }
         }
         body.ik-dark-mode #citiesMenu span.ik-zero-value { color: #ff5555 !important; font-weight: bold; }`;
