@@ -46,7 +46,7 @@
     body.ik-city-lupercalian-union img[src*="lumberwood.png"] {
         content: var(--ik-theme-city-trees) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-wall_upper.png"] {
+    body.ik-city-lupercalian-union img[src*="03-wall_upper.png"], body.ik-city-lupercalian-union div[style*="03-wall_upper.png"] {
         content: var(--ik-theme-city-wall-top) !important;
     }
     body.ik-city-lupercalian-union img[src*="03-wall_lower.png"] {
