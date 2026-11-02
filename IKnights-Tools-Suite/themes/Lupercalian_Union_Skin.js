@@ -38,7 +38,7 @@
 
     // 2. CSS Rules mapping image sources to custom theme variables
     const dynamicCityThemeCSS = generateVariablesCSS() + `
-    body.ik-city-lupercalian-union img[src*="back.png"] {
+    body.ik-city-lupercalian-union img[src*="back.jpg"] {
         content: var(--ik-theme-city-map) !important;
     }
     body.ik-city-lupercalian-union img[src*="lumberwood.png"] {
