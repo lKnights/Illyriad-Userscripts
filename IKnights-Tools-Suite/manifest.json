@@ -68,7 +68,7 @@
             "id": "lupercalian-union-skin",
             "name": "Lupercalian Union Skin",
             "version": "1.0.0",
-            "file": "Lupercalian_Union_Skin.js",
+            "file": "themes/Lupercalian_Union_Skin.js",
             "requires": [
                 "customizer"
             ],
