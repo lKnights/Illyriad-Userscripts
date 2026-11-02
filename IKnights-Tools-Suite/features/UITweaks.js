@@ -206,10 +206,18 @@
         if (!dialog) {
             const content = document.createElement("div");
             content.id = "ikUITweaks";
-            content.style.display = "flex";
-            content.style.flexDirection = "column";
-            content.style.gap = "8px";
+            
+            const accordion = document.createElement("div");
+            accordion.id = "ikUITweaksAccordion";
+            content.appendChild(accordion);
 
+            const sovHeader = document.createElement("h3");
+            sovHeader.textContent = "Sovereignty Claim Warnings";
+            
+            const sovPanel = document.createElement("div");
+            
+            accordion.append(sovHeader, sovPanel);
+            
             const label1 = document.createElement("label");
             const checkbox1 = document.createElement("input");
             checkbox1.type = "checkbox";
@@ -220,8 +228,15 @@
                 apply();
             });
             label1.append(checkbox1, " Highlight sovereignty claims with no structure or a lower structure level");
-            content.appendChild(label1);
+            sovPanel.appendChild(label1);
 
+            const plotHeader = document.createElement("h3");
+            plotHeader.textContent = "Town Building Plot Labels";
+            
+            const plotPanel = document.createElement("div");
+            
+            accordion.append(plotHeader, plotPanel);
+            
             const label2 = document.createElement("label");
             const checkbox2 = document.createElement("input");
             checkbox2.type = "checkbox";
@@ -232,9 +247,19 @@
                 apply();
             });
             label2.append(checkbox2, " Display level labels on town building plots");
-            content.appendChild(label2);
+            plotPanel.appendChild(label2);
 
             document.body.appendChild(content);
+
+            if (typeof window.jQuery.fn.accordion === "function") {
+                window.jQuery(accordion).accordion({
+                    header: "> h3",
+                    collapsible: true,
+                    active: false,
+                    heightStyle: "content"
+                });
+            }
+            
             dialog = window.jQuery(content).dialog({title:"UI Tweaks", autoOpen:false,
                 width:380, minWidth:280, height:"auto", dialogClass:"flora"});
         }
