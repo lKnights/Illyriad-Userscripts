@@ -65,6 +65,16 @@
             "enabled": true
         },
         {
+            "id": "lupercalian-union-skin",
+            "name": "Lupercalian Union Skin",
+            "version": "1.0.0",
+            "file": "Lupercalian_Union_Skin.js",
+            "requires": [
+                "customizer"
+            ],
+            "enabled": true
+        },
+        {
             "id": "ui-tweaks",
             "name": "UI Tweaks",
             "version": "1.0.0",
