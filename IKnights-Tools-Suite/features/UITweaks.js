@@ -186,6 +186,22 @@
         style.id = "ikUITweaksStyles";
         style.textContent = `#sovAccordion a.ik-sov-imbalance {
             background-color: var(--ik-theme-warning-highlight, #ff000042) !important;
+            
+            #ikUITweaksAccordion > h3 {
+                display: block !important;
+                cursor: pointer;
+                padding: 6px 10px;
+                font-size: 13px;
+                margin-bottom: 2px;
+            }
+            
+            #ikUITweaksAccordion label {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-size: 12px;
+                cursor: pointer;
+            }
         }
         body.ik-dark-mode #citiesMenu span.ik-zero-value { color: #ff5555 !important; font-weight: bold; }`;
         document.head.appendChild(style);
