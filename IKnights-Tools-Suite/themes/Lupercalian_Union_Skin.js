@@ -52,7 +52,7 @@
         content: var(--ik-theme-city-wall-top) !important;
     }
     body.ik-city-lupercalian-union img[src*="03-wall_lower.png"] {
-        background-image: var(--ik-theme-city-wall-bottom) !important;
+        content: var(--ik-theme-city-wall-bottom) !important;
     }
     body.ik-city-lupercalian-union div[style*="03-wall_upper.png"] {
         background-image: var(--ik-theme-city-wall-top) !important;
