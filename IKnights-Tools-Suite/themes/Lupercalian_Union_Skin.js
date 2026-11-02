@@ -21,6 +21,8 @@
 
     // 1. Single source of truth for city theme variables and art assets
     const variables = {
+        "--ik-theme-city-map": 'url("https://i.imgur.com/xWmXaI2.jpeg")',
+        "--ik-theme-city-trees": 'url("https://i.imgur.com/gTvNWI2.png")',
         "--ik-theme-city-castle-off": 'url("https://i.imgur.com/6N15PMJ.png")',
         "--ik-theme-city-castle-on": 'url("https://i.imgur.com/hlD6wHO.png")'
     };
@@ -36,6 +38,14 @@
 
     // 2. CSS Rules mapping image sources to custom theme variables
     const dynamicCityThemeCSS = generateVariablesCSS() + `
+    body.ik-city-lupercalian-union img[src*="back.png"] {
+        content: var(--ik-theme-city-map) !important;
+    }
+    body.ik-city-lupercalian-union img[src*="lumberwood.png"] {
+        content: var(--ik-theme-city-trees) !important;
+    }
+
+    
     body.ik-city-lupercalian-union img[src*="03-castle_off.png"] {
         content: var(--ik-theme-city-castle-off) !important;
     }
