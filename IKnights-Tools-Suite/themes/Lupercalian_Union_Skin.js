@@ -40,17 +40,28 @@
 
     // 2. CSS Rules mapping image sources to custom theme variables
     const dynamicCityThemeCSS = generateVariablesCSS() + `
+    /* ================== MAIN MAP + TREES ===================== */
     body.ik-city-lupercalian-union #townMap img[src*="back.jpg"] {
         content: var(--ik-theme-city-map) !important;
     }
     body.ik-city-lupercalian-union img[src*="lumberwood.png"] {
         content: var(--ik-theme-city-trees) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-wall_upper.png"], body.ik-city-lupercalian-union div[style*="03-wall_upper.png"] {
+    /* ======================= WALLS ============================ */
+    body.ik-city-lupercalian-union img[src*="03-wall_upper.png"] {
         content: var(--ik-theme-city-wall-top) !important;
     }
+    body.ik-city-lupercalian-union div[style*="03-wall_upper.png"] {
+        background-image: var(--ik-theme-city-wall-top) !important;
+        background-size: 1050px !important;
+        background-position-y: -1.5% !important;
+    }
+    body.ik-city-lupercalian-union div[style*="03-wall_lower.png"] {
+        background-image: var(--ik-theme-city-wall-bottom) !important;
+        background-size: 1030px !important;
+    }
     body.ik-city-lupercalian-union img[src*="03-wall_lower.png"] {
-        content: var(--ik-theme-city-wall-bottom) !important;
+        background-image: var(--ik-theme-city-wall-bottom) !important;
     }
 
     
