@@ -22,6 +22,7 @@
     // 1. Single source of truth for city theme variables and art assets
     const variables = {
         "--ik-theme-city-map": 'url("https://i.imgur.com/xWmXaI2.jpeg")',
+        "--ik-theme-city-road": 'url("https://i.imgur.com/AFWnmny.png")',
         "--ik-theme-city-trees": 'url("https://i.imgur.com/gTvNWI2.png")',
         "--ik-theme-city-wall-top": 'url("https://i.imgur.com/c22uYZI.png")',
         "--ik-theme-city-wall-bottom": 'url("https://i.imgur.com/Q9JecRZ.png")',
@@ -43,6 +44,9 @@
     /* ================== MAIN MAP + TREES ===================== */
     body.ik-city-lupercalian-union #townMap img[src*="back.jpg"] {
         content: var(--ik-theme-city-map) !important;
+    }
+    body.ik-city-lupercalian-union #townMap img[src*="03-roads.png"] {
+        content: var(--ik-theme-city-road) !important;
     }
     body.ik-city-lupercalian-union img[src*="lumberwood.png"] {
         content: var(--ik-theme-city-trees) !important;
