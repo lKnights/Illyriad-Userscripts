@@ -275,6 +275,18 @@
             #ikUITweaksAccordion > .ui-accordion-content {
                 padding: 12px 12px 12px 34px !important;
             }
+
+            #ikUITweaksAccordion label {
+                border-bottom-style: solid !important;
+                border-bottom-width: 1px !important;
+                padding-top: 10px !important;
+                padding-bottom: 10px !important;
+                border-bottom-color: inherit !important;
+            }
+
+            #ikUITweaksAccordion .ik-plot-color-controls label {
+                width: 60% !important;
+            }
         
             /* Existing zero-value styling */
             body.ik-dark-mode #citiesMenu span.ik-zero-value {
