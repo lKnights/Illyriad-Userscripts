@@ -37,6 +37,11 @@
         HEX_COLOR_PATTERN.test(saved?.gradientStart ?? "")
             ? saved.gradientStart
             : "";
+
+    let gradientMidHex =
+    HEX_COLOR_PATTERN.test(saved?.gradientMid ?? "")
+        ? saved.gradientMid
+        : "";
     
     let gradientEndHex =
         HEX_COLOR_PATTERN.test(saved?.gradientEnd ?? "")
@@ -51,6 +56,7 @@
             plotTextColor: plotTextColorHex,
             plotBorderColor: plotBorderColorHex,
             gradientStart: gradientStartHex,
+            gradientMid: gradientMidHex,
             gradientEnd: gradientEndHex
         });
     }
@@ -99,27 +105,42 @@
     }
 
     function getLevelColor(lvl) {
-        // Custom gradient applies only when both colors exist.
-        if (gradientStartHex && gradientEndHex) {
-            const start = hexToRGBA(gradientStartHex);
-            const end = hexToRGBA(gradientEndHex);
     
-            // 20 colors, with inclusive endpoints.
-            const t = (
-                Math.max(1, Math.min(20, lvl)) - 1
-            ) / 19;
+        // Custom gradient requires all three colors.
+        if (gradientStartHex && gradientMidHex && gradientEndHex) {
     
-            // Interpolate red, green, blue, and alpha.
-            const channels = start.map((value, index) =>
+            const level = Math.max(1, Math.min(20, lvl));
+    
+            // Levels 1-10: Start to Mid
+            // Levels 10-20: Mid to End
+            const firstHalf = level <= 10;
+    
+            const from = hexToRGBA(
+                firstHalf ? gradientStartHex : gradientMidHex
+            );
+    
+            const to = hexToRGBA(
+                firstHalf ? gradientMidHex : gradientEndHex
+            );
+    
+            // Each section has its own interpolation range.
+            const t = firstHalf
+                ? (level - 1) / 9
+                : (level - 10) / 10;
+    
+            // Interpolate RGBA channels.
+            const channels = from.map((value, index) =>
                 Math.round(
-                    value + (end[index] - value) * t
+                    value + (to[index] - value) * t
                 )
             );
     
-            // Preserve alpha if supplied in either hex code.
-            const hasAlpha =
-                gradientStartHex.length === 9 ||
-                gradientEndHex.length === 9;
+            // Preserve alpha if any color has an alpha channel.
+            const hasAlpha = [
+                gradientStartHex,
+                gradientMidHex,
+                gradientEndHex
+            ].some(hex => hex.length === 9);
     
             return "#" + channels
                 .slice(0, hasAlpha ? 4 : 3)
@@ -128,15 +149,20 @@
                 )
                 .join("");
         }
+    
+        // Original default gradient (unchanged).
         const ratio = Math.max(0, Math.min(20, lvl)) / 20;
+    
         let hue;
+    
         if (ratio <= 0.33) {
-            hue = (ratio / 0.33) * 35; // Red to Orange (0 - 35)
+            hue = (ratio / 0.33) * 35;
         } else if (ratio <= 0.66) {
-            hue = 35 + ((ratio - 0.33) / 0.33) * 25; // Orange to Yellow (35 - 60)
+            hue = 35 + ((ratio - 0.33) / 0.33) * 25;
         } else {
-            hue = 60 + ((ratio - 0.66) / 0.34) * 60; // Yellow to Green (60 - 120)
+            hue = 60 + ((ratio - 0.66) / 0.34) * 60;
         }
+    
         return `hsl(${hue}, 90%, 40%)`;
     }
 
@@ -357,6 +383,7 @@
 
             #ikUITweaksAccordion .ik-plot-color-controls label span {
                 width: 60% !important;
+                border-bottom-color: inherit !important;
             }
         
             /* Existing zero-value styling */
@@ -379,11 +406,13 @@
                 color: #ffffff !important;
             }
             
-            /* Apply button */
+
+            /* Center Apply button */
             #ikUITweaksAccordion .ik-plot-color-controls > button {
-                align-self: flex-start;
+                display: block !important;
+                float: none !important;
+                margin: 10px auto 0 !important;
                 padding: 5px 15px;
-                margin-top: 4px;
                 cursor: pointer;
             }
 
@@ -408,13 +437,29 @@
                 font-size: 12px;
                 font-weight: bold;
             }
+
+            /* Center Custom Gradient heading */
+            #ikUITweaksAccordion .ik-plot-gradient-section > h4 {
+                text-align: center !important;
+            }
             
-            /* Preview sample boxes */
+            /* Nine equally sized preview cells */
             #ikUITweaksAccordion .ik-gradient-preview-labels {
+                display: grid !important;
+                grid-template-columns: repeat(9, minmax(0, 1fr));
+                gap: 3px;
+                width: 100%;
+            }
+            
+            /* Stretch each sample label across its cell */
+            #ikUITweaksAccordion .ik-gradient-preview-labels > .ik-plot-label {
                 display: flex;
-                flex-wrap: wrap;
                 align-items: center;
-                gap: 8px;
+                justify-content: center;
+            
+                width: 100%;
+                min-width: 0;
+                box-sizing: border-box;
             }
             
         `;
@@ -538,6 +583,12 @@
                 gradientStartHex,
                 gradientSection
             );
+
+            const gradientMidInput = addColorInput(
+                "Mid Point",
+                gradientMidHex,
+                gradientSection
+            );
             
             // Gradient end color
             const gradientEndInput = addColorInput(
@@ -577,6 +628,7 @@
                 plotBorderColorHex = readColor(borderColorInput);
                 
                 gradientStartHex = readColor(gradientStartInput);
+                gradientMidHex = readColor(gradientMidInput);
                 gradientEndHex = readColor(gradientEndInput);
             
                 // Persist the settings.
@@ -608,7 +660,7 @@
             function refreshGradientPreview() {
                 previewBadges.replaceChildren();
             
-                const sampleLevels = [1, 5, 7, 10, 13, 17, 20];
+                const sampleLevels = [1, 3, 5, 7, 10, 13, 15, 17, 20];
             
                 sampleLevels.forEach(lvl => {
                     const badge = document.createElement("span");
