@@ -33,13 +33,25 @@
             ? saved.plotBorderColor
             : "";
     
+    let gradientStartHex =
+        HEX_COLOR_PATTERN.test(saved?.gradientStart ?? "")
+            ? saved.gradientStart
+            : "";
+    
+    let gradientEndHex =
+        HEX_COLOR_PATTERN.test(saved?.gradientEnd ?? "")
+            ? saved.gradientEnd
+            : "";
+    
     // Save all settings together.
     function saveSettings() {
         IKTools.util.saveJSON(key, {
             sovHighlight: enabled,
             plotLabels: plotLabelsEnabled,
             plotTextColor: plotTextColorHex,
-            plotBorderColor: plotBorderColorHex
+            plotBorderColor: plotBorderColorHex,
+            gradientStart: gradientStartHex,
+            gradientEnd: gradientEndHex
         });
     }
     
@@ -65,7 +77,57 @@
         return 0;
     }
 
+    function hexToRGBA(hex) {
+        let digits = hex.slice(1);
+    
+        // Expand #RGB into #RRGGBB.
+        if (digits.length === 3) {
+            digits = [...digits]
+                .map(char => char + char)
+                .join("");
+        }
+    
+        // Supply full opacity if alpha was omitted.
+        if (digits.length === 6) {
+            digits += "ff";
+        }
+    
+        // Return [red, green, blue, alpha].
+        return [0, 2, 4, 6].map(index =>
+            parseInt(digits.slice(index, index + 2), 16)
+        );
+    }
+
     function getLevelColor(lvl) {
+        // Custom gradient applies only when both colors exist.
+        if (gradientStartHex && gradientEndHex) {
+            const start = hexToRGBA(gradientStartHex);
+            const end = hexToRGBA(gradientEndHex);
+    
+            // 20 colors, with inclusive endpoints.
+            const t = (
+                Math.max(1, Math.min(20, lvl)) - 1
+            ) / 19;
+    
+            // Interpolate red, green, blue, and alpha.
+            const channels = start.map((value, index) =>
+                Math.round(
+                    value + (end[index] - value) * t
+                )
+            );
+    
+            // Preserve alpha if supplied in either hex code.
+            const hasAlpha =
+                gradientStartHex.length === 9 ||
+                gradientEndHex.length === 9;
+    
+            return "#" + channels
+                .slice(0, hasAlpha ? 4 : 3)
+                .map(value =>
+                    value.toString(16).padStart(2, "0")
+                )
+                .join("");
+        }
         const ratio = Math.max(0, Math.min(20, lvl)) / 20;
         let hue;
         if (ratio <= 0.33) {
@@ -76,6 +138,21 @@
             hue = 60 + ((ratio - 0.66) / 0.34) * 60; // Yellow to Green (60 - 120)
         }
         return `hsl(${hue}, 90%, 40%)`;
+    }
+
+    function stylePlotBadge(badge, lvl) {
+        badge.style.backgroundColor = getLevelColor(lvl);
+        badge.style.color =
+            plotTextColorHex || DEFAULT_PLOT_TEXT_COLOR;
+        badge.style.padding = "1px 5px";
+        badge.style.fontSize = "11px";
+        badge.style.fontWeight = "bold";
+        badge.style.borderRadius = "3px";
+        badge.style.border =
+            `1px solid ${plotBorderColorHex || DEFAULT_PLOT_BORDER_COLOR}`;
+        badge.style.boxShadow =
+            "0 1px 3px rgba(0,0,0,0.4)";
+        badge.style.pointerEvents = "none";
     }
 
     function refreshSov() {
@@ -154,17 +231,7 @@
             badge.style.left = `${centerX}px`;
             badge.style.top = `${centerY}px`;
             badge.style.transform = "translate(-50%, -50%)";
-            badge.style.backgroundColor = getLevelColor(lvl);
-            badge.style.color =
-                plotTextColorHex || DEFAULT_PLOT_TEXT_COLOR;
-            badge.style.padding = "1px 5px";
-            badge.style.fontSize = "11px";
-            badge.style.fontWeight = "bold";
-            badge.style.borderRadius = "3px";
-            badge.style.border =
-                `1px solid ${plotBorderColorHex || DEFAULT_PLOT_BORDER_COLOR}`;
-            badge.style.boxShadow = "0 1px 3px rgba(0,0,0,0.4)";
-            badge.style.pointerEvents = "none";
+            stylePlotBadge(badge, lvl);
 
             container.appendChild(badge);
         });
@@ -319,6 +386,36 @@
                 margin-top: 4px;
                 cursor: pointer;
             }
+
+            /* Custom Gradient section */
+            #ikUITweaksAccordion .ik-plot-gradient-section {
+                margin-top: 12px;
+                padding-top: 10px;
+                border-top: 1px solid rgba(128,128,128,0.35);
+            }
+            
+            /* Gradient Preview section */
+            #ikUITweaksAccordion .ik-plot-gradient-preview {
+                margin-top: 12px;
+                padding-top: 10px;
+                border-top: 1px solid rgba(128,128,128,0.35);
+            }
+            
+            /* Section headings */
+            #ikUITweaksAccordion .ik-plot-gradient-section h4,
+            #ikUITweaksAccordion .ik-plot-gradient-preview h4 {
+                margin: 0 0 8px;
+                font-size: 12px;
+                font-weight: bold;
+            }
+            
+            /* Preview sample boxes */
+            #ikUITweaksAccordion .ik-gradient-preview-labels {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 8px;
+            }
             
         `;
         document.head.appendChild(style);
@@ -387,7 +484,7 @@
             colorControls.className = "ik-plot-color-controls";
             
             // Create a labeled text input.
-            function addColorInput(caption, initialValue) {
+            function addColorInput(caption, initialValue, parent = colorControls) {
                 const row = document.createElement("label");
                 row.className = "ik-plot-color-row";
             
@@ -410,7 +507,7 @@
                 });
             
                 row.append(text, input);
-                colorControls.appendChild(row);
+                parent.appendChild(row);
             
                 return input;
             }
@@ -425,6 +522,27 @@
                 "Border Color",
                 plotBorderColorHex
             );
+
+            const gradientHeading = document.createElement("h4");
+            gradientHeading.textContent = "Custom Gradient";
+            
+            gradientSection.appendChild(gradientHeading);
+            
+            // Gradient start color
+            const gradientStartInput = addColorInput(
+                "Start Point",
+                gradientStartHex,
+                gradientSection
+            );
+            
+            // Gradient end color
+            const gradientEndInput = addColorInput(
+                "End Point",
+                gradientEndHex,
+                gradientSection
+            );
+            
+            colorControls.appendChild(gradientSection);
             
             // Create the Apply button.
             const applyColorsButton = document.createElement("button");
@@ -453,9 +571,13 @@
             
                 plotTextColorHex = readColor(textColorInput);
                 plotBorderColorHex = readColor(borderColorInput);
+                
+                gradientStartHex = readColor(gradientStartInput);
+                gradientEndHex = readColor(gradientEndInput);
             
                 // Persist the settings.
                 saveSettings();
+                refreshGradientPreview();
             
                 // Force existing labels to redraw.
                 if (plotLabelsEnabled) {
@@ -464,8 +586,42 @@
             });
             
             colorControls.appendChild(applyColorsButton);
+            
+            /* Gradient preview section */
+            const previewSection = document.createElement("div");
+            previewSection.className = "ik-plot-gradient-preview";
+            
+            const previewHeading = document.createElement("h4");
+            previewHeading.textContent = "Gradient Preview";
+            
+            const previewBadges = document.createElement("div");
+            previewBadges.className = "ik-gradient-preview-labels";
+            
+            previewSection.append(previewHeading, previewBadges);
+            colorControls.appendChild(previewSection);
+            
+            // Draw the seven requested level samples.
+            function refreshGradientPreview() {
+                previewBadges.replaceChildren();
+            
+                const sampleLevels = [1, 5, 7, 10, 13, 17, 20];
+            
+                sampleLevels.forEach(lvl => {
+                    const badge = document.createElement("span");
+                    badge.className = "ik-plot-label";
+                    badge.textContent = String(lvl);
+            
+                    // Use exactly the same styling as map labels.
+                    stylePlotBadge(badge, lvl);
+            
+                    previewBadges.appendChild(badge);
+                });
+            }
+            
+            // Initially show the currently applied gradient.
+            refreshGradientPreview();
+            
             plotPanel.appendChild(colorControls);
-
 
             document.body.appendChild(content);
 
