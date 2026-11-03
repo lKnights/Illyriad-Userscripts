@@ -523,6 +523,10 @@
                 plotBorderColorHex
             );
 
+            /* Custom Gradient section */
+            const gradientSection = document.createElement("div");
+            gradientSection.className = "ik-plot-gradient-section";
+            
             const gradientHeading = document.createElement("h4");
             gradientHeading.textContent = "Custom Gradient";
             
