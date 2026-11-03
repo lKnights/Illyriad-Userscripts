@@ -26,8 +26,8 @@
         "--ik-theme-city-trees": 'url("https://i.imgur.com/gTvNWI2.png")',
         "--ik-theme-city-wall-top": 'url("https://i.imgur.com/c22uYZI.png")',
         "--ik-theme-city-wall-bottom": 'url("https://i.imgur.com/Q9JecRZ.png")',
-        "--ik-theme-city-commonground-off": 'url("https://i.imgur.com/M5qkoeQ.png")',
-        "--ik-theme-city-paddock-off": 'url("https://i.imgur.com/3r0FGXw.png")',
+        "--ik-theme-city-commonground-off": 'url("https://i.imgur.com/5vQpFp6.png")',
+        "--ik-theme-city-paddock-off": 'url("https://i.imgur.com/wX3qQII.png")',
         "--ik-theme-city-castle-off": 'url("https://i.imgur.com/6N15PMJ.png")',
         "--ik-theme-city-castle-on": 'url("https://i.imgur.com/hlD6wHO.png")'
     };
