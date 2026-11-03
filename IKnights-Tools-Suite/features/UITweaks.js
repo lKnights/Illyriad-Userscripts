@@ -168,8 +168,11 @@
 
     function stylePlotBadge(badge, lvl) {
         badge.style.backgroundColor = getLevelColor(lvl);
-        badge.style.color =
-            plotTextColorHex || DEFAULT_PLOT_TEXT_COLOR;
+        badge.style.setProperty(
+            "color",
+            plotTextColorHex || DEFAULT_PLOT_TEXT_COLOR,
+            "important"
+        );
         badge.style.padding = "1px 5px";
         badge.style.fontSize = "11px";
         badge.style.fontWeight = "bold";
@@ -377,8 +380,10 @@
                 border-bottom-color: inherit !important;
             }
 
-            #ikUITweaksAccordion .ik-plot-color-controls label {
-                border-bottom-color: inherit !important;
+            #ikUITweaksAccordion .ik-plot-color-controls label.ik-plot-color-row {
+                border-bottom-color:
+                    var(--ik-ui-row-border, var(--ik-theme-border, #704116))
+                    !important;
             }
 
             #ikUITweaksAccordion .ik-plot-color-controls label span {
@@ -443,20 +448,22 @@
                 text-align: center !important;
             }
             
-            /* Nine equally sized preview cells */
+            /* Nine equal-width sample boxes */
             #ikUITweaksAccordion .ik-gradient-preview-labels {
                 display: grid !important;
                 grid-template-columns: repeat(9, minmax(0, 1fr));
                 gap: 3px;
                 width: 100%;
+                justify-items: stretch;
+                text-align: center;
             }
             
-            /* Stretch each sample label across its cell */
+            /* Center numbers inside their boxes */
             #ikUITweaksAccordion .ik-gradient-preview-labels > .ik-plot-label {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                text-align: center !important;
                 width: 100%;
                 min-width: 0;
                 box-sizing: border-box;
@@ -641,8 +648,6 @@
                 }
             });
             
-            colorControls.appendChild(applyColorsButton);
-            
             /* Gradient preview section */
             const previewSection = document.createElement("div");
             previewSection.className = "ik-plot-gradient-preview";
@@ -655,6 +660,8 @@
             
             previewSection.append(previewHeading, previewBadges);
             colorControls.appendChild(previewSection);
+
+            colorControls.appendChild(applyColorsButton);
             
             // Draw the seven requested level samples.
             function refreshGradientPreview() {
@@ -686,14 +693,39 @@
                     header: "> h3",
                     collapsible: true,
                     active: false,
-                    heightStyle: "content"
+            
+                    // Modern jQuery UI
+                    heightStyle: "content",
+            
+                    // Legacy jQuery UI
+                    autoHeight: false,
+                    fillSpace: false
                 });
             }
             
             dialog = window.jQuery(content).dialog({title:"UI Tweaks", autoOpen:false,
-                width:380, minWidth:280, height:"auto", dialogClass:"flora"});
+                width:380, minWidth:340, height:"auto", dialogClass:"flora"});
         }
         dialog.dialog("open");
+        // Use the Plot Labels checkbox row as the border reference.
+        const checkboxRows = document.querySelectorAll(
+            "#ikUITweaksAccordion > .ui-accordion-content > label"
+        );
+        
+        const referenceRow = checkboxRows[1] || checkboxRows[0];
+        const accordionElement = document.getElementById(
+            "ikUITweaksAccordion"
+        );
+        
+        if (referenceRow && accordionElement) {
+            const borderColor =
+                window.getComputedStyle(referenceRow).borderBottomColor;
+        
+            accordionElement.style.setProperty(
+                "--ik-ui-row-border",
+                borderColor
+            );
+        }
     }
 
     IKTools.registerTool({id:"ui-tweaks", name:"UI Tweaks", order:40,
