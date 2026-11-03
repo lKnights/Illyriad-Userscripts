@@ -15,6 +15,33 @@
     
     let enabled = saved ? saved.sovHighlight === true : legacy.sovHighlight === true;
     let plotLabelsEnabled = saved ? saved.plotLabels === true : false;
+
+    const DEFAULT_PLOT_TEXT_COLOR = "#ffffff";
+    const DEFAULT_PLOT_BORDER_COLOR = "rgba(0,0,0,0.6)";
+    
+    const HEX_COLOR_PATTERN =
+        /^#(?:[0-9a-f]{3}|[0-9a-f]{6}|[0-9a-f]{8})$/i;
+    
+    // Empty string means use the default.
+    let plotTextColorHex =
+        HEX_COLOR_PATTERN.test(saved?.plotTextColor ?? "")
+            ? saved.plotTextColor
+            : "";
+    
+    let plotBorderColorHex =
+        HEX_COLOR_PATTERN.test(saved?.plotBorderColor ?? "")
+            ? saved.plotBorderColor
+            : "";
+    
+    // Save all settings together.
+    function saveSettings() {
+        IKTools.util.saveJSON(key, {
+            sovHighlight: enabled,
+            plotLabels: plotLabelsEnabled,
+            plotTextColor: plotTextColorHex,
+            plotBorderColor: plotBorderColorHex
+        });
+    }
     
     let dialog = null;
     let observer = null;
@@ -71,7 +98,7 @@
         });
     }
 
-    function refreshPlotLabels() {
+    function refreshPlotLabels(force = false) {
         const mapImg = document.querySelector('img[usemap="#townMapOutline"]');
         if (!mapImg) {
             removePlotLabels();
@@ -101,7 +128,7 @@
         }
 
         const areas = document.querySelectorAll('map[name="townMapOutline"] area');
-        if (container.children.length === areas.length) return;
+        if (!force && container.children.length === areas.length) return;
 
         container.innerHTML = "";
 
@@ -128,12 +155,14 @@
             badge.style.top = `${centerY}px`;
             badge.style.transform = "translate(-50%, -50%)";
             badge.style.backgroundColor = getLevelColor(lvl);
-            badge.style.color = "#ffffff";
+            badge.style.color =
+                plotTextColorHex || DEFAULT_PLOT_TEXT_COLOR;
             badge.style.padding = "1px 5px";
             badge.style.fontSize = "11px";
             badge.style.fontWeight = "bold";
             badge.style.borderRadius = "3px";
-            badge.style.border = "1px solid rgba(0,0,0,0.6)";
+            badge.style.border =
+                `1px solid ${plotBorderColorHex || DEFAULT_PLOT_BORDER_COLOR}`;
             badge.style.boxShadow = "0 1px 3px rgba(0,0,0,0.4)";
             badge.style.pointerEvents = "none";
 
@@ -252,6 +281,29 @@
                 color: #ff5555 !important;
                 font-weight: bold;
             }
+
+            #ikUITweaksAccordion .ik-plot-color-row > input {
+                flex: 1;
+                min-width: 0;
+                box-sizing: border-box;
+                padding: 4px 6px;
+                font-size: 12px;
+            }
+            
+            /* Validation failure */
+            #ikUITweaksAccordion input.ik-color-invalid {
+                background-color: #8b2222 !important;
+                color: #ffffff !important;
+            }
+            
+            /* Apply button */
+            #ikUITweaksAccordion .ik-plot-color-controls > button {
+                align-self: flex-start;
+                padding: 5px 15px;
+                margin-top: 4px;
+                cursor: pointer;
+            }
+            
         `;
         document.head.appendChild(style);
 
@@ -289,7 +341,7 @@
             checkbox1.checked = enabled;
             checkbox1.addEventListener("change", () => {
                 enabled = checkbox1.checked;
-                IKTools.util.saveJSON(key, { sovHighlight: enabled, plotLabels: plotLabelsEnabled });
+                IKTools.util.saveJSON(key, { sovHighlight: enabled, plotLabels: plotLabelsEnabled, saveSettings(); });
                 apply();
             });
             label1.append(checkbox1, " Highlight sovereignty claims with no structure or a lower structure level");
@@ -308,11 +360,96 @@
             checkbox2.checked = plotLabelsEnabled;
             checkbox2.addEventListener("change", () => {
                 plotLabelsEnabled = checkbox2.checked;
-                IKTools.util.saveJSON(key, { sovHighlight: enabled, plotLabels: plotLabelsEnabled });
+                IKTools.util.saveJSON(key, { sovHighlight: enabled, plotLabels: plotLabelsEnabled, saveSettings(); });
                 apply();
             });
             label2.append(checkbox2, " Display level labels on town building plots");
             plotPanel.appendChild(label2);
+
+            /* Plot label color controls */
+            const colorControls = document.createElement("div");
+            colorControls.className = "ik-plot-color-controls";
+            
+            // Create a labeled text input.
+            function addColorInput(caption, initialValue) {
+                const row = document.createElement("label");
+                row.className = "ik-plot-color-row";
+            
+                const text = document.createElement("span");
+                text.textContent = caption;
+            
+                const input = document.createElement("input");
+                input.type = "text";
+                input.value = initialValue;
+                input.placeholder = "Default";
+                input.autocomplete = "off";
+                input.spellcheck = false;
+            
+                // Only remove the error when the field is cleared.
+                // Do not validate while the user is typing.
+                input.addEventListener("input", () => {
+                    if (input.value.trim() === "") {
+                        input.classList.remove("ik-color-invalid");
+                    }
+                });
+            
+                row.append(text, input);
+                colorControls.appendChild(row);
+            
+                return input;
+            }
+            
+            // Create both fields.
+            const textColorInput = addColorInput(
+                "Text Color",
+                plotTextColorHex
+            );
+            
+            const borderColorInput = addColorInput(
+                "Border Color",
+                plotBorderColorHex
+            );
+            
+            // Create the Apply button.
+            const applyColorsButton = document.createElement("button");
+            applyColorsButton.type = "button";
+            applyColorsButton.textContent = "Apply";
+            
+            applyColorsButton.addEventListener("click", () => {
+            
+                // Validate only when Apply is clicked.
+                function readColor(input) {
+                    const value = input.value.trim();
+            
+                    const invalid =
+                        value !== "" &&
+                        !HEX_COLOR_PATTERN.test(value);
+            
+                    // Highlight invalid nonempty values.
+                    input.classList.toggle(
+                        "ik-color-invalid",
+                        invalid
+                    );
+            
+                    // Empty or invalid means use the default.
+                    return invalid ? "" : value;
+                }
+            
+                plotTextColorHex = readColor(textColorInput);
+                plotBorderColorHex = readColor(borderColorInput);
+            
+                // Persist the settings.
+                saveSettings();
+            
+                // Force existing labels to redraw.
+                if (plotLabelsEnabled) {
+                    refreshPlotLabels(true);
+                }
+            });
+            
+            colorControls.appendChild(applyColorsButton);
+            plotPanel.appendChild(colorControls);
+
 
             document.body.appendChild(content);
 
