@@ -341,7 +341,7 @@
             checkbox1.checked = enabled;
             checkbox1.addEventListener("change", () => {
                 enabled = checkbox1.checked;
-                IKTools.util.saveJSON(key, { sovHighlight: enabled, plotLabels: plotLabelsEnabled, saveSettings(); });
+                saveSettings();
                 apply();
             });
             label1.append(checkbox1, " Highlight sovereignty claims with no structure or a lower structure level");
@@ -360,7 +360,7 @@
             checkbox2.checked = plotLabelsEnabled;
             checkbox2.addEventListener("change", () => {
                 plotLabelsEnabled = checkbox2.checked;
-                IKTools.util.saveJSON(key, { sovHighlight: enabled, plotLabels: plotLabelsEnabled, saveSettings(); });
+                saveSettings();
                 apply();
             });
             label2.append(checkbox2, " Display level labels on town building plots");
