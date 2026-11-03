@@ -285,6 +285,10 @@
             }
 
             #ikUITweaksAccordion .ik-plot-color-controls label {
+                border-bottom-color: inherit !important;
+            }
+
+            #ikUITweaksAccordion .ik-plot-color-controls label span {
                 width: 60% !important;
             }
         
