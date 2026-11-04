@@ -95,15 +95,15 @@
     /* ====================== CASTLE =========================== */
     body.ik-city-lupercalian-union img[src*="03-castle_off.png"] {
         content: var(--ik-theme-city-castle-off) !important;
-        width: 169px !important;
-        height: auto !important;
-        max-width: 100% !important;
     }
     body.ik-city-lupercalian-union img[src*="03-castle_on.png"] {
         content: var(--ik-theme-city-castle-on) !important;
-        width: 169px !important;
+    }
+
+    body.ik-city-lupercalian-union #MainContentDiv img[src*="03-castle_off.png"] {
+        width: auto !important;
         height: auto !important;
-        max-width: 100% !important;
+        max-width: 180px !important;
     }
     
     /* =================== COMMONGROUND ======================== */
