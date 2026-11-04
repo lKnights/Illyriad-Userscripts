@@ -24,12 +24,27 @@
         "--ik-theme-city-map": 'url("https://i.imgur.com/xWmXaI2.jpeg")',
         "--ik-theme-city-road": 'url("https://i.imgur.com/FmKCtP7.png")',
         "--ik-theme-city-trees": 'url("https://i.imgur.com/gTvNWI2.png")',
+        
         "--ik-theme-city-wall-top": 'url("https://i.imgur.com/c22uYZI.png")',
         "--ik-theme-city-wall-bottom": 'url("https://i.imgur.com/Q9JecRZ.png")',
+        
         "--ik-theme-city-commonground-off": 'url("https://i.imgur.com/5vQpFp6.png")',
+        "--ik-theme-city-commonground-on": 'url("https://i.imgur.com/5vQpFp6.png")',
+        
         "--ik-theme-city-paddock-off": 'url("https://i.imgur.com/wX3qQII.png")',
-        "--ik-theme-city-castle-off": 'url("https://i.imgur.com/6N15PMJ.png")',
-        "--ik-theme-city-castle-on": 'url("https://i.imgur.com/hlD6wHO.png")'
+        "--ik-theme-city-paddock-on": 'url("https://i.imgur.com/wX3qQII.png")',
+        
+        "--ik-theme-city-castle-off": 'url("https://i.imgur.com/NZkjimR.png")',
+        "--ik-theme-city-castle-on": 'url("https://i.imgur.com/NZkjimR.png")',
+        
+        "--ik-theme-city-warehouse-off": 'url("https://i.imgur.com/5Aya9sw.png")',
+        "--ik-theme-city-warehouse-on": 'url("https://i.imgur.com/5Aya9sw.png")',
+        
+        "--ik-theme-city-magetower-off": 'url("https://i.imgur.com/MFDf0wI.png")',
+        "--ik-theme-city-magetower-on": 'url("https://i.imgur.com/MFDf0wI.png")',
+        
+        "--ik-theme-city-carpenter-off": 'url("https://i.imgur.com/ZnCQM6u.png")',
+        "--ik-theme-city-carpenter-on": 'url("https://i.imgur.com/ZnCQM6u.png")',
     };
 
     function generateVariablesCSS() {
@@ -84,9 +99,36 @@
     body.ik-city-lupercalian-union img[src*="03-commonground_off.png"] {
         content: var(--ik-theme-city-commonground-off) !important;
     }
+    body.ik-city-lupercalian-union img[src*="03-commonground_on.png"] {
+        content: var(--ik-theme-city-commonground-on) !important;
+    }
     /* ===================== PADDOCK ========================== */
     body.ik-city-lupercalian-union img[src*="03-paddock_off.png"] {
         content: var(--ik-theme-city-paddock-off) !important;
+    }
+    body.ik-city-lupercalian-union img[src*="03-paddock_on.png"] {
+        content: var(--ik-theme-city-paddock-on) !important;
+    }
+     /* ==================== WAREHOUSE ======================== */
+    body.ik-city-lupercalian-union img[src*="03-warehouse_off.png"] {
+        content: var(--ik-theme-city-warehouse-off) !important;
+    }
+    body.ik-city-lupercalian-union img[src*="03-warehouse_on.png"] {
+        content: var(--ik-theme-city-warehouse-on) !important;
+    }
+     /* ===================== MAGE TOWER ======================== */
+    body.ik-city-lupercalian-union img[src*="03-magetower_off.png"] {
+        content: var(--ik-theme-city-magetower-off) !important;
+    }
+    body.ik-city-lupercalian-union img[src*="03-magetower_on.png"] {
+        content: var(--ik-theme-city-magetower-on) !important;
+    }
+     /* ===================== PADDOCK ========================== */
+    body.ik-city-lupercalian-union img[src*="03-carpenter_off.png"] {
+        content: var(--ik-theme-city-carpenter-off) !important;
+    }
+    body.ik-city-lupercalian-union img[src*="03-carpenter_on.png"] {
+        content: var(--ik-theme-city-carpenter-on) !important;
     }
     
     `;
