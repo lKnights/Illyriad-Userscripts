@@ -101,16 +101,14 @@
     }
 
     body.ik-city-lupercalian-union #MainContentDiv img[src*="03-castle_off.png"] {
-        width: auto !important;
-        height: auto !important;
-        max-width: 180px !important;
+        width: 169px !important;
+        height: 251px !important;
     }
 
     body.ik-city-lupercalian-union #townMap img[src*="03-castle_off.png"],
     body.ik-city-lupercalian-union #townMap img[src*="03-castle_on.png"] {
-        width: 251px !important;     /* Adjust width to fit your artwork proportions */
-        height: 169px !important;    /* Adjust height to fit your artwork proportions */
-        object-fit: contain !important;
+        width: 125.5px !important;     /* Adjust width to fit your artwork proportions */
+        height: 84.5px !important;    /* Adjust height to fit your artwork proportions */
     }
     
     /* =================== COMMONGROUND ======================== */
