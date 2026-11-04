@@ -68,6 +68,7 @@
     body.ik-city-lupercalian-union img[src*="lumberwood.png"] {
         content: var(--ik-theme-city-trees) !important;
     }
+    
     /* ======================= WALLS ============================ */
     body.ik-city-lupercalian-union img[src*="03-wall_upper.png"] {
         content: var(--ik-theme-city-wall-top) !important;
@@ -91,10 +92,17 @@
     /* ====================== CASTLE =========================== */
     body.ik-city-lupercalian-union img[src*="03-castle_off.png"] {
         content: var(--ik-theme-city-castle-off) !important;
+        width: 150px !important;
+        height: auto !important;
+        max-width: 100% !important;
     }
     body.ik-city-lupercalian-union img[src*="03-castle_on.png"] {
         content: var(--ik-theme-city-castle-on) !important;
+        width: 150px !important;
+        height: auto !important;
+        max-width: 100% !important;
     }
+    
     /* =================== COMMONGROUND ======================== */
     body.ik-city-lupercalian-union img[src*="03-commonground_off.png"] {
         content: var(--ik-theme-city-commonground-off) !important;
@@ -102,6 +110,7 @@
     body.ik-city-lupercalian-union img[src*="03-commonground_on.png"] {
         content: var(--ik-theme-city-commonground-on) !important;
     }
+    
     /* ===================== PADDOCK ========================== */
     body.ik-city-lupercalian-union img[src*="03-paddock_off.png"] {
         content: var(--ik-theme-city-paddock-off) !important;
@@ -109,6 +118,7 @@
     body.ik-city-lupercalian-union img[src*="03-paddock_on.png"] {
         content: var(--ik-theme-city-paddock-on) !important;
     }
+    
      /* ==================== WAREHOUSE ======================== */
     body.ik-city-lupercalian-union img[src*="03-warehouse_off.png"] {
         content: var(--ik-theme-city-warehouse-off) !important;
@@ -116,6 +126,7 @@
     body.ik-city-lupercalian-union img[src*="03-warehouse_on.png"] {
         content: var(--ik-theme-city-warehouse-on) !important;
     }
+    
      /* ===================== MAGE TOWER ======================== */
     body.ik-city-lupercalian-union img[src*="03-magetower_off.png"] {
         content: var(--ik-theme-city-magetower-off) !important;
@@ -123,6 +134,7 @@
     body.ik-city-lupercalian-union img[src*="03-magetower_on.png"] {
         content: var(--ik-theme-city-magetower-on) !important;
     }
+    
      /* ===================== PADDOCK ========================== */
     body.ik-city-lupercalian-union img[src*="03-carpenter_off.png"] {
         content: var(--ik-theme-city-carpenter-off) !important;
