@@ -45,6 +45,9 @@
         
         "--ik-theme-city-carpenter-off": 'url("https://i.imgur.com/ZnCQM6u.png")',
         "--ik-theme-city-carpenter-on": 'url("https://i.imgur.com/ZnCQM6u.png")',
+
+        "--ik-theme-city-swrordsmith-off": 'url("https://i.imgur.com/9H9bOJo.png")',
+        "--ik-theme-city-swrordsmith-on": 'url("https://i.imgur.com/9H9bOJo.png")'
     };
 
     function generateVariablesCSS() {
@@ -92,13 +95,13 @@
     /* ====================== CASTLE =========================== */
     body.ik-city-lupercalian-union img[src*="03-castle_off.png"] {
         content: var(--ik-theme-city-castle-off) !important;
-        width: 150px !important;
+        width: 169px !important;
         height: auto !important;
         max-width: 100% !important;
     }
     body.ik-city-lupercalian-union img[src*="03-castle_on.png"] {
         content: var(--ik-theme-city-castle-on) !important;
-        width: 150px !important;
+        width: 169px !important;
         height: auto !important;
         max-width: 100% !important;
     }
@@ -135,12 +138,20 @@
         content: var(--ik-theme-city-magetower-on) !important;
     }
     
-     /* ===================== PADDOCK ========================== */
+     /* ===================== CARPENTER ======================== */
     body.ik-city-lupercalian-union img[src*="03-carpenter_off.png"] {
         content: var(--ik-theme-city-carpenter-off) !important;
     }
     body.ik-city-lupercalian-union img[src*="03-carpenter_on.png"] {
         content: var(--ik-theme-city-carpenter-on) !important;
+    }
+
+     /* ==================== SWORDSMITH ======================== */
+    body.ik-city-lupercalian-union img[src*="03-swordsmith_off.png"] {
+        content: var(--ik-theme-city-swordsmith-off) !important;
+    }
+    body.ik-city-lupercalian-union img[src*="03-swordsmith_on.png"] {
+        content: var(--ik-theme-city-swordsmith-on) !important;
     }
     
     `;
