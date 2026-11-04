@@ -47,7 +47,7 @@
         "--ik-theme-city-carpenter-on": 'url("https://i.imgur.com/ZnCQM6u.png")',
 
         "--ik-theme-city-swrordsmith-off": 'url("https://i.imgur.com/9H9bOJo.png")',
-        "--ik-theme-city-swrordsmith-on": 'url("https://i.imgur.com/9H9bOJo.png")'
+        "--ik-theme-city-swrordsmith-on": 'url("https://i.imgur.com/9H9bOJo.png")',
     };
 
     function generateVariablesCSS() {
@@ -91,8 +91,9 @@
     body.ik-city-lupercalian-union div[style*="03-wall_lower.png"] fieldset:nth-of-type(2) {
         margin-left: 125px !important;
     }
-
+    
     /* ====================== CASTLE =========================== */
+    // 1. Swap the asset globally
     body.ik-city-lupercalian-union img[src*="03-castle_off.png"] {
         content: var(--ik-theme-city-castle-off) !important;
     }
@@ -104,6 +105,13 @@
         width: auto !important;
         height: auto !important;
         max-width: 180px !important;
+    }
+
+    body.ik-city-lupercalian-union #townMap img[src*="03-castle_off.png"],
+    body.ik-city-lupercalian-union #townMap img[src*="03-castle_on.png"] {
+        width: 251px !important;     /* Adjust width to fit your artwork proportions */
+        height: 169px !important;    /* Adjust height to fit your artwork proportions */
+        object-fit: contain !important;
     }
     
     /* =================== COMMONGROUND ======================== */
