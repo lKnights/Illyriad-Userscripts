@@ -103,6 +103,7 @@
     body.ik-city-lupercalian-union #MainContentDiv img[src*="03-castle_off.png"] {
         width: 169px !important;
         height: 251px !important;
+        clip-path: polygon(0 0, 75% 0, 75% 100%, 0 100%);
     }
 
     body.ik-city-lupercalian-union #townMap img[src*="03-castle_off.png"],
