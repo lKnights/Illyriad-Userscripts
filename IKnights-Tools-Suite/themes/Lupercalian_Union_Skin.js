@@ -39,6 +39,15 @@
         
         "--ik-theme-city-warehouse-off": 'url("https://i.imgur.com/5Aya9sw.png")',
         "--ik-theme-city-warehouse-on": 'url("https://i.imgur.com/5Aya9sw.png")',
+
+        "--ik-theme-city-library-off": 'url("https://i.imgur.com/yiUjBhe.png")',
+        "--ik-theme-city-library-on": 'url("https://i.imgur.com/yiUjBhe.png")',
+        
+        "--ik-theme-city-consulate-off": 'url("https://i.imgur.com/2BAz05f.png")',
+        "--ik-theme-city-consulate-on": 'url("https://i.imgur.com/2BAz05f.png")',
+        
+        "--ik-theme-city-barracks-off": 'url("https://i.imgur.com/wqqMum3.png")',
+        "--ik-theme-city-barracks-on": 'url("https://i.imgur.com/wqqMum3.png")',
         
         "--ik-theme-city-magetower-off": 'url("https://i.imgur.com/MFDf0wI.png")',
         "--ik-theme-city-magetower-on": 'url("https://i.imgur.com/MFDf0wI.png")',
@@ -48,6 +57,18 @@
 
         "--ik-theme-city-swordsmith-off": 'url("https://i.imgur.com/9H9bOJo.png")',
         "--ik-theme-city-swordsmith-on": 'url("https://i.imgur.com/9H9bOJo.png")',
+
+        "--ik-theme-city-spearmensbillets-off": 'url("https://i.imgur.com/mFe4f6V.png")',
+        "--ik-theme-city-spearmensbillets-on": 'url("https://i.imgur.com/mFe4f6V.png")',
+        
+        "--ik-theme-city-archersfield-off": 'url("https://i.imgur.com/i4tfnQV.png")',
+        "--ik-theme-city-archersfield-on": 'url("https://i.imgur.com/i4tfnQV.png")',
+        
+        "--ik-theme-city-infantryquarters-off": 'url("https://i.imgur.com/rxX8vY4.png")',
+        "--ik-theme-city-infantryquarters-on": 'url("https://i.imgur.com/rxX8vY4.png")',
+
+        "--ik-theme-city-cavalryparadeground-off": 'url("https://i.imgur.com/hX9hjNV.png")',
+        "--ik-theme-city-cavalryparadeground-on": 'url("https://i.imgur.com/hX9hjNV.png")',
     };
 
     function generateVariablesCSS() {
@@ -152,12 +173,68 @@
         content: var(--ik-theme-city-carpenter-on) !important;
     }
 
+    /* ======================= LIBRARY ========================== */
+    body.ik-city-lupercalian-union img[src*="03-library_off.png"] {
+        content: var(--ik-theme-city-library-off) !important;
+    }
+    body.ik-city-lupercalian-union img[src*="03-library_on.png"] {
+        content: var(--ik-theme-city-library-on) !important;
+    }
+    
+     /* ===================== CONSULATE ======================== */
+    body.ik-city-lupercalian-union img[src*="03-consulate_off.png"] {
+        content: var(--ik-theme-city-consulate-off) !important;
+    }
+    body.ik-city-lupercalian-union img[src*="03-consulate_on.png"] {
+        content: var(--ik-theme-city-consulate-on) !important;
+    }
+    
+     /* ===================== BARRACKS ======================== */
+    body.ik-city-lupercalian-union img[src*="03-barracks_off.png"] {
+        content: var(--ik-theme-city-barracks-off) !important;
+    }
+    body.ik-city-lupercalian-union img[src*="03-barracks_on.png"] {
+        content: var(--ik-theme-city-barracks-on) !important;
+    }
+
      /* ==================== SWORDSMITH ======================== */
     body.ik-city-lupercalian-union img[src*="03-swordsmith_off.png"] {
         content: var(--ik-theme-city-swordsmith-off) !important;
     }
     body.ik-city-lupercalian-union img[src*="03-swordsmith_on.png"] {
         content: var(--ik-theme-city-swordsmith-on) !important;
+    }
+
+    /* ================== SPEARMANS BILLET ==================== */
+    body.ik-city-lupercalian-union img[src*="03-spearmensbillets_off.png"] {
+        content: var(--ik-theme-city-spearmensbillets-off) !important;
+    }
+    body.ik-city-lupercalian-union img[src*="03-spearmensbillets_on.png"] {
+        content: var(--ik-theme-city-spearmensbillets-on) !important;
+    }
+    
+     /* =================== ARCHERS FIELD ===================== */
+    body.ik-city-lupercalian-union img[src*="03-archersfield_off.png"] {
+        content: var(--ik-theme-city-archersfield-off) !important;
+    }
+    body.ik-city-lupercalian-union img[src*="03-archersfield_on.png"] {
+        content: var(--ik-theme-city-archersfield-on) !important;
+    }
+    
+     /* ================= INFANTRY QUARTERS =================== */
+    body.ik-city-lupercalian-union img[src*="03-infantryquarters_off.png"] {
+        content: var(--ik-theme-city-infantryquarters-off) !important;
+    }
+    body.ik-city-lupercalian-union img[src*="03-infantryquarters_on.png"] {
+        content: var(--ik-theme-city-infantryquarters-on) !important;
+    }
+
+     /* =============== CAVALRY PARADE GROUND ================= */
+    body.ik-city-lupercalian-union img[src*="03-cavalryparadeground_off.png"] {
+        content: var(--ik-theme-city-cavalryparadeground-off) !important;
+    }
+    body.ik-city-lupercalian-union img[src*="03-cavalryparadeground_on.png"] {
+        content: var(--ik-theme-city-cavalryparadeground-on) !important;
     }
     
     `;
