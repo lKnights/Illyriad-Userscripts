@@ -43,14 +43,14 @@
         "--ik-theme-city-library-off": 'url("https://i.imgur.com/yiUjBhe.png")',
         "--ik-theme-city-library-on": 'url("https://i.imgur.com/yiUjBhe.png")',
 
-        "--ik-theme-city-taverna-off": 'url("https://i.imgur.com/yiUjBhe.png")',
-        "--ik-theme-city-taverna-on": 'url("https://i.imgur.com/yiUjBhe.png")',
+        "--ik-theme-city-taverna-off": 'url("https://i.imgur.com/myLnMRZ.png")',
+        "--ik-theme-city-taverna-on": 'url("https://i.imgur.com/myLnMRZ.png")',
 
-        "--ik-theme-city-marketplace-off": 'url("https://i.imgur.com/9UmZZv8.png")',
-        "--ik-theme-city-marketplace-on": 'url("https://i.imgur.com/9UmZZv8.png")',
+        "--ik-theme-city-marketplace-off": 'url("https://i.imgur.com/tZ0CfKu.png")',
+        "--ik-theme-city-marketplace-on": 'url("https://i.imgur.com/tZ0CfKu.png")',
 
-        "--ik-theme-city-architectsoffice-off": 'url("https://i.imgur.com/mlwCJp3.png")',
-        "--ik-theme-city-architectsoffice-on": 'url("https://i.imgur.com/mlwCJp3.png")',
+        "--ik-theme-city-architectsoffice-off": 'url("https://i.imgur.com/7L31ExV.png")',
+        "--ik-theme-city-architectsoffice-on": 'url("https://i.imgur.com/7L31ExV.png")',
         
         "--ik-theme-city-consulate-off": 'url("https://i.imgur.com/2BAz05f.png")',
         "--ik-theme-city-consulate-on": 'url("https://i.imgur.com/2BAz05f.png")',
@@ -79,32 +79,32 @@
         "--ik-theme-city-cavalryparadeground-off": 'url("https://i.imgur.com/hX9hjNV.png")',
         "--ik-theme-city-cavalryparadeground-on": 'url("https://i.imgur.com/hX9hjNV.png")',
 
-        "--ik-theme-city-blacksmith-off": 'url("https://i.imgur.com/Y3xTm0g.png")',
-        "--ik-theme-city-blacksmith-on": 'url("https://i.imgur.com/Y3xTm0g.png")',
+        "--ik-theme-city-blacksmith-off": 'url("https://i.imgur.com/bO2yXXG.png")',
+        "--ik-theme-city-blacksmith-on": 'url("https://i.imgur.com/bO2yXXG.png")',
         
-        "--ik-theme-city-bookbinder-off": 'url("https://i.imgur.com/Y3xTm0g.png")',
-        "--ik-theme-city-bookbinder-on": 'url("https://i.imgur.com/Y3xTm0g.png")',
+        "--ik-theme-city-bookbinder-off": 'url("https://i.imgur.com/LkgWLqV.png")',
+        "--ik-theme-city-bookbinder-on": 'url("https://i.imgur.com/LkgWLqV.png")',
         
-        "--ik-theme-city-brewery-off": 'url("https://i.imgur.com/Y3xTm0g.png")',
-        "--ik-theme-city-brewery-on": 'url("https://i.imgur.com/Y3xTm0g.png")',
+        "--ik-theme-city-brewery-off": 'url("https://i.imgur.com/QTpQc9q.png")',
+        "--ik-theme-city-brewery-on": 'url("https://i.imgur.com/QTpQc9q.png")',
 
-        "--ik-theme-city-flourmill-off": 'url("https://i.imgur.com/Y3xTm0g.png")',
-        "--ik-theme-city-flourmill-on": 'url("https://i.imgur.com/Y3xTm0g.png")',
+        "--ik-theme-city-flourmill-off": 'url("https://i.imgur.com/WiQWD3z.png")',
+        "--ik-theme-city-flourmill-on": 'url("https://i.imgur.com/WiQWD3z.png")',
         
-        "--ik-theme-city-forge-off": 'url("https://i.imgur.com/Y3xTm0g.png")',
-        "--ik-theme-city-flourmill-on": 'url("https://i.imgur.com/Y3xTm0g.png")',
+        "--ik-theme-city-forge-off": 'url("https://i.imgur.com/YlydQof.png")',
+        "--ik-theme-city-forge-on": 'url("https://i.imgur.com/YlydQof.png")',
         
-        "--ik-theme-city-leathersmith-off": 'url("https://i.imgur.com/Y3xTm0g.png")',
-        "--ik-theme-city-leathersmith-on": 'url("https://i.imgur.com/Y3xTm0g.png")',
+        "--ik-theme-city-leathersmith-off": 'url("https://i.imgur.com/lnm3VcW.png")',
+        "--ik-theme-city-leathersmith-on": 'url("https://i.imgur.com/lnm3VcW.png")',
         
-        "--ik-theme-city-saddlemaker-off": 'url("https://i.imgur.com/Y3xTm0g.png")',
-        "--ik-theme-city-saddlemaker-on": 'url("https://i.imgur.com/Y3xTm0g.png")',
+        "--ik-theme-city-saddlemaker-off": 'url("https://i.imgur.com/HjkEBlC.png")',
+        "--ik-theme-city-saddlemaker-on": 'url("https://i.imgur.com/HjkEBlC.png")',
 
-        "--ik-theme-city-swordsmith-off": 'url("https://i.imgur.com/Y3xTm0g.png")',
-        "--ik-theme-city-swordsmith-on": 'url("https://i.imgur.com/Y3xTm0g.png")',
+        "--ik-theme-city-swordsmith-off": 'url("https://i.imgur.com/KA1mm5q.png")',
+        "--ik-theme-city-swordsmith-on": 'url("https://i.imgur.com/KA1mm5q.png")',
 
-        "--ik-theme-city-tanner-off": 'url("https://i.imgur.com/Y3xTm0g.png")',
-        "--ik-theme-city-tanner-on": 'url("https://i.imgur.com/Y3xTm0g.png")',
+        "--ik-theme-city-tanner-off": 'url("https://i.imgur.com/KJNUs7M.png")',
+        "--ik-theme-city-tanner-on": 'url("https://i.imgur.com/KJNUs7M.png")',
     };
 
     function generateVariablesCSS() {
@@ -192,6 +192,14 @@
     body.ik-city-lupercalian-union img[src*="03-warehouse_on.png"] {
         content: var(--ik-theme-city-warehouse-on) !important;
     }
+
+     /* ==================== MARKETPLACE ======================== */
+    body.ik-city-lupercalian-union img[src*="03-marketplace_off.png"] {
+        content: var(--ik-theme-city-marketplace-off) !important;
+    }
+    body.ik-city-lupercalian-union img[src*="03-marketplace_on.png"] {
+        content: var(--ik-theme-city-marketplace-on) !important;
+    }
     
      /* ===================== MAGE TOWER ======================== */
     body.ik-city-lupercalian-union img[src*="03-magetower_off.png"] {
@@ -271,6 +279,94 @@
     }
     body.ik-city-lupercalian-union img[src*="03-cavalryparadeground_on.png"] {
         content: var(--ik-theme-city-cavalryparadeground-on) !important;
+    }
+
+    /* ===================== BLACKSMITH ======================= */
+    body.ik-city-lupercalian-union img[src*="03-blacksmith_off.png"] {
+        content: var(--ik-theme-city-blacksmith-off) !important;
+    }
+    body.ik-city-lupercalian-union img[src*="03-blacksmith_on.png"] {
+        content: var(--ik-theme-city-blacksmith-on) !important;
+    }
+    
+     /* ========================= TANNER ========================= */
+    body.ik-city-lupercalian-union img[src*="03-tanner_off.png"] {
+        content: var(--ik-theme-city-tanner-off) !important;
+    }
+    body.ik-city-lupercalian-union img[src*="03-tanner_on.png"] {
+        content: var(--ik-theme-city-tanner-on) !important;
+    }
+    
+     /* ======================= BREWERY ========================== */
+    body.ik-city-lupercalian-union img[src*="03-brewery_off.png"] {
+        content: var(--ik-theme-city-brewery-off) !important;
+    }
+    body.ik-city-lupercalian-union img[src*="03- _on.png"] {
+        content: var(--ik-theme-city- -on) !important;
+    }
+
+     /* =============== ARCHITECTS OFFICE ====================== */
+    body.ik-city-lupercalian-union img[src*="03-architectsoffice_off.png"] {
+        content: var(--ik-theme-city-architectsoffice-off) !important;
+    }
+    body.ik-city-lupercalian-union img[src*="03-architectsoffice_on.png"] {
+        content: var(--ik-theme-city-architectsoffice-on) !important;
+    }
+
+    /* ======================= TAVERN ========================= */
+    body.ik-city-lupercalian-union img[src*="03-taverna_off.png"] {
+        content: var(--ik-theme-city-taverna-off) !important;
+    }
+    body.ik-city-lupercalian-union img[src*="03-taverna_on.png"] {
+        content: var(--ik-theme-city-taverna-on) !important;
+    }
+    
+    /* ====================== BOOKBINDER ========================= */
+    body.ik-city-lupercalian-union img[src*="03-bookbinder_off.png"] {
+        content: var(--ik-theme-city-bookbinder-off) !important;
+    }
+    body.ik-city-lupercalian-union img[src*="03-bookbinder_on.png"] {
+        content: var(--ik-theme-city-bookbinder-on) !important;
+    }
+    
+     /* ======================= FLOURMILL ========================== */
+    body.ik-city-lupercalian-union img[src*="03-flourmill_off.png"] {
+        content: var(--ik-theme-city-flourmill-off) !important;
+    }
+    body.ik-city-lupercalian-union img[src*="03-flourmill_on.png"] {
+        content: var(--ik-theme-city-flourmill-on) !important;
+    }
+
+     /* =============== LEATHERSMITH ================= */
+    body.ik-city-lupercalian-union img[src*="03-leathersmith_off.png"] {
+        content: var(--ik-theme-city-leathersmith-off) !important;
+    }
+    body.ik-city-lupercalian-union img[src*="03-leathersmith_on.png"] {
+        content: var(--ik-theme-city-leathersmith-on) !important;
+    }
+
+    /* ================ SADDLEMAKER ================== */
+    body.ik-city-lupercalian-union img[src*="03-saddlemaker_off.png"] {
+        content: var(--ik-theme-city-saddlemaker-off) !important;
+    }
+    body.ik-city-lupercalian-union img[src*="03-saddlemaker_on.png"] {
+        content: var(--ik-theme-city-saddlemaker-on) !important;
+    }
+
+    /* ================ SWORDSMITH ================== */
+    body.ik-city-lupercalian-union img[src*="03-swordsmith_off.png"] {
+        content: var(--ik-theme-city-swordsmith-off) !important;
+    }
+    body.ik-city-lupercalian-union img[src*="03-swordsmith_on.png"] {
+        content: var(--ik-theme-city-swordsmith-on) !important;
+    }
+
+    /* ================== FORGE ==================== */
+    body.ik-city-lupercalian-union img[src*="03-forge_off.png"] {
+        content: var(--ik-theme-city-forge-off) !important;
+    }
+    body.ik-city-lupercalian-union img[src*="03-forge_on.png"] {
+        content: var(--ik-theme-city-forge-on) !important;
     }
     
     `;
