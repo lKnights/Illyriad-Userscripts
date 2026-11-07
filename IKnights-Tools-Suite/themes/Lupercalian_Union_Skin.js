@@ -42,6 +42,15 @@
 
         "--ik-theme-city-library-off": 'url("https://i.imgur.com/yiUjBhe.png")',
         "--ik-theme-city-library-on": 'url("https://i.imgur.com/yiUjBhe.png")',
+
+        "--ik-theme-city-taverna-off": 'url("https://i.imgur.com/yiUjBhe.png")',
+        "--ik-theme-city-taverna-on": 'url("https://i.imgur.com/yiUjBhe.png")',
+
+        "--ik-theme-city-marketplace-off": 'url("https://i.imgur.com/9UmZZv8.png")',
+        "--ik-theme-city-marketplace-on": 'url("https://i.imgur.com/9UmZZv8.png")',
+
+        "--ik-theme-city-architectsoffice-off": 'url("https://i.imgur.com/mlwCJp3.png")',
+        "--ik-theme-city-architectsoffice-on": 'url("https://i.imgur.com/mlwCJp3.png")',
         
         "--ik-theme-city-consulate-off": 'url("https://i.imgur.com/2BAz05f.png")',
         "--ik-theme-city-consulate-on": 'url("https://i.imgur.com/2BAz05f.png")',
@@ -69,6 +78,33 @@
 
         "--ik-theme-city-cavalryparadeground-off": 'url("https://i.imgur.com/hX9hjNV.png")',
         "--ik-theme-city-cavalryparadeground-on": 'url("https://i.imgur.com/hX9hjNV.png")',
+
+        "--ik-theme-city-blacksmith-off": 'url("https://i.imgur.com/Y3xTm0g.png")',
+        "--ik-theme-city-blacksmith-on": 'url("https://i.imgur.com/Y3xTm0g.png")',
+        
+        "--ik-theme-city-bookbinder-off": 'url("https://i.imgur.com/Y3xTm0g.png")',
+        "--ik-theme-city-bookbinder-on": 'url("https://i.imgur.com/Y3xTm0g.png")',
+        
+        "--ik-theme-city-brewery-off": 'url("https://i.imgur.com/Y3xTm0g.png")',
+        "--ik-theme-city-brewery-on": 'url("https://i.imgur.com/Y3xTm0g.png")',
+
+        "--ik-theme-city-flourmill-off": 'url("https://i.imgur.com/Y3xTm0g.png")',
+        "--ik-theme-city-flourmill-on": 'url("https://i.imgur.com/Y3xTm0g.png")',
+        
+        "--ik-theme-city-forge-off": 'url("https://i.imgur.com/Y3xTm0g.png")',
+        "--ik-theme-city-flourmill-on": 'url("https://i.imgur.com/Y3xTm0g.png")',
+        
+        "--ik-theme-city-leathersmith-off": 'url("https://i.imgur.com/Y3xTm0g.png")',
+        "--ik-theme-city-leathersmith-on": 'url("https://i.imgur.com/Y3xTm0g.png")',
+        
+        "--ik-theme-city-saddlemaker-off": 'url("https://i.imgur.com/Y3xTm0g.png")',
+        "--ik-theme-city-saddlemaker-on": 'url("https://i.imgur.com/Y3xTm0g.png")',
+
+        "--ik-theme-city-swordsmith-off": 'url("https://i.imgur.com/Y3xTm0g.png")',
+        "--ik-theme-city-swordsmith-on": 'url("https://i.imgur.com/Y3xTm0g.png")',
+
+        "--ik-theme-city-tanner-off": 'url("https://i.imgur.com/Y3xTm0g.png")',
+        "--ik-theme-city-tanner-on": 'url("https://i.imgur.com/Y3xTm0g.png")',
     };
 
     function generateVariablesCSS() {
