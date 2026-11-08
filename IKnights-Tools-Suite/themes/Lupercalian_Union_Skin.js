@@ -140,7 +140,7 @@
 
         /* 46. Stonemason =============================================================== */
         "--ik-theme-city-stonemason-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794122892/Soviet_Snowy_stonemason_off.png")',
-        "--ik-theme-city-stonemason-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794123331/Soviet_Snowy_Storehouse_on.png")',
+        "--ik-theme-city-stonemason-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794123318/Soviet_Snowy_stonemason_on.png")',
         /* 47. Storehouse =============================================================== */
         "--ik-theme-city-storehouse-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794122903/Soviet_Snowy_Storehouse_off.png")',
         "--ik-theme-city-storehouse-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794123331/Soviet_Snowy_Storehouse_on.png")',
@@ -171,7 +171,7 @@
         "--ik-theme-city-paddock-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794122882/Soviet_Snowy_Paddock_off.png")',
         "--ik-theme-city-paddock-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794123271/Soviet_Snowy_Paddock_on.png")',
         /* 57. Castle Wall ============================================================== */
-        "--ik-theme-city-wall-top": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794122919/Soviet_Snowy_Wall_Bottom_Final_off.png")',
+        "--ik-theme-city-wall-top": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794122919/Soviet_Snowy_Wall_Top_Final_off.png")',
         "--ik-theme-city-wall-bottom": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794122919/Soviet_Snowy_Wall_Bottom_Final_off.png")',
         /* 58. Lumberyard =============================================================== */
 
