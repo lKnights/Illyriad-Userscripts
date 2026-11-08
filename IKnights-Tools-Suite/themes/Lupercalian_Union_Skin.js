@@ -93,8 +93,8 @@
         "--ik-theme-city-leathersmith-off": 'url("https://i.imgur.com/lnm3VcW.png")',
         "--ik-theme-city-leathersmith-on": 'url("https://i.imgur.com/lnm3VcW.png")',
         /* 30. Library ================================================================== */
-        "--ik-theme-city-library-off": 'url("https://i.imgur.com/yiUjBhe.png")',
-        "--ik-theme-city-library-on": 'url("https://i.imgur.com/yiUjBhe.png")',
+        "--ik-theme-city-library-off": 'url("https://i.imgur.com/XQZtDcx.png")',
+        "--ik-theme-city-library-on": 'url("https://i.imgur.com/DCDICgU.png")',
         /* 31. Mage Tower =============================================================== */
         "--ik-theme-city-magetower-off": 'url("https://i.imgur.com/MFDf0wI.png")',
         "--ik-theme-city-magetower-on": 'url("https://i.imgur.com/MFDf0wI.png")',
