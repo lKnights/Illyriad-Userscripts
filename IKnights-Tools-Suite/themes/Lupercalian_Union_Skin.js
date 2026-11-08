@@ -58,8 +58,8 @@
         /* 14. Chancery of Estates ====================================================== */
 
         /* 15. Consulate ================================================================ */
-        "--ik-theme-city-consulate-off": 'url("https://i.imgur.com/2BAz05f.png")',
-        "--ik-theme-city-consulate-on": 'url("https://i.imgur.com/2BAz05f.png")',
+        "--ik-theme-city-consulate-off": 'url("https://i.imgur.com/7lhb1QE.png")',
+        "--ik-theme-city-consulate-on": 'url("https://i.imgur.com/z8jkrKn.png")',
         /* 16. Cottage ================================================================== */
 
         /* 17. Desert Warfare College =================================================== */
