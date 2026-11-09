@@ -234,6 +234,23 @@
 
     };
 
+    // =========================================================================
+    // IMAGE PRELOADER (Eliminates hover flash)
+    // =========================================================================
+    function preloadThemeImages() {
+        Object.values(variables).forEach(urlValue => {
+            // Extract the raw URL string out of CSS 'url("...")' format
+            const match = urlValue.match(/url\("(.*?)"\)/);
+            if (match && match[1]) {
+                const img = new Image();
+                img.src = match[1];
+            }
+        });
+    }
+
+    // Call it immediately upon script load
+    preloadThemeImages();
+    
     function generateVariablesCSS() {
         let cssString = "html.ik-city-lupercalian-union {\n";
         for (const [key, value] of Object.entries(variables)) {
