@@ -251,7 +251,26 @@
         });
     }
 
+    // =========================================================================
+    // HIDDEN DOM CACHE (Method 2: Pre-painting Texture Hold)
+    // =========================================================================
+    function forceCacheDOMImages() {
+        const preloaderDiv = document.createElement("div");
+        preloaderDiv.style.cssText = "position: absolute; width: 0; height: 0; overflow: hidden; pointer-events: none; visibility: hidden;";
+        
+        Object.values(variables).forEach(urlValue => {
+            const match = urlValue.match(/url\("(.*?)"\)/);
+            if (match && match[1]) {
+                const img = document.createElement("img");
+                img.src = match[1];
+                preloaderDiv.appendChild(img);
+            }
+        });
+        document.body.appendChild(preloaderDiv);
+    }
+    
     preloadThemeImages();
+    forceCacheDOMImages();
     
     function generateVariablesCSS() {
         let cssString = "html.ik-city-lupercalian-union {\n";
