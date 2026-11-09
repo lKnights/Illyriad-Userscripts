@@ -155,6 +155,12 @@
                 font-weight: bold;
             }
 
+            span.ikcat-dialog-tab.active {
+                background-image: var(--ik-theme-texture) !important;
+                background-repeat: repeat !important;
+                color: var(--ik-theme-special-text5) !important;
+            }
+
             /* Core Dialog Layout - Fixes jQuery UI recursive shrink bug */
             #ikCatalogue {
                 padding: 0 !important; /* CRITICAL: Removing padding stops jQuery UI from subtracting it on every frame */
