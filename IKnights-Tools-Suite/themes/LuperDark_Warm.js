@@ -510,6 +510,7 @@ body.ik-dark-mode span.ikcat-dialog-tab.selected:not([id*="Notes"] *) {
 
 body.ik-dark-mode tr.odd,
 body.ik-dark-mode th.odd,
+body.ik-dark-mode td.odd,
 body.ik-dark-mode li.odd,
 body.ik-dark-mode form.odd,
 body.ik-dark-mode table.oddeven > tbody > tr:nth-child(2n),
