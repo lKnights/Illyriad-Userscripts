@@ -268,9 +268,33 @@
         });
         document.body.appendChild(preloaderDiv);
     }
+
+    // =========================================================================
+    // GPU RASTERIZATION PRE-WARM (Eliminates First-Hover Cold-Paint Flash)
+    // =========================================================================
+    function preWarmRasterization() {
+        const canvas = document.createElement("canvas");
+        canvas.width = 1;
+        canvas.height = 1;
+        const ctx = canvas.getContext("2d");
+
+        Object.values(variables).forEach(urlValue => {
+            const match = urlValue.match(/url\("(.*?)"\)/);
+            if (match && match[1]) {
+                const img = new Image();
+                img.src = match[1];
+                img.onload = () => {
+                    // Drawing to an offscreen canvas forces the browser to fully 
+                    // rasterize the image pixels into GPU memory immediately.
+                    ctx.drawImage(img, 0, 0);
+                };
+            }
+        });
+    }
     
     preloadThemeImages();
     forceCacheDOMImages();
+    preWarmRasterization();
     
     function generateVariablesCSS() {
         let cssString = "html.ik-city-lupercalian-union {\n";
