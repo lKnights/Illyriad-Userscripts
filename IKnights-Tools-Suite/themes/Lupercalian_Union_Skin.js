@@ -22,8 +22,8 @@
     // ----------------- VVVV -------- ART ASSETS HERE ---------- VVVV ---------------------
     const variables = {
         /* 1. Empty Plot ================================================================ */
-        "--ik-theme-city-emptytownplotbuildlist-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794189766/Snowy_Soviet_emptytownplotbuildlist_off.png")',
-        "--ik-theme-city-emptytownplotbuildlist-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794189550/Snowy_Soviet_emptytownplotbuildlist_on.png")',
+        "--ik-theme-city-emptytownplotbuildlist-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794265621/Snowy_Soviet_emptytownplotbuildlist_off.png")',
+        "--ik-theme-city-emptytownplotbuildlist-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794265621/Snowy_Soviet_emptytownplotbuildlist_on.png")',
         /* 2. Archer's Field ============================================================ */
         "--ik-theme-city-archersfield-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794122861/Soviet_Snowy_Archerfield_off.png")',
         "--ik-theme-city-archersfield-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794122974/Soviet_Snowy_Archerfield_on.png")',
@@ -31,11 +31,11 @@
         "--ik-theme-city-architectsoffice-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794122861/Soviet_Snowy_Architect_off.png")',
         "--ik-theme-city-architectsoffice-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794122974/Soviet_Snowy_Architect_on.png")',
         /* 4. Arctic Warfare College ==================================================== */
-        "--ik-theme-city-arcticwarfarecollege-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794189752/Snowy_Soviet_arcticwarfarecollege_off.png")',
-        "--ik-theme-city-arcticwarfarecollege-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794189536/Snowy_Soviet_arcticwarfarecollege_on.png")',
+        "--ik-theme-city-arcticwarfarecollege-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794265591/Snowy_Soviet_arcticwarfarecollege_off.png")',
+        "--ik-theme-city-arcticwarfarecollege-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794265591/Snowy_Soviet_arcticwarfarecollege_on.png")',
         /* 5. Assassin's Abode ========================================================== */
-        "--ik-theme-city-assassinsabode-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794189753/Snowy_Soviet_assassinsabode_off.png")',
-        "--ik-theme-city-assassinsabode-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794189536/Snowy_Soviet_assassinsabode_on.png")',
+        "--ik-theme-city-assassinsabode-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794265591/Snowy_Soviet_assassinsabode_off.png")',
+        "--ik-theme-city-assassinsabode-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794265591/Snowy_Soviet_assassinsabode_on.png")',
         /* 6. Barracks ================================================================== */
         "--ik-theme-city-barracks-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794122861/Soviet_Snowy_Barracks_off.png")',
         "--ik-theme-city-barracks-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794122974/Soviet_Snowy_Barracks_on.png")',
@@ -58,20 +58,20 @@
         "--ik-theme-city-cavalryparadeground-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794122865/Soviet_Snowy_Cavground_off.png")',
         "--ik-theme-city-cavalryparadeground-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794123007/Soviet_Snowy_Cavground_on.png")',
         /* 13. Chain Armourer =========================================================== */
-        "--ik-theme-city-chainsmith-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794189753/Snowy_Soviet_chainsmith_off.png")',
-        "--ik-theme-city-chainsmith-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794189536/Snowy_Soviet_chainsmith_on.png")',
+        "--ik-theme-city-chainsmith-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794265592/Snowy_Soviet_chainsmith_off.png")',
+        "--ik-theme-city-chainsmith-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794265592/Snowy_Soviet_chainsmith_on.png")',
         /* 14. Chancery of Estates ====================================================== */
-        "--ik-theme-city-chanceryofestates-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794189756/Snowy_Soviet_chancery_off.png")',
-        "--ik-theme-city-chanceryofestates-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794189539/Snowy_Soviet_chancery_on.png")',
+        "--ik-theme-city-chanceryofestates-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794265606/Snowy_Soviet_chancery_off.png")',
+        "--ik-theme-city-chanceryofestates-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794265606/Snowy_Soviet_chancery_on.png")',
         /* 15. Consulate ================================================================ */
         "--ik-theme-city-consulate-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794122866/Soviet_Snowy_Consulate_off.png")',
         "--ik-theme-city-consulate-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794123008/Soviet_Snowy_Consulate_on.png")',
         /* 16. Cottage ================================================================== */
-        "--ik-theme-city-cottage-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794189765/Snowy_Soviet_cottage_off.png")',
-        "--ik-theme-city-cottage-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794189550/Snowy_Soviet_cottage_on.png")',
+        "--ik-theme-city-cottage-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794213803/Snowy_Soviet_cottage_off.png")',
+        "--ik-theme-city-cottage-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794265606/Snowy_Soviet_cottage_on.png")',
         /* 17. Desert Warfare College =================================================== */
-        "--ik-theme-city-dessertwarfarecollege-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794189765/Snowy_Soviet_dessertwarfarecollege_off.png")',
-        "--ik-theme-city-dessertwarfarecollege-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794189550/Snowy_Soviet_dessertwarfarecollege_on.png")',
+        "--ik-theme-city-dessertwarfarecollege-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794265607/Snowy_Soviet_dessertwarfarecollege_off.png")',
+        "--ik-theme-city-dessertwarfarecollege-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794265607/Snowy_Soviet_dessertwarfarecollege_on.png")',
         /* 18. Fletcher ================================================================= */
         "--ik-theme-city-fletcher-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794122869/Soviet_Snowy_fletcher_off.png")',
         "--ik-theme-city-fletcher-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794123021/Soviet_Snowy_fletcher_on.png")',
@@ -79,8 +79,8 @@
         "--ik-theme-city-flourmill-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794122869/Soviet_Snowy_Flourmill_off.png")',
         "--ik-theme-city-flourmill-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794123021/Soviet_Snowy_Flourmill_on.png")',
         /* 20. Foreign Office =========================================================== */
-        "--ik-theme-city-foreignoffice-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794189766/Snowy_Soviet_foreignoffice_off.png")',
-        "--ik-theme-city-foreignoffice-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794189560/Snowy_Soviet_foreignoffice_on.png")',
+        "--ik-theme-city-foreignoffice-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794213261/Snowy_Soviet_foreignoffice_off.png")',
+        "--ik-theme-city-foreignoffice-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794265622/Snowy_Soviet_foreignoffice_on.png")',
         /* 21. Forge ==================================================================== */
         "--ik-theme-city-forge-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794122870/Soviet_Snowy_Forge_off.png")',
         "--ik-theme-city-forge-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794123208/Soviet_Snowy_Forge_on.png")',
@@ -88,20 +88,20 @@
         "--ik-theme-city-foundry-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794122869/Soviet_Snowy_Foundry_off.png")',
         "--ik-theme-city-foundry-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794123209/Soviet_Snowy_Foundry_on.png")',
         /* 23. Geomancer's Retreat ====================================================== */
-        "--ik-theme-city-geomancersretreat-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794189776/Snowy_Soviet_geomancersretreat_off.png")',
-        "--ik-theme-city-geomancersretreat-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794189561/Snowy_Soviet_geomancersretreat_on.png")',
+        "--ik-theme-city-geomancersretreat-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794265622/Snowy_Soviet_geomancersretreat_off.png")',
+        "--ik-theme-city-geomancersretreat-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794265634/Snowy_Soviet_geomancersretreat_on.png")',
         /* 24. Herbalist's Guild ======================================================== */
         "--ik-theme-city-herbalist-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794122870/Soviet_Snowy_herbalist_off.png")',
         "--ik-theme-city-herbalist-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794123220/Soviet_Snowy_herbalist_on.png")',
         /* 25. Horse Trainer ============================================================ */
-        "--ik-theme-city-horsetrainer2-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794189776/Snowy_Soviet_horsetrainer2_off.png")',
-        "--ik-theme-city-horsetrainer2-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794189561/Snowy_Soviet_horsetrainer2_on.png")',
+        "--ik-theme-city-horsetrainer2-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794265634/Snowy_Soviet_horsetrainer2_off.png")',
+        "--ik-theme-city-horsetrainer2-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794265634/Snowy_Soviet_horsetrainer2_on.png")',
         /* 26. Infantry Quarters ======================================================== */
         "--ik-theme-city-infantryquarters-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794122874/Soviet_Snowy_infantryquarter_off.png")',
         "--ik-theme-city-infantryquarters-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794123221/Soviet_Snowy_infantryquarter_on.png")',
         /* 27. Jungle Warfare College =================================================== */
-        "--ik-theme-city-junglewarfarecollege-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794189777/Snowy_Soviet_junglewarfarecollege_off.png")',
-        "--ik-theme-city-junglewarfarecollege-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794189561/Snowy_Soviet_junglewarfarecollege_on.png")',
+        "--ik-theme-city-junglewarfarecollege-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794265635/Snowy_Soviet_junglewarfarecollege_off.png")',
+        "--ik-theme-city-junglewarfarecollege-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794265635/Snowy_Soviet_junglewarfarecollege_on.png")',
         /* 28. Kiln ===================================================================== */
         "--ik-theme-city-kiln-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794122874/Soviet_Snowy_kiln_off.png")',
         "--ik-theme-city-kiln-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794123232/Soviet_Snowy_kiln_on.png")',
@@ -118,29 +118,29 @@
         "--ik-theme-city-marketplace-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794122882/Soviet_Snowy_Marketplace_off.png")',
         "--ik-theme-city-marketplace-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794123264/Soviet_Snowy_Marketplace_on.png")',
         /* 33. Merchant's Guild ========================================================= */
-        "--ik-theme-city-merchantsguild-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794189782/Snowy_Soviet_merchantsguild_off.png")',
-        "--ik-theme-city-merchantsguild-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794189564/Snowy_Soviet_merchantsguild_on.png")',
+        "--ik-theme-city-merchantsguild-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794265647/Snowy_Soviet_merchantsguild_off.png")',
+        "--ik-theme-city-merchantsguild-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794265647/Snowy_Soviet_merchantsguild_on.png")',
         /* 34. Miner's Guild ============================================================ */
         "--ik-theme-city-miner-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794122881/Soviet_Snowy_minersguild_off.png")',
         "--ik-theme-city-miner-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794123270/Soviet_Snowy_minersguild_on.png")',
         /* 35. Plate Armourer =========================================================== */
-        "--ik-theme-city-platesmith-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794189791/Snowy_Soviet_platesmith_off.png")',
-        "--ik-theme-city-platesmith-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794189575/Snowy_Soviet_platesmith_on.png")',
+        "--ik-theme-city-platesmith-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794265648/Snowy_Soviet_platesmith_off.png")',
+        "--ik-theme-city-platesmith-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794265648/Snowy_Soviet_platesmith_on.png")',
         /* 36. Runemaster's Grounding =================================================== */
-        "--ik-theme-city-runemaster-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794189792/Snowy_Soviet_runemaster_off.png")',
-        "--ik-theme-city-runemaster-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794189575/Snowy_Soviet_runemaster_on.png")',
+        "--ik-theme-city-runemaster-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794265648/Snowy_Soviet_runemaster_off.png")',
+        "--ik-theme-city-runemaster-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794265648/Snowy_Soviet_runemaster_on.png")',
         /* 37. Saboteur's Sanctuary ===================================================== */
-
-        
+        "--ik-theme-city-saboteurssanctuary-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794265662/Snowy_Soviet_saboteurssanctuary_off.png")',
+        "--ik-theme-city-saboteurssanctuary-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794265662/Snowy_Soviet_saboteurssanctuary_on.png")',
         /* 38. Saddlemaker ============================================================== */
         "--ik-theme-city-saddlemaker-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794122882/Soviet_Snowy_Saddlemaker_off.png")',
         "--ik-theme-city-saddlemaker-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794123283/Soviet_Snowy_Saddlemaker_on.png")',
         /* 39. Scouts Lookout =========================================================== */
-        "--ik-theme-city-scoutslookout-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794189792/Snowy_Soviet_scoutslookout_off.png")',
-        "--ik-theme-city-scoutslookout-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794189575/Snowy_Soviet_scoutslookout_on.png")',
+        "--ik-theme-city-scoutslookout-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794265662/Snowy_Soviet_scoutslookout_off.png")',
+        "--ik-theme-city-scoutslookout-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794265663/Snowy_Soviet_scoutslookout_on.png")',
         /* 40. Siege Workshop =========================================================== */
-        "--ik-theme-city-siegeworkshop-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794189796/Snowy_Soviet_siegeworkshop_off.png")',
-        "--ik-theme-city-siegeworkshop-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794189576/Snowy_Soviet_siegeworkshop_on.png")',
+        "--ik-theme-city-siegeworkshop-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794265663/Snowy_Soviet_siegeworkshop_off.png")',
+        "--ik-theme-city-siegeworkshop-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794265682/Snowy_Soviet_siegeworkshop_on.png")',
         /* 41. Skinner's Guild ========================================================== */
         "--ik-theme-city-trapper-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794122918/Soviet_Snowy_trapper_off.png")',
         "--ik-theme-city-trapper-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794123366/Soviet_Snowy_trapper_on.png")',
@@ -152,10 +152,10 @@
         "--ik-theme-city-spearmensbillets-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794123294/Soviet_Snowy_Spearbillet_on.png")',
         /* 44. Spearsmith =============================================================== */
         "--ik-theme-city-spearsmith-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794122892/Soviet_Snowy_Spearsmith_off.png")',
-        "--ik-theme-city-spearsmith-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794123318/Soviet_Snowy_stonemason_on.png")',
+        "--ik-theme-city-spearsmith-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794123306/Soviet_Snowy_Spearsmith_on.png")',
         /* 45. Spies Hideout ============================================================ */
-        "--ik-theme-city-spieshidout-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794189806/Snowy_Soviet_spieshidout_off.png")',
-        "--ik-theme-city-spieshidout-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794189576/Snowy_Soviet_spieshidout_on.png")',
+        "--ik-theme-city-spieshidout-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794265682/Snowy_Soviet_spieshidout_off.png")',
+        "--ik-theme-city-spieshidout-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794265683/Snowy_Soviet_spieshidout_on.png")',
         /* 46. Stonemason =============================================================== */
         "--ik-theme-city-stonemason-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794122892/Soviet_Snowy_stonemason_off.png")',
         "--ik-theme-city-stonemason-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794123318/Soviet_Snowy_stonemason_on.png")',
@@ -172,8 +172,8 @@
         "--ik-theme-city-taverna-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794122904/Soviet_Snowy_tavern_off.png")',
         "--ik-theme-city-taverna-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794123355/Soviet_Snowy_tavern_on.png")',
         /* 51. Thieves Den ============================================================== */
-        "--ik-theme-city-thievesden-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794189806/Snowy_Soviet_thievesden_off.png")',
-        "--ik-theme-city-thievesden-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794189588/Snowy_Soviet_thievesden_on.png")',
+        "--ik-theme-city-thievesden-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794265683/Snowy_Soviet_thievesden_off.png")',
+        "--ik-theme-city-thievesden-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794265683/Snowy_Soviet_thievesden_on.png")',
         /* 52. Trade Office ============================================================= */
         "--ik-theme-city-tradeoffice-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794122907/Soviet_Snowy_Tradeoffice_off.png")',
         "--ik-theme-city-tradeoffice-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794123355/Soviet_Snowy_Tradeoffice_on.png")',
@@ -227,6 +227,8 @@
         "--ik-theme-city-map": 'url("https://i.imgur.com/xWmXaI2.jpeg")',
         "--ik-theme-city-road": 'url("https://i.imgur.com/FmKCtP7.png")',
         "--ik-theme-city-trees": 'url("https://i.imgur.com/gTvNWI2.png")',
+        "--ik-theme-city-hedge": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794122862/Soviet_Snowy_Bushes_Adjusted_off.png")',
+        "--ik-theme-city-fountain": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794265695/Soviet_Snowy_Statue_on.png")',
         
         "--ik-theme-city-castle-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794122864/Soviet_Snowy_Castle_Smaller_off.png")',
         "--ik-theme-city-castle-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794123006/Soviet_Snowy_Castle_Smaller_on.png")',
@@ -628,9 +630,12 @@
     }
 
     /* 37. Saboteur's Sanctuary ===================================================== */
-
-
-
+    body.ik-city-lupercalian-union img[src*="03-saboteurssanctuary_off.png"] {
+        content: var(--ik-theme-city-saboteurssanctuary-off) !important;
+    }
+    body.ik-city-lupercalian-union img[src*="03-saboteurssanctuary_on.png"] {
+        content: var(--ik-theme-city-saboteurssanctuary-on) !important;
+    }
 
     /* 38. Saddlemaker ============================================================== */
     body.ik-city-lupercalian-union img[src*="03-saddlemaker_off.png"] {
@@ -893,6 +898,13 @@
     body.ik-city-lupercalian-union img[src*="lumberwood.png"] {
         content: var(--ik-theme-city-trees) !important;
     }
+    body.ik-city-lupercalian-union #townMap img[src*="03-fountain.png"] {
+        content: var(--ik-theme-city-fountain) !important;
+    }
+    body.ik-city-lupercalian-union img[src*="03-squarebushes.png"] {
+        content: var(--ik-theme-city-hedge) !important;
+    }
+
     
     /* ====================== CASTLE =========================== */
     body.ik-city-lupercalian-union #MainContentDiv img[src*="03-castle_off.png"] {
@@ -911,6 +923,7 @@
         height: 84.5px !important;    
         content: var(--ik-theme-city-castle-on) !important;
     }
+
     
     `;
 
