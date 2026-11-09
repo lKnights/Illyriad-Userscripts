@@ -271,6 +271,14 @@
         transform: translateZ(0);
     }
 
+    /* Pre-render and stack hover images in GPU memory */
+    body.ik-city-lupercalian-union img[src*="_off.png"],
+    body.ik-city-lupercalian-union img[src*="_on.png"] {
+        backface-visibility: hidden !important;
+        transform: translate3d(0, 0, 0) !important;
+        image-rendering: -webkit-optimize-contrast !important;
+    }
+
     /* 1. Empty Plot ================================================================ */
     body.ik-city-lupercalian-union #MainContentDiv img[src*="03-emptytownplotbuildlist_off.png"] {
         width: 150px !important;
