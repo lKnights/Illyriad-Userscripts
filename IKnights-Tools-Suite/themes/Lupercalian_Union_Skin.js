@@ -247,17 +247,21 @@
     const dynamicCityThemeCSS = generateVariablesCSS() + `
 
     /* 1. Empty Plot ================================================================ */
-    body.ik-city-lupercalian-union img[src*="03-emptytownplotbuildlist_off.png"] {
-        content: var(--ik-theme-city-emptytownplotbuildlist-off) !important;
-    }
-    body.ik-city-lupercalian-union img[src*="03-emptytownplotbuildlist_on.png"] {
-        content: var(--ik-theme-city-emptytownplotbuildlist-on) !important;
-    }
-
     body.ik-city-lupercalian-union #MainContentDiv img[src*="03-emptytownplotbuildlist_off.png"] {
         width: 150px !important;
         height: 150px !important;
         content: var(--ik-theme-city-emptytownplotbuildlist-off) !important;
+    }
+    
+    body.ik-city-lupercalian-union #townMap img[src*="03-emptytownplotbuildlist_off.png"] {
+        content: var(--ik-theme-city-emptytownplotbuildlist-off) !important;
+        width: 75px !important;
+        height: 75px !important;
+    }
+    body.ik-city-lupercalian-union img[src*="03-emptytownplotbuildlist_on.png"] {
+        content: var(--ik-theme-city-emptytownplotbuildlist-on) !important;
+        width: 75px !important;
+        height: 75px !important;
     }
 
     /* 2. Archer's Field ============================================================ */
@@ -808,23 +812,21 @@
     }
     
     /* ====================== CASTLE =========================== */
-    body.ik-city-lupercalian-union img[src*="03-castle_off.png"] {
-        content: var(--ik-theme-city-castle-off) !important;
-    }
-    body.ik-city-lupercalian-union img[src*="03-castle_on.png"] {
-        content: var(--ik-theme-city-castle-on) !important;
-    }
-
     body.ik-city-lupercalian-union #MainContentDiv img[src*="03-castle_off.png"] {
         width: 169px !important;
         height: 251px !important;
         content: var(--ik-theme-city-castle-full) !important;
     }
 
-    body.ik-city-lupercalian-union #townMap img[src*="03-castle_off.png"],
+    body.ik-city-lupercalian-union #townMap img[src*="03-castle_off.png"] {
+        width: 125.5px !important;    
+        height: 84.5px !important;   
+        content: var(--ik-theme-city-castle-off) !important;
+    }
     body.ik-city-lupercalian-union #townMap img[src*="03-castle_on.png"] {
         width: 125.5px !important;    
         height: 84.5px !important;    
+        content: var(--ik-theme-city-castle-on) !important;
     }
     
     `;
