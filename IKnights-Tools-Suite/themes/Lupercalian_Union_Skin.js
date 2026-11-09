@@ -871,6 +871,48 @@
     
     `;
 
+    // =========================================================================
+    // TOWN MAP SPECIFIC GPU LAYER LOCKER
+    // =========================================================================
+    function initTownMapObserver() {
+        const townMapNode = document.getElementById("townMap");
+
+        // If townMap isn't loaded into the DOM yet, wait for DOMContentLoaded
+        if (!townMapNode) {
+            document.addEventListener("DOMContentLoaded", initTownMapObserver, { once: true });
+            return;
+        }
+
+        const observer = new MutationObserver((mutations) => {
+            for (let i = 0; i < mutations.length; i++) {
+                const addedNodes = mutations[i].addedNodes;
+                for (let j = 0; j < addedNodes.length; j++) {
+                    const node = addedNodes[j];
+                    if (node.nodeType === Node.ELEMENT_NODE) {
+                        // Scope check directly to building image nodes within #townMap
+                        const images = node.matches('img[src*="03-"]') 
+                            ? [node] 
+                            : node.querySelectorAll('img[src*="03-"]');
+                        
+                        images.forEach((img) => {
+                            img.style.willChange = "content";
+                            img.style.transform = "translateZ(0)";
+                            img.style.backfaceVisibility = "hidden";
+                        });
+                    }
+                }
+            }
+        });
+
+        // Scoped exclusively to #townMap for minimal CPU overhead
+        observer.observe(townMapNode, {
+            childList: true,
+            subtree: true
+        });
+    }
+
+    initTownMapObserver();
+
     function remove() {
         document.documentElement.classList.remove("ik-city-lupercalian-union");
         document.body.classList.remove("ik-city-lupercalian-union");
