@@ -239,16 +239,18 @@
     // =========================================================================
     function preloadThemeImages() {
         Object.values(variables).forEach(urlValue => {
-            // Extract the raw URL string out of CSS 'url("...")' format
             const match = urlValue.match(/url\("(.*?)"\)/);
             if (match && match[1]) {
                 const img = new Image();
                 img.src = match[1];
+                // Force synchronous/asynchronous decode into GPU memory
+                if (typeof img.decode === "function") {
+                    img.decode().catch(() => {});
+                }
             }
         });
     }
 
-    // Call it immediately upon script load
     preloadThemeImages();
     
     function generateVariablesCSS() {
@@ -262,6 +264,12 @@
 
     // 2. CSS Rules mapping image sources to custom theme variables
     const dynamicCityThemeCSS = generateVariablesCSS() + `
+    
+    body.ik-city-lupercalian-union img[src*="_off.png"],
+    body.ik-city-lupercalian-union img[src*="_on.png"] {
+        will-change: content;
+        transform: translateZ(0);
+    }
 
     /* 1. Empty Plot ================================================================ */
     body.ik-city-lupercalian-union #MainContentDiv img[src*="03-emptytownplotbuildlist_off.png"] {
