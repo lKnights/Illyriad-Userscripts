@@ -872,46 +872,56 @@
     `;
 
     // =========================================================================
-    // TOWN MAP SPECIFIC GPU LAYER LOCKER
+    // EVENT-DRIVEN & MUTATION OBSERVER GPU LAYER LOCKER
     // =========================================================================
-    function initTownMapObserver() {
+    function initEventDrivenGPULocker() {
         const townMapNode = document.getElementById("townMap");
 
-        // If townMap isn't loaded into the DOM yet, wait for DOMContentLoaded
+        // If townMap isn't loaded yet, wait for DOMContentLoaded
         if (!townMapNode) {
-            document.addEventListener("DOMContentLoaded", initTownMapObserver, { once: true });
+            document.addEventListener("DOMContentLoaded", initEventDrivenGPULocker, { once: true });
             return;
         }
 
+        const lockLayers = (node = townMapNode) => {
+            const images = node.matches && node.matches('img[src*="03-"]') 
+                ? [node] 
+                : node.querySelectorAll('img[src*="03-"]');
+            
+            images.forEach((img) => {
+                img.style.willChange = "content, transform";
+                img.style.transform = "translate3d(0, 0, 0)";
+                img.style.backfaceVisibility = "hidden";
+            });
+        };
+
+        // 1. Lock existing layers immediately
+        lockLayers();
+
+        // 2. Observe future DOM insertions inside the map container
         const observer = new MutationObserver((mutations) => {
             for (let i = 0; i < mutations.length; i++) {
                 const addedNodes = mutations[i].addedNodes;
                 for (let j = 0; j < addedNodes.length; j++) {
                     const node = addedNodes[j];
                     if (node.nodeType === Node.ELEMENT_NODE) {
-                        // Scope check directly to building image nodes within #townMap
-                        const images = node.matches('img[src*="03-"]') 
-                            ? [node] 
-                            : node.querySelectorAll('img[src*="03-"]');
-                        
-                        images.forEach((img) => {
-                            img.style.willChange = "content";
-                            img.style.transform = "translateZ(0)";
-                            img.style.backfaceVisibility = "hidden";
-                        });
+                        lockLayers(node);
                     }
                 }
             }
         });
 
-        // Scoped exclusively to #townMap for minimal CPU overhead
         observer.observe(townMapNode, {
             childList: true,
             subtree: true
         });
+
+        // 3. Re-apply locks instantly on user interaction to catch any state resets
+        townMapNode.addEventListener("mouseenter", () => lockLayers(), { passive: true });
+        townMapNode.addEventListener("mousemove", () => lockLayers(), { passive: true });
     }
 
-    initTownMapObserver();
+    initEventDrivenGPULocker();
 
     function remove() {
         document.documentElement.classList.remove("ik-city-lupercalian-union");
