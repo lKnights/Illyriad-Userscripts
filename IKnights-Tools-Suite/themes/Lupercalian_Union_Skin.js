@@ -230,6 +230,7 @@
         
         "--ik-theme-city-castle-off": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794122864/Soviet_Snowy_Castle_Smaller_off.png")',
         "--ik-theme-city-castle-on": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794123006/Soviet_Snowy_Castle_Smaller_on.png")',
+        "--ik-theme-city-castle-full": 'url("https://res.cloudinary.com/uzoacdfm/image/upload/v1794122865/Soviet_Snowy_Castle_Small_off.png")',
 
     };
 
@@ -251,6 +252,12 @@
     }
     body.ik-city-lupercalian-union img[src*="03-emptytownplotbuildlist_on.png"] {
         content: var(--ik-theme-city-emptytownplotbuildlist-on) !important;
+    }
+
+    body.ik-city-lupercalian-union #MainContentDiv img[src*="03-emptytownplotbuildlist_off.png"] {
+        width: 150px !important;
+        height: 150px !important;
+        content: var(--ik-theme-city-emptytownplotbuildlist-off) !important;
     }
 
     /* 2. Archer's Field ============================================================ */
@@ -811,13 +818,13 @@
     body.ik-city-lupercalian-union #MainContentDiv img[src*="03-castle_off.png"] {
         width: 169px !important;
         height: 251px !important;
-        /* add seperate image with no right margin buffer */
+        content: var(--ik-theme-city-castle-full) !important;
     }
 
     body.ik-city-lupercalian-union #townMap img[src*="03-castle_off.png"],
     body.ik-city-lupercalian-union #townMap img[src*="03-castle_on.png"] {
-        width: 125.5px !important;     /* Adjust width to fit your artwork proportions */
-        height: 84.5px !important;    /* Adjust height to fit your artwork proportions */
+        width: 125.5px !important;    
+        height: 84.5px !important;    
     }
     
     `;
