@@ -279,6 +279,13 @@
         image-rendering: -webkit-optimize-contrast !important;
     }
 
+    body.ik-city-lupercalian-union #townMap img,
+    body.ik-city-lupercalian-union div[style*="background-image"] {
+        transform: translateZ(0);
+        backface-visibility: hidden;
+        perspective: 1000px;
+    }
+
     /* 1. Empty Plot ================================================================ */
     body.ik-city-lupercalian-union #MainContentDiv img[src*="03-emptytownplotbuildlist_off.png"] {
         width: 150px !important;
