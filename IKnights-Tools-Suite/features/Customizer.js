@@ -154,14 +154,14 @@
             inputId: "ikCustomizerSelfChatColor",
             label: "Self Chat Colour",
             variables: ["--ik-theme-special-text1"],
-            previewVariable: "--ik-theme-special-text2"
+            previewVariable: "--ik-theme-special-text1"
         },
         {
             setting: "systemChatColor",
             inputId: "ikCustomizerSystemChatColor",
             label: "System Chat Colour",
             variables: ["--ik-theme-special-text2"],
-            previewVariable: "--ik-theme-special-text8"
+            previewVariable: "--ik-theme-special-text2"
         },
         {
             setting: "cityDropdownBackgroundColor",
@@ -1833,6 +1833,7 @@ function updateAccordionStatusHeaders() {
 
         updateThemeDescriptions();
         syncCustomCssState();
+        updateAccordionStatusHeaders();
     }
 
 
@@ -1914,7 +1915,12 @@ function updateAccordionStatusHeaders() {
             customCss:
                 customCss
                     ? customCss.value
-                    : ""
+                    : "",
+            
+            replacePaperTexture:
+                document.getElementById(
+                    "ikCustomizerReplacePaperTexture"
+                )?.checked === true
         };
 
         for (const field of COLOR_OVERRIDE_FIELDS) {
