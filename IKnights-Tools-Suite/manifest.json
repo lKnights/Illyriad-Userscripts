@@ -67,7 +67,7 @@
         {
             "id": "luper-dark-cold",
             "name": "LuperDark (Cold) Interface Theme",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "file": "themes/LuperDark_Cold/LuperDark_Cold.js",
             "requires": [
                 "customizer"
