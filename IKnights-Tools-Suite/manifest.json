@@ -37,7 +37,7 @@
         {
             "id": "catalogue",
             "name": "Catalogue",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "file": "tools/Catalogue.js",
             "requires": [
                 "catalogue-data"
@@ -47,7 +47,7 @@
         {
             "id": "luper-dark-warm",
             "name": "LuperDark (Warm) Interface Theme",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "file": "themes/LuperDark_Warm.js",
             "requires": [
                 "customizer"
