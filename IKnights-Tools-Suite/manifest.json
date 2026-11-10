@@ -23,7 +23,7 @@
         {
             "id": "customizer",
             "name": "Customizer",
-            "version": "1.1.4",
+            "version": "1.1.5",
             "file": "features/Customizer.js",
             "enabled": true
         },
@@ -77,7 +77,7 @@
         {
             "id": "ui-tweaks",
             "name": "UI Tweaks",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "file": "features/UITweaks.js",
             "enabled": true
         }
