@@ -1005,11 +1005,11 @@
             }
 
             /* Main Customizer heading */
-            #ikCustomizerDialog .ik-customizer-main-heading {
+            #ikCustomizerDialog h1.ik-customizer-main-heading {
                 font-size: 2em;
                 font-weight: bold;
                 line-height: 1.2;
-                margin: 0 0 12px 0;
+                margin: 0 0 12px 0 !important;
             }
 
             #ikCustomizerDialog
@@ -1168,6 +1168,8 @@
             #ikCustomizerDialog .ik-customizer-color-actions {
                 display: flex;
                 justify-content: center;
+                align-items: center;
+                gap: 10px;
                 margin-top: 10px;
             }
 
@@ -1392,65 +1394,51 @@
     // =========================================================================
     // CONTROL SYNC
     // =========================================================================
-    function updateAccordionStatusHeaders() {
-        const colorLabel = document.getElementById(
-            "ikCustomizerColorHeaderLabel"
-        );
-    
-        const cssLabel = document.getElementById(
-            "ikCustomizerCssHeaderLabel"
-        );
-    
-        let hasValue = false;
-        let hasError = false;
-    
-        // Check all colour input fields.
-        for (const field of COLOR_OVERRIDE_FIELDS) {
-            const input = document.getElementById(
-                field.inputId
+function updateAccordionStatusHeaders() {
+    const colorLabel = document.getElementById(
+        "ikCustomizerColorHeaderLabel"
+    );
+
+    const cssLabel = document.getElementById(
+        "ikCustomizerCssHeaderLabel"
+    );
+
+    const values = COLOR_OVERRIDE_FIELDS.map(field =>
+        String(settings?.[field.setting] ?? "").trim()
+    );
+
+    const hasValue = values.some(value =>
+        value !== ""
+    );
+
+    const hasError = values.some(value =>
+        value !== "" && !isValidHexColor(value)
+    );
+
+    // Custom Color Settings
+    if (colorLabel) {
+        colorLabel.textContent =
+            "Custom Color Settings" +
+            (
+                hasError
+                    ? " - Error"
+                    : hasValue
+                        ? " - Active"
+                        : ""
             );
-    
-            if (!input) {
-                continue;
-            }
-    
-            const value = input.value.trim();
-    
-            if (!value) {
-                continue;
-            }
-    
-            hasValue = true;
-    
-            if (!isValidHexColor(value)) {
-                hasError = true;
-            }
-        }
-    
-        // Error takes priority over Active.
-        if (colorLabel) {
-            colorLabel.textContent =
-                "Custom Color Settings" +
-                (
-                    hasError
-                        ? " - Error"
-                        : hasValue
-                            ? " - Active"
-                            : ""
-                );
-        }
-    
-        // Custom CSS is active whenever its checkbox is enabled.
-        if (cssLabel) {
-            const checkbox = document.getElementById(
-                "ikCustomizerCustomCssEnabled"
-            );
-    
-            cssLabel.textContent =
-                "Custom CSS Injection" +
-                (checkbox?.checked ? " - Active" : "");
-        }
     }
+
+    // Custom CSS Injection
+    if (cssLabel) {
+        cssLabel.textContent =
+            "Custom CSS Injection" +
+            (
+                settings?.customCssEnabled
+                    ? " - Active"
+                    : ""
+            );
+    }
+}
     
     function updateThemeDescriptions() {
         const fields = [
@@ -1499,40 +1487,58 @@
         }
     }
     
-    function updateColorInputValidity(input) {
+    function updateColorInputValidity(input, validate = false) {
         if (!input) {
             return false;
         }
     
         const value = input.value.trim();
     
-        const invalid =
-            value !== "" && !isValidHexColor(value);
+        if (validate) {
+            // Full validation only when requested by Apply.
+            const invalid =
+                value !== "" && !isValidHexColor(value);
     
-        input.classList.toggle(
-            "ik-customizer-invalid",
-            invalid
-        );
+            input.classList.toggle(
+                "ik-customizer-invalid",
+                invalid
+            );
     
-        input.setAttribute(
-            "aria-invalid",
-            String(invalid)
-        );
-        
-        // Update the corresponding colour preview.
+            input.setAttribute(
+                "aria-invalid",
+                String(invalid)
+            );
+    
+        } else if (value === "") {
+            // Always clear the error when the field is empty.
+            input.classList.remove(
+                "ik-customizer-invalid"
+            );
+    
+            input.setAttribute(
+                "aria-invalid",
+                "false"
+            );
+        }
+    
+        // Keep the colour preview updated while typing.
         const swatch = document.getElementById(
             input.id + "Swatch"
         );
-        
+    
         if (swatch) {
             if (isValidHexColor(value)) {
                 swatch.style.backgroundColor = value;
             } else {
-                swatch.style.removeProperty("background-color");
+                swatch.style.removeProperty(
+                    "background-color"
+                );
             }
         }
-        
-        return invalid;
+    
+        return input.classList.contains(
+            "ik-customizer-invalid"
+        );
     }
     
     function syncControlsFromSettings() {
@@ -1614,7 +1620,7 @@
         
             if (input) {
                 input.value = settings[field.setting] || "";
-                updateColorInputValidity(input);
+                updateColorInputValidity(input, true);
             }
         }
 
@@ -1643,7 +1649,6 @@
                 !enabled?.checked;
         }
 
-        updateAccordionStatusHeaders();
     }
 
 
@@ -1712,7 +1717,7 @@
             settings[field.setting] =
                 input ? input.value.trim() : "";
         
-            updateColorInputValidity(input);
+            updateColorInputValidity(input, true);
         }
         
     }
@@ -1725,9 +1730,10 @@
     function applyFromUI() {
         readSettingsFromControls();
 
+        
         updateAccordionStatusHeaders();
 
-
+        
         saveSettings();
 
 
@@ -1861,6 +1867,8 @@
                     </div>
     
                 </div>
+
+                <div id="ikCustomizerStatus"></div>
     
                 <div class="ik-customizer-buttons">
     
@@ -1879,8 +1887,6 @@
                     >
     
                 </div>
-                
-                <div id="ikCustomizerStatus"></div>
     
             </div>
             
@@ -1952,10 +1958,17 @@
                     </div>
             
                     <div class="ik-customizer-color-actions">
+                    
+                        <input type="button"
+                               id="ikCustomizerApplyColors"
+                               class="ik-game-button"
+                               value="Apply">
+                    
                         <input type="button"
                                id="ikCustomizerClearColors"
                                class="ik-game-button"
                                value="Clear">
+                    
                     </div>
             
                 </div>
@@ -2043,6 +2056,15 @@
                 applyFromUI
             );
 
+        document
+            .querySelector(
+                "#ikCustomizerApplyColors"
+            )
+            ?.addEventListener(
+                "click",
+                applyFromUI
+            );
+
 
         document
             .querySelector(
@@ -2080,8 +2102,6 @@
                     // Reset validation and clear the preview.
                     updateColorInputValidity(input);
                 }
-
-                updateAccordionStatusHeaders();
                 
                 setStatus(
                     "Colour fields cleared. Click Apply to save."
@@ -2089,12 +2109,14 @@
             });
         
         for (const field of COLOR_OVERRIDE_FIELDS) {
-            const input =
-                document.getElementById(field.inputId);
+            const input = document.getElementById(
+                field.inputId
+            );
         
             input?.addEventListener("input", () => {
+                // Update preview and clear errors on empty fields.
+                // Do not flag new errors while typing.
                 updateColorInputValidity(input);
-                updateAccordionStatusHeaders();
             });
         }
 
