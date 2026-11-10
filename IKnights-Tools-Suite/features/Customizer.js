@@ -1887,9 +1887,6 @@ function updateAccordionStatusHeaders() {
                 updateColorInputValidity(input);
             }
         }
-
-        fitCustomizerDialogToContent();
-        
     }
     
     function syncControlsFromSettings() {
@@ -2167,47 +2164,6 @@ function updateAccordionStatusHeaders() {
     // DIALOG
     // =========================================================================
 
-    function fitCustomizerDialogToContent() {
-        const $dialog = jQuery("#" + DIALOG_ID);
-    
-        // Only resize when the dialog is open.
-        if (
-            !$dialog.length ||
-            !$dialog.dialog("isOpen")
-        ) {
-            return;
-        }
-    
-        const minHeight =
-            Number($dialog.dialog("option", "minHeight")) || 400;
-    
-        // Leave a little space around the dialog.
-        const viewportLimit = Math.max(
-            minHeight,
-            window.innerHeight - 32
-        );
-    
-        // Remove the previously fixed height and let
-        // jQuery UI recalculate the natural content size.
-        $dialog.dialog("option", {
-            height: "auto",
-            maxHeight: viewportLimit
-        });
-    
-        // If the content exceeds the available screen
-        // height, cap the dialog and allow scrolling.
-        if (
-            $dialog.dialog("widget").outerHeight() >
-            viewportLimit
-        ) {
-            $dialog.dialog(
-                "option",
-                "height",
-                viewportLimit
-            );
-        }
-    }
-    
     function createDialog() {
         if (
             dialogCreated
@@ -2364,7 +2320,7 @@ function updateAccordionStatusHeaders() {
                         >
                     
                         <label for="ikCustomizerReplacePaperTexture">
-                            Replace paper background image with Background Colour
+                            Replace paper background images with Background Colour
                         </label>
                     
                     </div>
@@ -2377,7 +2333,7 @@ function updateAccordionStatusHeaders() {
                         >
                     
                         <label for="ikCustomizerReplaceDarkHeaderTexture">
-                            Replace dark header image with Custom Dark Header Colour
+                            Replace dark header images with Custom Dark Header Colour
                         </label>
                     
                     </div>
@@ -2390,7 +2346,7 @@ function updateAccordionStatusHeaders() {
                         >
                     
                         <label for="ikCustomizerReplaceLightHeaderTexture">
-                            Replace light header image with Custom Light Header Colour
+                            Replace light header images with Custom Light Header Colour
                         </label>
                     
                     </div>
@@ -2478,17 +2434,13 @@ function updateAccordionStatusHeaders() {
                 header: "> h3",
                 collapsible: true,
                 active: false,
-            
+        
+                // Modern jQuery UI
                 heightStyle: "content",
-            
+        
+                // Legacy jQuery UI
                 autoHeight: false,
-                fillSpace: false,
-            
-                // Called after an accordion finishes
-                // expanding or collapsing.
-                activate: function () {
-                    fitCustomizerDialogToContent();
-                }
+                fillSpace: false
             });
         }
 
@@ -2531,15 +2483,14 @@ function updateAccordionStatusHeaders() {
                 const accordion = jQuery(
                     "#ikCustomizerAccordion"
                 );
-            
+        
                 if (
                     accordion.length &&
                     accordion.hasClass("ui-accordion")
                 ) {
+                    // Recalculate after the dialog becomes visible.
                     accordion.accordion("refresh");
                 }
-            
-                fitCustomizerDialogToContent();
             },
         
             closeOnEscape: true
