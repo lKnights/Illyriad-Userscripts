@@ -80,14 +80,14 @@
         {
             setting: "backgroundColor",
             inputId: "ikCustomizerBackgroundColor",
-            label: "Background Color",
+            label: "Background Colour",
             variables: ["--ik-theme-content-bg"],
             previewVariable: "--ik-theme-content-bg"
         },
         {
             setting: "alternatingBackgroundColor",
             inputId: "ikCustomizerAlternatingBackgroundColor",
-            label: "Alternating Background Color",
+            label: "Alternating Background Colour",
             variables: ["--ik-theme-alt-bg"],
             previewVariable: "--ik-theme-alt-bg"
         },
@@ -204,6 +204,9 @@
 
         customCss:
             "",
+
+        replacePaperTexture:
+            false,
         
         ...Object.fromEntries(
             COLOR_OVERRIDE_FIELDS.map(field => [
@@ -303,6 +306,10 @@
                     "string"
                     ? source.customCss
                     : "",
+
+            replacePaperTexture:
+                source.replacePaperTexture === 
+                    true,
             
             ...Object.fromEntries(
                 COLOR_OVERRIDE_FIELDS.map(field => [
@@ -314,6 +321,8 @@
                 ])
             )
         };
+
+        
     }
 
 
@@ -886,6 +895,65 @@
             );
         }
 
+        // =============================================================
+        // REPLACE PAPER TEXTURE WITH SOLID BACKGROUND
+        // =============================================================
+        
+        if (
+            settings.replacePaperTexture === true &&
+            interfaceTheme
+        ) {
+            blocks.push(`
+                /* Disable the theme's paper texture variable */
+                html:root,
+                body {
+                    --ik-theme-texture: none !important;
+                }
+        
+                /*
+                 * Replace textured backgrounds with the
+                 * selected content background colour.
+                 */
+        
+                body.ik-dark-mode
+                .ui-widget-content:not([id="ikNotesPanel"]):not([id="ikNotesPanel"] *),
+        
+                body.ik-dark-mode .smallBorder,
+                body.ik-dark-mode #DockedFriends,
+                body.ik-dark-mode .ui-state-active,
+        
+                body.ik-dark-mode .sideTab.selected,
+        
+                body.ik-dark-mode
+                span.ikcat-dialog-tab.data-tab,
+        
+                body.ik-dark-mode
+                span.ikcat-dialog-tab.selected,
+        
+                body.ik-dark-mode
+                span.ikcat-dialog-tab.active,
+        
+                body.ik-dark-mode
+                span.ikcat-dialog-tab.active.data-tab,
+        
+                body.ik-dark-mode
+                div.headlinks a.selected,
+        
+                body.ik-dark-mode
+                div.headLinks a.selected,
+        
+                body.ik-dark-mode
+                .headlinks a.selected,
+        
+                body.ik-dark-mode
+                .headLinks a.selected {
+                    background-image: none !important;
+        
+                    background-color:
+                        var(--ik-theme-content-bg) !important;
+                }
+            `);
+        }
 
         return blocks.join(
             "\n\n"
@@ -1101,7 +1169,7 @@
                 font-size: 2em;
                 font-weight: bold;
                 line-height: 1.2;
-                margin: 0 0 12px 0 !important;
+                margin: 12px 0 12px 0 !important;
             }
 
             #ikCustomizerDialog
@@ -1180,6 +1248,26 @@
                 background-color: #ffd6d6 !important;
                 color: #800000 !important;
                 border: 2px solid #c00000 !important;
+            }
+
+            #ikCustomizerDialog
+            .ik-customizer-texture-toggle {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-top: 12px;
+                margin-bottom: 12px;
+            }
+            
+            #ikCustomizerDialog
+            .ik-customizer-texture-toggle > label {
+                flex: 1 1 auto;
+                cursor: pointer;
+            }
+            
+            #ikCustomizerDialog
+            .ik-customizer-texture-toggle > input {
+                flex: 0 0 auto;
             }
 
             /* Accordion headers */
@@ -1734,6 +1822,15 @@ function updateAccordionStatusHeaders() {
             }
         }
 
+        const textureCheckbox = document.getElementById(
+            "ikCustomizerReplacePaperTexture"
+        );
+        
+        if (textureCheckbox) {
+            textureCheckbox.checked =
+                settings.replacePaperTexture === true;
+        }
+
         updateThemeDescriptions();
         syncCustomCssState();
     }
@@ -2015,6 +2112,19 @@ function updateAccordionStatusHeaders() {
                         Leave a field blank to use the interface theme's default.
                         Custom colours do not apply to Illyriad Native.
                     </div>
+
+                    <div class="ik-customizer-row ik-customizer-texture-toggle">
+
+                        <input
+                            type="checkbox"
+                            id="ikCustomizerReplacePaperTexture"
+                        >
+                    
+                        <label for="ikCustomizerReplacePaperTexture">
+                            Replace paper background texture with custom background colour
+                        </label>
+                    
+                    </div>
             
                     ${COLOR_OVERRIDE_FIELDS.map(field => `
                         <div class="ik-customizer-row ik-customizer-color-row">
@@ -2186,9 +2296,17 @@ function updateAccordionStatusHeaders() {
                     // Reset validation and clear the preview.
                     updateColorInputValidity(input);
                 }
+
+                const textureCheckbox = document.getElementById(
+                    "ikCustomizerReplacePaperTexture"
+                );
+                
+                if (textureCheckbox) {
+                    textureCheckbox.checked = false;
+                }
                 
                 setStatus(
-                    "Colour fields cleared. Click Apply to save."
+                    "Custom colour settings cleared. Click Apply to save."
                 );
             });
         
