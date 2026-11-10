@@ -579,7 +579,8 @@ body.ik-dark-mode #dTownTD *, body.ik-dark-mode .dTownTD *, body.ik-dark-mode #c
 body.ik-dark-mode .cityMenu.selected { background-color: var(--ik-theme-special-text7) !important; }
 
 body.ik-dark-mode div.ui-accordion-content.ui-helper-reset.ui-widget-content.ui-corner-bottom.ui-accordion-content-active hr,
-body.ik-dark-mode div#MainContentDiv div.info hr {
+body.ik-dark-mode div#MainContentDiv div.info hr,
+body.ik-dark-mode div#citiesMenu {
     border-color: var(--ik-theme-border-color) !important;
 }
 
