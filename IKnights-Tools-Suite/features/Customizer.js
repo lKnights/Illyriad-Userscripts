@@ -1392,6 +1392,66 @@
     // =========================================================================
     // CONTROL SYNC
     // =========================================================================
+    function updateAccordionStatusHeaders() {
+        const colorLabel = document.getElementById(
+            "ikCustomizerColorHeaderLabel"
+        );
+    
+        const cssLabel = document.getElementById(
+            "ikCustomizerCssHeaderLabel"
+        );
+    
+        let hasValue = false;
+        let hasError = false;
+    
+        // Check all colour input fields.
+        for (const field of COLOR_OVERRIDE_FIELDS) {
+            const input = document.getElementById(
+                field.inputId
+            );
+    
+            if (!input) {
+                continue;
+            }
+    
+            const value = input.value.trim();
+    
+            if (!value) {
+                continue;
+            }
+    
+            hasValue = true;
+    
+            if (!isValidHexColor(value)) {
+                hasError = true;
+            }
+        }
+    
+        // Error takes priority over Active.
+        if (colorLabel) {
+            colorLabel.textContent =
+                "Custom Color Settings" +
+                (
+                    hasError
+                        ? " - Error"
+                        : hasValue
+                            ? " - Active"
+                            : ""
+                );
+        }
+    
+        // Custom CSS is active whenever its checkbox is enabled.
+        if (cssLabel) {
+            const checkbox = document.getElementById(
+                "ikCustomizerCustomCssEnabled"
+            );
+    
+            cssLabel.textContent =
+                "Custom CSS Injection" +
+                (checkbox?.checked ? " - Active" : "");
+        }
+    }
+    
     function updateThemeDescriptions() {
         const fields = [
             {
@@ -1582,6 +1642,8 @@
             textarea.disabled =
                 !enabled?.checked;
         }
+
+        updateAccordionStatusHeaders();
     }
 
 
@@ -1663,6 +1725,8 @@
     function applyFromUI() {
         readSettingsFromControls();
 
+        updateAccordionStatusHeaders();
+
 
         saveSettings();
 
@@ -1729,7 +1793,7 @@
     
                 <div class="ik-customizer-section">
     
-                    <h1 class="ik-customizer-heading">
+                    <h1 class=".ik-customizer-main-heading">
                         Customizer
                     </h1>
     
@@ -1822,13 +1886,18 @@
             
             <div id="ikCustomizerAccordion">
             
-                <h3>Custom Colour Settings</h3>
+                <h3>
+                    <span id="ikCustomizerColorHeaderLabel">
+                        Custom Color Settings
+                    </span>
+                </h3>
             
                 <div class="ik-customizer-section">
             
                     <div class="ik-customizer-description">
-                        Optional hex colours (#FFF, #FFFFFF, or #FFFFFFFF).
+                        Optional hex colours (3, 6, and 9 digit hex values).
                         Leave a field blank to use the interface theme's default.
+                        Custom colours do not apply to Illyriad Native.
                     </div>
             
                     <div class="ik-customizer-row ik-customizer-color-row">
@@ -1892,7 +1961,11 @@
                 </div>
             
             
-                <h3>Custom CSS Injection</h3>
+                <h3>
+                    <span id="ikCustomizerCssHeaderLabel">
+                        Custom CSS Injection
+                    </span>
+                </h3>
             
                 <div class="ik-customizer-section">
             
@@ -2007,7 +2080,9 @@
                     // Reset validation and clear the preview.
                     updateColorInputValidity(input);
                 }
-        
+
+                updateAccordionStatusHeaders();
+                
                 setStatus(
                     "Colour fields cleared. Click Apply to save."
                 );
@@ -2019,6 +2094,7 @@
         
             input?.addEventListener("input", () => {
                 updateColorInputValidity(input);
+                updateAccordionStatusHeaders();
             });
         }
 
