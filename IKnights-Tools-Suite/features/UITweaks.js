@@ -358,8 +358,8 @@
                 transform: translateY(-50%) rotate(90deg);
             }
 
-            /* Active accordion header background */
-            :where(#ikUITweaksAccordion) > h3.ui-state-active {
+            /* Active accordion header - native fallback */
+            #ikUITweaksAccordion > h3.ui-state-active {
                 background-image: var(
                     --ik-theme-texture,
                     url("https://assets.illyriad.net/img/backgrounds/paper2.jpg")
