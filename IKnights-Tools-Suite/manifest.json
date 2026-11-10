@@ -78,7 +78,7 @@
             "id": "lupercalian-union-skin-hr",
             "name": "Lupercalian Union Skin (HiRes)",
             "version": "1.0.4",
-            "file": "themes/Lupercalian_Union_Skin.js",
+            "file": "themes/Lupercalian_Union_Skin_HiRes.js",
             "requires": [
                 "customizer"
             ],
