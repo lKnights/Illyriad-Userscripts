@@ -9,15 +9,15 @@
 (function () {
     "use strict";
 
-    if (window.__IKTOOLS_LUPERCALIAN_UNION_SKIN_LOADED__) {
+    if (window.__IKTOOLS_LUPERCALIAN_UNION_SKIN_HR_LOADED__) {
         return;
     }
 
     if (!window.IKTools?.customizer) {
-        throw new Error("Lupercalian Union Skin requires Customizer.");
+        throw new Error("Lupercalian Union Skin (HiRes) requires Customizer.");
     }
 
-    window.__IKTOOLS_LUPERCALIAN_UNION_SKIN_LOADED__ = true;
+    window.__IKTOOLS_LUPERCALIAN_UNION_SKIN_HR_LOADED__ = true;
 
     // ----------------- VVVV -------- ART ASSETS HERE ---------- VVVV ---------------------
     const variables = {
@@ -299,7 +299,7 @@
     preWarmRasterization();
     
     function generateVariablesCSS() {
-        let cssString = "html.ik-city-lupercalian-union {\n";
+        let cssString = "html.ik-city-lupercalian-union-hr {\n";
         for (const [key, value] of Object.entries(variables)) {
             cssString += `  ${key}: ${value};\n`;
         }
@@ -310,502 +310,502 @@
     // 2. CSS Rules mapping image sources to custom theme variables
     const dynamicCityThemeCSS = generateVariablesCSS() + `
     
-    body.ik-city-lupercalian-union img[src*="_off.png"],
-    body.ik-city-lupercalian-union img[src*="_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="_off.png"],
+    body.ik-city-lupercalian-union-hr img[src*="_on.png"] {
         will-change: content;
         transform: translateZ(0);
     }
 
     /* Pre-render and stack hover images in GPU memory */
-    body.ik-city-lupercalian-union img[src*="_off.png"],
-    body.ik-city-lupercalian-union img[src*="_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="_off.png"],
+    body.ik-city-lupercalian-union-hr img[src*="_on.png"] {
         backface-visibility: hidden !important;
         transform: translate3d(0, 0, 0) !important;
         image-rendering: -webkit-optimize-contrast !important;
     }
 
-    body.ik-city-lupercalian-union #townMap img,
-    body.ik-city-lupercalian-union div[style*="background-image"] {
+    body.ik-city-lupercalian-union-hr #townMap img,
+    body.ik-city-lupercalian-union-hr div[style*="background-image"] {
         transform: translateZ(0);
         backface-visibility: hidden;
         perspective: 1000px;
     }
 
     /* 1. Empty Plot ================================================================ */
-    body.ik-city-lupercalian-union #MainContentDiv img[src*="03-emptytownplotbuildlist_off.png"] {
+    body.ik-city-lupercalian-union-hr #MainContentDiv img[src*="03-emptytownplotbuildlist_off.png"] {
         width: 150px !important;
         height: 150px !important;
         content: var(--ik-theme-city-emptytownplotbuildlist-off) !important;
     }
     
-    body.ik-city-lupercalian-union #townMap img[src*="03-emptytownplotbuildlist_off.png"] {
+    body.ik-city-lupercalian-union-hr #townMap img[src*="03-emptytownplotbuildlist_off.png"] {
         content: var(--ik-theme-city-emptytownplotbuildlist-off) !important;
         width: 75px !important;
         height: 75px !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-emptytownplotbuildlist_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-emptytownplotbuildlist_on.png"] {
         content: var(--ik-theme-city-emptytownplotbuildlist-on) !important;
         width: 75px !important;
         height: 75px !important;
     }
 
     /* 2. Archer's Field ============================================================ */
-    body.ik-city-lupercalian-union img[src*="03-archersfield_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-archersfield_off.png"] {
         content: var(--ik-theme-city-archersfield-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-archersfield_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-archersfield_on.png"] {
         content: var(--ik-theme-city-archersfield-on) !important;
     }
     
     /* 3. Architect's Office ======================================================== */
-    body.ik-city-lupercalian-union img[src*="03-architectsoffice_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-architectsoffice_off.png"] {
         content: var(--ik-theme-city-architectsoffice-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-architectsoffice_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-architectsoffice_on.png"] {
         content: var(--ik-theme-city-architectsoffice-on) !important;
     }
 
     /* 4. Arctic Warfare College ==================================================== */
-    body.ik-city-lupercalian-union img[src*="03-arcticwarfarecollege_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-arcticwarfarecollege_off.png"] {
         content: var(--ik-theme-city-arcticwarfarecollege-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-arcticwarfarecollege_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-arcticwarfarecollege_on.png"] {
         content: var(--ik-theme-city-arcticwarfarecollege-on) !important;
     }
 
     /* 5. Assassin's Abode ========================================================== */
-    body.ik-city-lupercalian-union img[src*="03-assassinsabode_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-assassinsabode_off.png"] {
         content: var(--ik-theme-city-assassinsabode-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-assassinsabode_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-assassinsabode_on.png"] {
         content: var(--ik-theme-city-assassinsabode-on) !important;
     }
 
     /* 6. Barracks ================================================================== */
-    body.ik-city-lupercalian-union img[src*="03-barracks_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-barracks_off.png"] {
         content: var(--ik-theme-city-barracks-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-barracks_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-barracks_on.png"] {
         content: var(--ik-theme-city-barracks-on) !important;
     }
 
     /* 7. Blacksmith ================================================================ */
-    body.ik-city-lupercalian-union img[src*="03-blacksmith_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-blacksmith_off.png"] {
         content: var(--ik-theme-city-blacksmith-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-blacksmith_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-blacksmith_on.png"] {
         content: var(--ik-theme-city-blacksmith-on) !important;
     }
     
     /* 8. Bookbinder ================================================================ */
-    body.ik-city-lupercalian-union img[src*="03-bookbinder_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-bookbinder_off.png"] {
         content: var(--ik-theme-city-bookbinder-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-bookbinder_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-bookbinder_on.png"] {
         content: var(--ik-theme-city-bookbinder-on) !important;
     }
     
     /* 9. Bowyer ==================================================================== */
-    body.ik-city-lupercalian-union img[src*="03-bowyer_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-bowyer_off.png"] {
         content: var(--ik-theme-city-bowyer-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-bowyer_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-bowyer_on.png"] {
         content: var(--ik-theme-city-bowyer-on) !important;
     }
 
     /* 10. Brewery ================================================================== */
-    body.ik-city-lupercalian-union img[src*="03-brewery_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-brewery_off.png"] {
         content: var(--ik-theme-city-brewery-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-brewery_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-brewery_on.png"] {
         content: var(--ik-theme-city-brewery-on) !important;
     }
 
     /* 11. Carpentry ================================================================ */
-    body.ik-city-lupercalian-union img[src*="03-carpenter_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-carpenter_off.png"] {
         content: var(--ik-theme-city-carpenter-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-carpenter_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-carpenter_on.png"] {
         content: var(--ik-theme-city-carpenter-on) !important;
     }
     
     /* 12. Cavalry Parade Ground ==================================================== */
-    body.ik-city-lupercalian-union img[src*="03-cavalryparadeground_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-cavalryparadeground_off.png"] {
         content: var(--ik-theme-city-cavalryparadeground-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-cavalryparadeground_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-cavalryparadeground_on.png"] {
         content: var(--ik-theme-city-cavalryparadeground-on) !important;
     }
 
     /* 13. Chain Armourer =========================================================== */
-    body.ik-city-lupercalian-union img[src*="03-chainsmith_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-chainsmith_off.png"] {
         content: var(--ik-theme-city-chainsmith-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-chainsmith_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-chainsmith_on.png"] {
         content: var(--ik-theme-city-chainsmith-on) !important;
     }
 
     /* 14. Chancery of Estates ====================================================== */
-    body.ik-city-lupercalian-union img[src*="03-chanceryofestates_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-chanceryofestates_off.png"] {
         content: var(--ik-theme-city-chanceryofestates-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-chanceryofestates_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-chanceryofestates_on.png"] {
         content: var(--ik-theme-city-chanceryofestates-on) !important;
     }
 
     /* 15. Consulate ================================================================ */
-    body.ik-city-lupercalian-union img[src*="03-consulate_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-consulate_off.png"] {
         content: var(--ik-theme-city-consulate-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-consulate_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-consulate_on.png"] {
         content: var(--ik-theme-city-consulate-on) !important;
     }
 
     /* 16. Cottage ================================================================== */
-    body.ik-city-lupercalian-union img[src*="03-cottage_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-cottage_off.png"] {
         content: var(--ik-theme-city-cottage-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-cottage_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-cottage_on.png"] {
         content: var(--ik-theme-city-cottage-on) !important;
     }
 
     /* 17. Desert Warfare College =================================================== */
-    body.ik-city-lupercalian-union img[src*="03-dessertwarfarecollege_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-dessertwarfarecollege_off.png"] {
         content: var(--ik-theme-city-dessertwarfarecollege-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-dessertwarfarecollege_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-dessertwarfarecollege_on.png"] {
         content: var(--ik-theme-city-dessertwarfarecollege-on) !important;
     }
 
     /* 18. Fletcher ================================================================= */
-    body.ik-city-lupercalian-union img[src*="03-fletcher_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-fletcher_off.png"] {
         content: var(--ik-theme-city-fletcher-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-fletcher_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-fletcher_on.png"] {
         content: var(--ik-theme-city-fletcher-on) !important;
     }
 
     /* 19. Flourmill ================================================================ */
-    body.ik-city-lupercalian-union img[src*="03-flourmill_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-flourmill_off.png"] {
         content: var(--ik-theme-city-flourmill-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-flourmill_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-flourmill_on.png"] {
         content: var(--ik-theme-city-flourmill-on) !important;
     }
 
     /* 20. Foreign Office =========================================================== */
-    body.ik-city-lupercalian-union img[src*="03-foreignoffice_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-foreignoffice_off.png"] {
         content: var(--ik-theme-city-foreignoffice-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-foreignoffice_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-foreignoffice_on.png"] {
         content: var(--ik-theme-city-foreignoffice-on) !important;
     }
 
     /* 21. Forge ==================================================================== */
-    body.ik-city-lupercalian-union img[src*="03-forge_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-forge_off.png"] {
         content: var(--ik-theme-city-forge-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-forge_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-forge_on.png"] {
         content: var(--ik-theme-city-forge-on) !important;
     }
 
     /* 22. Foundry ================================================================== */
-    body.ik-city-lupercalian-union img[src*="03-foundry_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-foundry_off.png"] {
         content: var(--ik-theme-city-foundry-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-foundry_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-foundry_on.png"] {
         content: var(--ik-theme-city-foundry-on) !important;
     }
 
     /* 23. Geomancer's Retreat ====================================================== */
-    body.ik-city-lupercalian-union img[src*="03-geomancersretreat_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-geomancersretreat_off.png"] {
         content: var(--ik-theme-city-geomancersretreat-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-geomancersretreat_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-geomancersretreat_on.png"] {
         content: var(--ik-theme-city-geomancersretreat-on) !important;
     }
 
     /* 24. Herbalist's Guild ======================================================== */
-    body.ik-city-lupercalian-union img[src*="03-herbalist_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-herbalist_off.png"] {
         content: var(--ik-theme-city-herbalist-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-herbalist_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-herbalist_on.png"] {
         content: var(--ik-theme-city-herbalist-on) !important;
     }
 
     /* 25. Horse Trainer ============================================================ */
-    body.ik-city-lupercalian-union img[src*="03-horsetrainer2_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-horsetrainer2_off.png"] {
         content: var(--ik-theme-city-horsetrainer2-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-horsetrainer2_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-horsetrainer2_on.png"] {
         content: var(--ik-theme-city-horsetrainer2-on) !important;
     }
 
     /* 26. Infantry Quarters ======================================================== */
-    body.ik-city-lupercalian-union img[src*="03-infantryquarters_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-infantryquarters_off.png"] {
         content: var(--ik-theme-city-infantryquarters-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-infantryquarters_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-infantryquarters_on.png"] {
         content: var(--ik-theme-city-infantryquarters-on) !important;
     }
 
     /* 27. Jungle Warfare College =================================================== */
-    body.ik-city-lupercalian-union img[src*="03-junglewarfarecollege_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-junglewarfarecollege_off.png"] {
         content: var(--ik-theme-city-junglewarfarecollege-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-junglewarfarecollege_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-junglewarfarecollege_on.png"] {
         content: var(--ik-theme-city-junglewarfarecollege-on) !important;
     }
 
     /* 28. Kiln ===================================================================== */
-    body.ik-city-lupercalian-union img[src*="03-kiln_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-kiln_off.png"] {
         content: var(--ik-theme-city-kiln-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-kiln_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-kiln_on.png"] {
         content: var(--ik-theme-city-kiln-on) !important;
     }
 
     /* 29. Leather Armourer ========================================================= */
-    body.ik-city-lupercalian-union img[src*="03-leathersmith_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-leathersmith_off.png"] {
         content: var(--ik-theme-city-leathersmith-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-leathersmith_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-leathersmith_on.png"] {
         content: var(--ik-theme-city-leathersmith-on) !important;
     }
 
     /* 30. Library ================================================================== */
-    body.ik-city-lupercalian-union img[src*="03-library_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-library_off.png"] {
         content: var(--ik-theme-city-library-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-library_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-library_on.png"] {
         content: var(--ik-theme-city-library-on) !important;
     }
     
     /* 31. Mage Tower =============================================================== */
-    body.ik-city-lupercalian-union img[src*="03-magetower_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-magetower_off.png"] {
         content: var(--ik-theme-city-magetower-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-magetower_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-magetower_on.png"] {
         content: var(--ik-theme-city-magetower-on) !important;
     }
     
     /* 32. Marketplace ============================================================== */
-    body.ik-city-lupercalian-union img[src*="03-marketplace_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-marketplace_off.png"] {
         content: var(--ik-theme-city-marketplace-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-marketplace_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-marketplace_on.png"] {
         content: var(--ik-theme-city-marketplace-on) !important;
     }
     
     /* 33. Merchant's Guild ========================================================= */
-    body.ik-city-lupercalian-union img[src*="03-merchantsguild_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-merchantsguild_off.png"] {
         content: var(--ik-theme-city-merchantsguild-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-merchantsguild_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-merchantsguild_on.png"] {
         content: var(--ik-theme-city-merchantsguild-on) !important;
     }
 
     /* 34. Miner's Guild ============================================================ */
-    body.ik-city-lupercalian-union img[src*="03-miner_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-miner_off.png"] {
         content: var(--ik-theme-city-miner-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-miner_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-miner_on.png"] {
         content: var(--ik-theme-city-miner-on) !important;
     }
 
     /* 35. Plate Armourer =========================================================== */
-    body.ik-city-lupercalian-union img[src*="03-platesmith_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-platesmith_off.png"] {
         content: var(--ik-theme-city-platesmith-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-platesmith_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-platesmith_on.png"] {
         content: var(--ik-theme-city-platesmith-on) !important;
     }
 
     /* 36. Runemaster's Grounding =================================================== */
-    body.ik-city-lupercalian-union img[src*="03-runemaster_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-runemaster_off.png"] {
         content: var(--ik-theme-city-runemaster-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-runemaster_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-runemaster_on.png"] {
         content: var(--ik-theme-city-runemaster-on) !important;
     }
 
     /* 37. Saboteur's Sanctuary ===================================================== */
-    body.ik-city-lupercalian-union img[src*="03-saboteurssanctuary_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-saboteurssanctuary_off.png"] {
         content: var(--ik-theme-city-saboteurssanctuary-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-saboteurssanctuary_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-saboteurssanctuary_on.png"] {
         content: var(--ik-theme-city-saboteurssanctuary-on) !important;
     }
 
     /* 38. Saddlemaker ============================================================== */
-    body.ik-city-lupercalian-union img[src*="03-saddlemaker_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-saddlemaker_off.png"] {
         content: var(--ik-theme-city-saddlemaker-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-saddlemaker_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-saddlemaker_on.png"] {
         content: var(--ik-theme-city-saddlemaker-on) !important;
     }
     
     /* 39. Scouts Lookout =========================================================== */
-    body.ik-city-lupercalian-union img[src*="03-scoutslookout_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-scoutslookout_off.png"] {
         content: var(--ik-theme-city-scoutslookout-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-scoutslookout_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-scoutslookout_on.png"] {
         content: var(--ik-theme-city-scoutslookout-on) !important;
     }
 
     /* 40. Siege Workshop =========================================================== */
-    body.ik-city-lupercalian-union img[src*="03-siegeworkshop_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-siegeworkshop_off.png"] {
         content: var(--ik-theme-city-siegeworkshop-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-siegeworkshop_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-siegeworkshop_on.png"] {
         content: var(--ik-theme-city-siegeworkshop-on) !important;
     }
 
     /* 41. Skinner's Guild ========================================================== */
-    body.ik-city-lupercalian-union img[src*="03-trapper_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-trapper_off.png"] {
         content: var(--ik-theme-city-trapper-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-trapper_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-trapper_on.png"] {
         content: var(--ik-theme-city-trapper-on) !important;
     }
 
     /* 42. Spearmaker =============================================================== */
-    body.ik-city-lupercalian-union img[src*="03-spearmaker_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-spearmaker_off.png"] {
         content: var(--ik-theme-city-spearmaker-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-spearmaker_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-spearmaker_on.png"] {
         content: var(--ik-theme-city-spearmaker-on) !important;
     }
 
     /* 43. Spearman's Billet ======================================================== */
-    body.ik-city-lupercalian-union img[src*="03-spearmensbillets_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-spearmensbillets_off.png"] {
         content: var(--ik-theme-city-spearmensbillets-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-spearmensbillets_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-spearmensbillets_on.png"] {
         content: var(--ik-theme-city-spearmensbillets-on) !important;
     }
     
     /* 44. Spearsmith =============================================================== */
-    body.ik-city-lupercalian-union img[src*="03-spearsmith_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-spearsmith_off.png"] {
         content: var(--ik-theme-city-spearsmith-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-spearsmith_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-spearsmith_on.png"] {
         content: var(--ik-theme-city-spearsmith-on) !important;
     }
 
     /* 45. Spies Hideout ============================================================ */
-    body.ik-city-lupercalian-union img[src*="03-spieshidout_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-spieshidout_off.png"] {
         content: var(--ik-theme-city-spieshidout-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-spieshidout_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-spieshidout_on.png"] {
         content: var(--ik-theme-city-spieshidout-on) !important;
     }
 
     /* 46. Stonemason =============================================================== */
-    body.ik-city-lupercalian-union img[src*="03-stonemason_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-stonemason_off.png"] {
         content: var(--ik-theme-city-stonemason-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-stonemason_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-stonemason_on.png"] {
         content: var(--ik-theme-city-stonemason-on) !important;
     }
 
     /* 47. Storehouse =============================================================== */
-    body.ik-city-lupercalian-union img[src*="03-storehouse_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-storehouse_off.png"] {
         content: var(--ik-theme-city-storehouse-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-storehouse_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-storehouse_on.png"] {
         content: var(--ik-theme-city-storehouse-on) !important;
     }
 
     /* 48. Swordsmith =============================================================== */
-    body.ik-city-lupercalian-union img[src*="03-swordsmith_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-swordsmith_off.png"] {
         content: var(--ik-theme-city-swordsmith-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-swordsmith_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-swordsmith_on.png"] {
         content: var(--ik-theme-city-swordsmith-on) !important;
     }
 
     /* 49. Tannery ================================================================== */
-    body.ik-city-lupercalian-union img[src*="03-tanner_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-tanner_off.png"] {
         content: var(--ik-theme-city-tanner-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-tanner_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-tanner_on.png"] {
         content: var(--ik-theme-city-tanner-on) !important;
     }
 
     /* 50. Tavern =================================================================== */
-    body.ik-city-lupercalian-union img[src*="03-taverna_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-taverna_off.png"] {
         content: var(--ik-theme-city-taverna-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-taverna_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-taverna_on.png"] {
         content: var(--ik-theme-city-taverna-on) !important;
     }
     
     /* 51. Thieves Den ============================================================== */
-    body.ik-city-lupercalian-union img[src*="03-thievesden_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-thievesden_off.png"] {
         content: var(--ik-theme-city-thievesden-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-thievesden_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-thievesden_on.png"] {
         content: var(--ik-theme-city-thievesden-on) !important;
     }
 
     /* 52. Trade Office ============================================================= */
-    body.ik-city-lupercalian-union img[src*="03-tradeoffice_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-tradeoffice_off.png"] {
         content: var(--ik-theme-city-tradeoffice-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-tradeoffice_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-tradeoffice_on.png"] {
         content: var(--ik-theme-city-tradeoffice-on) !important;
     }
 
     /* 53. Vault ==================================================================== */
-    body.ik-city-lupercalian-union img[src*="03-vault_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-vault_off.png"] {
         content: var(--ik-theme-city-vault-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-vault_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-vault_on.png"] {
         content: var(--ik-theme-city-vault-on) !important;
     }
 
     /* 54. Warehouse ================================================================ */
-    body.ik-city-lupercalian-union img[src*="03-warehouse_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-warehouse_off.png"] {
         content: var(--ik-theme-city-warehouse-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-warehouse_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-warehouse_on.png"] {
         content: var(--ik-theme-city-warehouse-on) !important;
     }
     
     /* 55. Common Ground ============================================================ */
-    body.ik-city-lupercalian-union img[src*="03-commonground_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-commonground_off.png"] {
         content: var(--ik-theme-city-commonground-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-commonground_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-commonground_on.png"] {
         content: var(--ik-theme-city-commonground-on) !important;
     }
     
     /* 56. Paddock ================================================================== */
-    body.ik-city-lupercalian-union img[src*="03-paddock_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-paddock_off.png"] {
         content: var(--ik-theme-city-paddock-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-paddock_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-paddock_on.png"] {
         content: var(--ik-theme-city-paddock-on) !important;
     }
     
     /* 57. Castle Wall ============================================================== */
-    body.ik-city-lupercalian-union img[src*="03-wall_upper.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-wall_upper.png"] {
         content: var(--ik-theme-city-wall-top) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-wall_lower.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-wall_lower.png"] {
         content: var(--ik-theme-city-wall-bottom) !important;
     }
-    body.ik-city-lupercalian-union div[style*="03-wall_upper.png"] {
+    body.ik-city-lupercalian-union-hr div[style*="03-wall_upper.png"] {
         background-image: var(--ik-theme-city-wall-top) !important;
         background-size: 1050px !important;
         background-position-y: -1.5% !important;
     }
-    body.ik-city-lupercalian-union div[style*="03-wall_lower.png"] {
+    body.ik-city-lupercalian-union-hr div[style*="03-wall_lower.png"] {
         background-image: var(--ik-theme-city-wall-bottom) !important;
         background-size: 1030px !important;
     }
-    body.ik-city-lupercalian-union div[style*="03-wall_lower.png"] fieldset:nth-of-type(2) {
+    body.ik-city-lupercalian-union-hr div[style*="03-wall_lower.png"] fieldset:nth-of-type(2) {
         margin-left: 125px !important;
     }
     
@@ -830,52 +830,52 @@
 
 
     /* 62. Farmyard ================================================================= */
-    body.ik-city-lupercalian-union img[src*="03-farm_1_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-farm_1_off.png"] {
         content: var(--ik-theme-city-farm_1-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-farm_1_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-farm_1_on.png"] {
         content: var(--ik-theme-city-farm_1-on) !important;
     }
 
-    body.ik-city-lupercalian-union img[src*="03-farm_2_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-farm_2_off.png"] {
         content: var(--ik-theme-city-farm_2-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-farm_2_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-farm_2_on.png"] {
         content: var(--ik-theme-city-farm_2-on) !important;
     }
 
-    body.ik-city-lupercalian-union img[src*="03-farm_3_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-farm_3_off.png"] {
         content: var(--ik-theme-city-farm_3-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-farm_3_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-farm_3_on.png"] {
         content: var(--ik-theme-city-farm_3-on) !important;
     }
 
-    body.ik-city-lupercalian-union img[src*="03-farm_4_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-farm_4_off.png"] {
         content: var(--ik-theme-city-farm_4-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-farm_4_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-farm_4_on.png"] {
         content: var(--ik-theme-city-farm_4-on) !important;
     }
 
-    body.ik-city-lupercalian-union img[src*="03-farm_5_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-farm_5_off.png"] {
         content: var(--ik-theme-city-farm_5-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-farm_5_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-farm_5_on.png"] {
         content: var(--ik-theme-city-farm_5-on) !important;
     }
 
-    body.ik-city-lupercalian-union img[src*="03-farm_6_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-farm_6_off.png"] {
         content: var(--ik-theme-city-farm_6-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-farm_6_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-farm_6_on.png"] {
         content: var(--ik-theme-city-farm_6-on) !important;
     }
 
-    body.ik-city-lupercalian-union img[src*="03-farm_7_off.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-farm_7_off.png"] {
         content: var(--ik-theme-city-farm_7-off) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-farm_7_on.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-farm_7_on.png"] {
         content: var(--ik-theme-city-farm_7-on) !important;
     }
 
@@ -889,36 +889,36 @@
 
     
     /* ================== MAIN MAP + TREES ===================== */
-    body.ik-city-lupercalian-union #townMap img[src*="back.jpg"] {
+    body.ik-city-lupercalian-union-hr #townMap img[src*="back.jpg"] {
         content: var(--ik-theme-city-map) !important;
     }
-    body.ik-city-lupercalian-union #townMap img[src*="03-roads.png"] {
+    body.ik-city-lupercalian-union-hr #townMap img[src*="03-roads.png"] {
         content: var(--ik-theme-city-road) !important;
     }
-    body.ik-city-lupercalian-union img[src*="lumberwood.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="lumberwood.png"] {
         content: var(--ik-theme-city-trees) !important;
     }
-    body.ik-city-lupercalian-union #townMap img[src*="03-fountain.png"] {
+    body.ik-city-lupercalian-union-hr #townMap img[src*="03-fountain.png"] {
         content: var(--ik-theme-city-fountain) !important;
     }
-    body.ik-city-lupercalian-union img[src*="03-squarebushes.png"] {
+    body.ik-city-lupercalian-union-hr img[src*="03-squarebushes.png"] {
         content: var(--ik-theme-city-hedge) !important;
     }
 
     
     /* ====================== CASTLE =========================== */
-    body.ik-city-lupercalian-union #MainContentDiv img[src*="03-castle_off.png"] {
+    body.ik-city-lupercalian-union-hr #MainContentDiv img[src*="03-castle_off.png"] {
         width: 169px !important;
         height: 251px !important;
         content: var(--ik-theme-city-castle-full) !important;
     }
 
-    body.ik-city-lupercalian-union #townMap img[src*="03-castle_off.png"] {
+    body.ik-city-lupercalian-union-hr #townMap img[src*="03-castle_off.png"] {
         width: 125.5px !important;    
         height: 84.5px !important;   
         content: var(--ik-theme-city-castle-off) !important;
     }
-    body.ik-city-lupercalian-union #townMap img[src*="03-castle_on.png"] {
+    body.ik-city-lupercalian-union-hr #townMap img[src*="03-castle_on.png"] {
         width: 125.5px !important;    
         height: 84.5px !important;    
         content: var(--ik-theme-city-castle-on) !important;
@@ -980,24 +980,24 @@
     initEventDrivenGPULocker();
 
     function remove() {
-        document.documentElement.classList.remove("ik-city-lupercalian-union");
-        document.body.classList.remove("ik-city-lupercalian-union");
+        document.documentElement.classList.remove("ik-city-lupercalian-union-hr");
+        document.body.classList.remove("ik-city-lupercalian-union-hr");
     }
 
     // 3. Register the theme with Customizer under category: "city"
     window.IKTools.customizer.registerTheme({
-        id: "lupercalian-union-skin",
-        name: "Lupercalian Union Skin",
+        id: "lupercalian-union-skin-hr",
+        name: "Lupercalian Union Skin (HiRes)",
         category: "city",
         author: "HoRRis Lupercal",
-        description: "Custom city theme styling buildings and assets for the Lupercalian Union.",
+        description: "Custom city theme providing high resolution buildings and assets for the Lupercalian Union. Uses externally hosted artwork.",
         css: dynamicCityThemeCSS,
         apply() {
-            document.documentElement.classList.add("ik-city-lupercalian-union");
-            document.body.classList.add("ik-city-lupercalian-union");
+            document.documentElement.classList.add("ik-city-lupercalian-union-hr");
+            document.body.classList.add("ik-city-lupercalian-union-hr");
         },
         remove
     });
 
-    console.log("IKnights Lupercalian Union Skin module loaded.");
+    console.log("IKnights Lupercalian Union Skin (HiRes) module loaded.");
 })();
