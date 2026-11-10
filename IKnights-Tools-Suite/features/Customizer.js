@@ -78,6 +78,34 @@
             previewVariable: "--ik-theme-text"
         },
         {
+            setting: "customDarkHeaderColor",
+            inputId: "ikCustomizerCustomDarkHeaderColor",
+            label: "Custom Dark Header Colour",
+        
+            variables: ["--ik-theme-header-texture"],
+        
+            previewImageVariable: "--ik-theme-header-texture",
+        
+            enabledBy: "replaceDarkHeaderTexture",
+            toggleId: "ikCustomizerReplaceDarkHeaderTexture",
+        
+            textureColor: true
+        },
+        {
+            setting: "customLightHeaderColor",
+            inputId: "ikCustomizerCustomLightHeaderColor",
+            label: "Custom Light Header Colour",
+        
+            variables: ["--ik-theme-headerO-texture"],
+        
+            previewImageVariable: "--ik-theme-headerO-texture",
+        
+            enabledBy: "replaceLightHeaderTexture",
+            toggleId: "ikCustomizerReplaceLightHeaderTexture",
+        
+            textureColor: true
+        },
+        {
             setting: "backgroundColor",
             inputId: "ikCustomizerBackgroundColor",
             label: "Background Colour",
@@ -207,6 +235,12 @@
 
         replacePaperTexture:
             false,
+
+        replaceDarkHeaderTexture:
+            false,
+        
+        replaceLightHeaderTexture:
+            false,
         
         ...Object.fromEntries(
             COLOR_OVERRIDE_FIELDS.map(field => [
@@ -310,14 +344,22 @@
             replacePaperTexture:
                 source.replacePaperTexture === 
                     true,
+
+            replaceDarkHeaderTexture:
+                source.replaceDarkHeaderTexture === true,
+            
+            replaceLightHeaderTexture:
+                source.replaceLightHeaderTexture === true,
             
             ...Object.fromEntries(
                 COLOR_OVERRIDE_FIELDS.map(field => [
                     field.setting,
             
-                    typeof source[field.setting] === "string"
-                        ? source[field.setting].trim()
-                        : ""
+                    field.enabledBy && source[field.enabledBy] !== true
+                        ? ""
+                        : typeof source[field.setting] === "string"
+                            ? source[field.setting].trim()
+                            : ""
                 ])
             )
         };
@@ -660,14 +702,28 @@
         for (const field of COLOR_OVERRIDE_FIELDS) {
             const color = settings[field.setting];
     
-            // Ignore missing or invalid colours.
+            // Disabled conditional fields never override anything.
+            if (
+                field.enabledBy &&
+                settings[field.enabledBy] !== true
+            ) {
+                continue;
+            }
+            
+            // Ignore empty and invalid hex values.
             if (!isValidHexColor(color)) {
                 continue;
             }
-    
-            // One input can override multiple variables.
+            
+            // Header textures require a CSS image value.
+            // Use a solid-colour gradient instead of an image.
+            const cssValue = field.textureColor
+                ? `linear-gradient(${color}, ${color})`
+                : color;
+            
+            // Apply to every variable associated with the field.
             for (const variable of field.variables) {
-                overrides[variable] = color;
+                overrides[variable] = cssValue;
             }
         }
     
@@ -1159,9 +1215,12 @@
 
         style.textContent = `
 
-            /* Keep Customizer contents accessible during resizing */
+            /* Prevent jQuery UI's recursive resize shrink bug */
             #ikCustomizerDialog {
+                padding: 0 !important;
+                border: 0 !important;
                 box-sizing: border-box;
+            
                 overflow-x: auto !important;
                 overflow-y: auto !important;
             }
@@ -1220,6 +1279,12 @@
 
                 box-sizing:
                     border-box;
+            }
+
+
+            #ikCustomizerDialog
+            .ik-customizer-color-row[hidden] {
+                display: none !important;
             }
 
 
@@ -1601,7 +1666,9 @@ function updateAccordionStatusHeaders() {
 
     const hasValue =
         values.some(value => value !== "") ||
-        settings?.replacePaperTexture === true;
+        settings?.replacePaperTexture === true ||
+        settings?.replaceDarkHeaderTexture === true ||
+        settings?.replaceLightHeaderTexture === true;
 
     const hasError = values.some(value =>
         value !== "" && !isValidHexColor(value)
@@ -1725,30 +1792,98 @@ function updateAccordionStatusHeaders() {
         
         if (swatch && field) {
         
-            // Valid input: preview the entered colour.
-            // Otherwise use the designated theme variable.
-            const previewColor = isValidHexColor(value)
-                ? value
-                : `var(${field.previewVariable}, transparent)`;
+            if (isValidHexColor(value)) {
         
-            swatch.style.setProperty(
-                "background-color",
-                previewColor,
-                "important"
-            );
+                // Valid hex: preview the solid colour.
+                swatch.style.setProperty(
+                    "background-color",
+                    value,
+                    "important"
+                );
         
-            // Prevent theme background textures from
-            // obscuring the solid colour indicator.
-            swatch.style.setProperty(
-                "background-image",
-                "none",
-                "important"
-            );
+                swatch.style.setProperty(
+                    "background-image",
+                    "none",
+                    "important"
+                );
+        
+            } else if (field.previewImageVariable) {
+        
+                // Invalid or empty: preview the theme texture.
+                swatch.style.setProperty(
+                    "background-color",
+                    "transparent",
+                    "important"
+                );
+        
+                swatch.style.setProperty(
+                    "background-image",
+                    `var(${field.previewImageVariable}, none)`,
+                    "important"
+                );
+        
+                swatch.style.setProperty(
+                    "background-size",
+                    "cover"
+                );
+        
+            } else {
+        
+                // Existing colour fields use their theme variable.
+                swatch.style.setProperty(
+                    "background-color",
+                    `var(${field.previewVariable}, transparent)`,
+                    "important"
+                );
+        
+                swatch.style.setProperty(
+                    "background-image",
+                    "none",
+                    "important"
+                );
+            }
         }
     
         return input.classList.contains(
             "ik-customizer-invalid"
         );
+    }
+
+    function syncHeaderTextureRows() {
+    
+        for (const field of COLOR_OVERRIDE_FIELDS) {
+    
+            // Only process conditional fields.
+            if (!field.toggleId) {
+                continue;
+            }
+    
+            const checkbox = document.getElementById(
+                field.toggleId
+            );
+    
+            const input = document.getElementById(
+                field.inputId
+            );
+    
+            const row = document.getElementById(
+                field.inputId + "Row"
+            );
+    
+            const enabled =
+                checkbox?.checked === true;
+    
+            // Show or hide the corresponding row.
+            if (row) {
+                row.hidden = !enabled;
+            }
+    
+            // Clear disabled inputs immediately.
+            if (!enabled && input) {
+                input.value = "";
+                updateColorInputValidity(input);
+            }
+        }
     }
     
     function syncControlsFromSettings() {
@@ -1843,6 +1978,25 @@ function updateAccordionStatusHeaders() {
                 settings.replacePaperTexture === true;
         }
 
+        const darkToggle = document.getElementById(
+            "ikCustomizerReplaceDarkHeaderTexture"
+        );
+        
+        const lightToggle = document.getElementById(
+            "ikCustomizerReplaceLightHeaderTexture"
+        );
+        
+        if (darkToggle) {
+            darkToggle.checked =
+                settings.replaceDarkHeaderTexture === true;
+        }
+        
+        if (lightToggle) {
+            lightToggle.checked =
+                settings.replaceLightHeaderTexture === true;
+        }
+        
+        syncHeaderTextureRows();
         updateThemeDescriptions();
         syncCustomCssState();
         updateAccordionStatusHeaders();
@@ -1932,15 +2086,39 @@ function updateAccordionStatusHeaders() {
             replacePaperTexture:
                 document.getElementById(
                     "ikCustomizerReplacePaperTexture"
+                )?.checked === true,
+            
+            replaceDarkHeaderTexture:
+                document.getElementById(
+                    "ikCustomizerReplaceDarkHeaderTexture"
+                )?.checked === true,
+            
+            replaceLightHeaderTexture:
+                document.getElementById(
+                    "ikCustomizerReplaceLightHeaderTexture"
                 )?.checked === true
+            
         };
 
         for (const field of COLOR_OVERRIDE_FIELDS) {
-            const input =
-                document.getElementById(field.inputId);
         
+            const input = document.getElementById(
+                field.inputId
+            );
+        
+            const enabled =
+                !field.enabledBy ||
+                settings[field.enabledBy] === true;
+        
+            // Disabled conditional inputs are not saved.
             settings[field.setting] =
-                input ? input.value.trim() : "";
+                enabled && input
+                    ? input.value.trim()
+                    : "";
+        
+            if (!enabled && input) {
+                input.value = "";
+            }
         
             updateColorInputValidity(input, true);
         }
@@ -2139,13 +2317,43 @@ function updateAccordionStatusHeaders() {
                         >
                     
                         <label for="ikCustomizerReplacePaperTexture">
-                            Replace paper background texture with custom background colour
+                            Replace paper background image with Background Colour
+                        </label>
+                    
+                    </div>
+
+                    <div class="ik-customizer-row ik-customizer-texture-toggle">
+
+                        <input
+                            type="checkbox"
+                            id="ikCustomizerReplaceDarkHeaderTexture"
+                        >
+                    
+                        <label for="ikCustomizerReplaceDarkHeaderTexture">
+                            Replace dark header texture with Custom Dark Header Colour
+                        </label>
+                    
+                    </div>
+                    
+                    <div class="ik-customizer-row ik-customizer-texture-toggle">
+                    
+                        <input
+                            type="checkbox"
+                            id="ikCustomizerReplaceLightHeaderTexture"
+                        >
+                    
+                        <label for="ikCustomizerReplaceLightHeaderTexture">
+                            Replace dark header texture with Custom Light Header Colour
                         </label>
                     
                     </div>
             
                     ${COLOR_OVERRIDE_FIELDS.map(field => `
-                        <div class="ik-customizer-row ik-customizer-color-row">
+                            <div
+                                class="ik-customizer-row ik-customizer-color-row"
+                                id="${field.inputId}Row"
+                                ${field.enabledBy ? "hidden" : ""}
+                            >
                     
                             <label for="${field.inputId}">
                                 ${field.label}
@@ -2349,20 +2557,43 @@ function updateAccordionStatusHeaders() {
                 if (textureCheckbox) {
                     textureCheckbox.checked = false;
                 }
+
+                for (const field of COLOR_OVERRIDE_FIELDS) {
                 
+                    if (!field.toggleId) {
+                        continue;
+                    }
+                
+                    const checkbox = document.getElementById(
+                        field.toggleId
+                    );
+                
+                    if (checkbox) {
+                        checkbox.checked = false;
+                    }
+                }
+                
+                syncHeaderTextureRows();
                 setStatus(
                     "Custom colour settings cleared. Click Apply to save."
                 );
             });
         
         for (const field of COLOR_OVERRIDE_FIELDS) {
+        
+            if (field.toggleId) {
+                document.getElementById(field.toggleId)
+                    ?.addEventListener(
+                        "change",
+                        syncHeaderTextureRows
+                    );
+            }
+        
             const input = document.getElementById(
                 field.inputId
             );
         
             input?.addEventListener("input", () => {
-                // Update preview and clear errors on empty fields.
-                // Do not flag new errors while typing.
                 updateColorInputValidity(input);
             });
         }
