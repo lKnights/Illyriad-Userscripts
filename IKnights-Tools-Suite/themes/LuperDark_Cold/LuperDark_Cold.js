@@ -161,6 +161,29 @@
         "--ik-theme-button-chat-on": 'url("https://raw.githubusercontent.com/lKnights/Illyriad-Userscripts/refs/heads/HoRRis_Test_Branch/IKnights-Tools-Suite/themes/LuperDark_Cold/Assets/UI_LDC_2/colddarkchat_32x32_on.png")'
     };
 
+    
+    const hoverImageCache = new Map();
+    
+    function preloadHoverImages() {
+        for (const [name, value] of Object.entries(variables)) {
+            if (!name.endsWith("-on") || typeof value !== "string") continue;
+    
+            const match = /^url\(\s*(["']?)(.*?)\1\s*\)$/i.exec(value);
+            if (!match) continue;
+    
+            const url = match[2].trim();
+            if (!url || hoverImageCache.has(url)) continue;
+    
+            const img = new Image();
+            hoverImageCache.set(url, img);
+            img.src = url;
+    
+            if (typeof img.decode === "function") {
+                img.decode().catch(() => {});
+            }
+        }
+    }
+
     let observer = null;
     let pending = null;
     const frameListeners = new Map();
@@ -1059,6 +1082,7 @@ body.ik-dark-mode div.iconBox img.sIcon {
         apply() {
             document.documentElement.classList.add("ik-dark-mode");
             document.body.classList.add("ik-dark-mode");
+            preloadHoverImages();
             styleCKEditorPanels();
             observer = new MutationObserver(scheduleEditorStyles);
             observer.observe(document.body, {childList:true, subtree:true, attributes:true, attributeFilter:["class"]});
