@@ -331,9 +331,12 @@
 
         style.textContent = `
 
+            /* Prevent jQuery UI recursive resize shrink */
             #ikQuartermaster {
+                padding: 0 !important;
+                border: 0 !important;
                 box-sizing: border-box;
-                overflow: auto;
+                overflow: auto !important;
             }
 
 
