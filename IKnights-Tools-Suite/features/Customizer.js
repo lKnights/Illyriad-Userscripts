@@ -1159,9 +1159,21 @@
 
         style.textContent = `
 
+            /* Keep Customizer contents accessible during resizing */
             #ikCustomizerDialog {
-                box-sizing:
-                    border-box;
+                box-sizing: border-box;
+                overflow-x: auto !important;
+                overflow-y: auto !important;
+            }
+            
+            /* Keep the two main content containers responsive */
+            #ikCustomizerDialog > #ikCustomizerMainPanel,
+            #ikCustomizerDialog > #ikCustomizerAccordion {
+                box-sizing: border-box;
+                width: 100%;
+                max-width: 100%;
+                min-width: 0;
+                height: auto;
             }
 
             /* Main Customizer heading */
@@ -1587,9 +1599,9 @@ function updateAccordionStatusHeaders() {
         String(settings?.[field.setting] ?? "").trim()
     );
 
-    const hasValue = values.some(value =>
-        value !== ""
-    );
+    const hasValue =
+        values.some(value => value !== "") ||
+        settings?.replacePaperTexture === true;
 
     const hasError = values.some(value =>
         value !== "" && !isValidHexColor(value)
@@ -2224,26 +2236,53 @@ function updateAccordionStatusHeaders() {
         jQuery(
             dialog
         ).dialog({
-            autoOpen:
-                false,
-
-            width:
-                600,
-
-            minWidth:
-                520,
-
-            minHeight:
-                400,
-
-            modal:
-                false,
-
-            resizable:
-                true,
-
-            closeOnEscape:
-                true
+            autoOpen: false,
+        
+            width: 600,
+            height: "auto",
+        
+            minWidth: 520,
+            minHeight: 400,
+        
+            modal: false,
+            resizable: true,
+        
+            resizeStop: function () {
+                const accordion = jQuery(
+                    "#ikCustomizerAccordion"
+                );
+        
+                if (
+                    accordion.length &&
+                    accordion.hasClass("ui-accordion")
+                ) {
+                    // Recalculate the accordion's dimensions.
+                    accordion.accordion("refresh");
+        
+                    // Remove any retained panel heights.
+                    // heightStyle: "content" lets panels
+                    // return to their natural height.
+                    accordion
+                        .children(".ui-accordion-content")
+                        .css("height", "");
+                }
+            },
+        
+            open: function () {
+                const accordion = jQuery(
+                    "#ikCustomizerAccordion"
+                );
+        
+                if (
+                    accordion.length &&
+                    accordion.hasClass("ui-accordion")
+                ) {
+                    // Recalculate after the dialog becomes visible.
+                    accordion.accordion("refresh");
+                }
+            },
+        
+            closeOnEscape: true
         });
 
 
