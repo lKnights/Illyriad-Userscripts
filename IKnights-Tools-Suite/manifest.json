@@ -67,7 +67,7 @@
         {
             "id": "luper-dark-cold",
             "name": "LuperDark (Cold) Interface Theme",
-            "version": "1.0.5",
+            "version": "1.0.6",
             "file": "themes/LuperDark_Cold/LuperDark_Cold.js",
             "requires": [
                 "customizer"
@@ -75,9 +75,9 @@
             "enabled": true
         },
         {
-            "id": "lupercalian-union-skin",
-            "name": "Lupercalian Union Skin",
-            "version": "1.0.3",
+            "id": "lupercalian-union-skin-hr",
+            "name": "Lupercalian Union Skin (HiRes)",
+            "version": "1.0.4",
             "file": "themes/Lupercalian_Union_Skin.js",
             "requires": [
                 "customizer"
