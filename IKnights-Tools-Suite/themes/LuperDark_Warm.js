@@ -190,10 +190,16 @@
             return;
         }
 
+        const colorOverrides =
+            window.IKTools.customizer.getColorOverrides?.() || {};
+        
         let rootVarsCSS = ":root {\n";
+        
         for (const [key, value] of Object.entries(variables)) {
-            rootVarsCSS += `  ${key}: ${value};\n`;
+            rootVarsCSS +=
+                `  ${key}: ${colorOverrides[key] || value};\n`;
         }
+        
         rootVarsCSS += "}\n";
 
         iframes.forEach(iframe => {
