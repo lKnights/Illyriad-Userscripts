@@ -1127,6 +1127,17 @@
             #ikCustomizerAccordion > h3.ui-state-active::before {
                 transform: translateY(-50%) rotate(90deg);
             }
+
+            /* Active accordion header background */
+            :where(#ikCustomizerAccordion) > h3.ui-state-active {
+                background-image: var(
+                    --ik-theme-texture,
+                    url("https://assets.illyriad.net/img/backgrounds/paper2.jpg")
+                );
+            
+                background-position: 50% 50%;
+                background-repeat: repeat;
+            }
             
             /* Expanded accordion panel */
             #ikCustomizerDialog
@@ -1167,6 +1178,24 @@
 
                 box-sizing:
                     border-box;
+            }
+
+            /* Main Customizer settings panel */
+            #ikCustomizerDialog #ikCustomizerMainPanel {
+                box-sizing: border-box;
+            
+                border-style: solid;
+                border-width: 0 1px 1px 1px;
+            
+                padding: 12px;
+                margin-bottom: 10px;
+            }
+            
+            /* Buttons inside the main panel */
+            #ikCustomizerDialog
+            #ikCustomizerMainPanel .ik-customizer-buttons {
+                margin-top: 10px;
+                padding-bottom: 4px;
             }
 
 
@@ -1636,75 +1665,99 @@
 
         dialog.innerHTML = `
 
-            <div class="ik-customizer-section">
-
-                <div class="ik-customizer-heading">
-                    Customizer
+            <div id="ikCustomizerMainPanel" class="ui-widget-content">
+    
+                <div class="ik-customizer-section">
+    
+                    <div class="ik-customizer-heading">
+                        Customizer
+                    </div>
+    
+                    <div class="ik-customizer-row">
+    
+                        <label for="ikCustomizerEnabled">
+                            Enabled
+                        </label>
+    
+                        <input
+                            type="checkbox"
+                            id="ikCustomizerEnabled"
+                        >
+    
+                    </div>
+    
                 </div>
-
-                <div class="ik-customizer-row">
-
-                    <label for="ikCustomizerEnabled">
-                        Enabled
-                    </label>
-
+    
+    
+                <div class="ik-customizer-section">
+    
+                    <div class="ik-customizer-heading">
+                        Interface
+                    </div>
+    
+                    <div class="ik-customizer-row">
+    
+                        <label for="ikCustomizerInterfaceTheme">
+                            Interface Theme
+                        </label>
+    
+                        <select
+                            id="ikCustomizerInterfaceTheme"
+                        ></select>
+    
+                    </div>
+    
+                    <div class="ik-customizer-description">
+                        Native leaves Illyriad's normal interface unchanged.
+                    </div>
+    
+                </div>
+    
+    
+                <div class="ik-customizer-section">
+    
+                    <div class="ik-customizer-heading">
+                        City Map
+                    </div>
+    
+                    <div class="ik-customizer-row">
+    
+                        <label for="ikCustomizerCityTheme">
+                            City Theme
+                        </label>
+    
+                        <select
+                            id="ikCustomizerCityTheme"
+                        ></select>
+    
+                    </div>
+    
+                    <div class="ik-customizer-description">
+                        City-map themes will appear here as they are added.
+                    </div>
+    
+                </div>
+    
+                <div class="ik-customizer-buttons">
+    
                     <input
-                        type="checkbox"
-                        id="ikCustomizerEnabled"
+                        type="button"
+                        id="ikCustomizerApply"
+                        class="ik-game-button"
+                        value="Apply"
                     >
-
+    
+                    <input
+                        type="button"
+                        id="ikCustomizerReset"
+                        class="ik-game-button"
+                        value="Native Reset"
+                    >
+    
                 </div>
-
-            </div>
-
-
-            <div class="ik-customizer-section">
-
-                <div class="ik-customizer-heading">
-                    Interface
-                </div>
-
-                <div class="ik-customizer-row">
-
-                    <label for="ikCustomizerInterfaceTheme">
-                        Interface Theme
-                    </label>
-
-                    <select
-                        id="ikCustomizerInterfaceTheme"
-                    ></select>
-
-                </div>
-
-                <div class="ik-customizer-description">
-                    Native leaves Illyriad's normal interface unchanged.
-                </div>
-
-            </div>
-
-
-            <div class="ik-customizer-section">
-
-                <div class="ik-customizer-heading">
-                    City Map
-                </div>
-
-                <div class="ik-customizer-row">
-
-                    <label for="ikCustomizerCityTheme">
-                        City Theme
-                    </label>
-
-                    <select
-                        id="ikCustomizerCityTheme"
-                    ></select>
-
-                </div>
-
-                <div class="ik-customizer-description">
-                    City-map themes will appear here as they are added.
-                </div>
-
+                
+                <div id="ikCustomizerStatus"></div>
+    
             </div>
             
             <div id="ikCustomizerAccordion">
@@ -1799,27 +1852,6 @@
                 </div>
             
             </div>
-
-            <div class="ik-customizer-buttons">
-
-                <input
-                    type="button"
-                    id="ikCustomizerApply"
-                    class="ik-game-button"
-                    value="Apply"
-                >
-
-                <input
-                    type="button"
-                    id="ikCustomizerReset"
-                    class="ik-game-button"
-                    value="Native Reset"
-                >
-
-            </div>
-
-
-            <div id="ikCustomizerStatus"></div>
 
         `;
 
