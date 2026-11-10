@@ -1525,14 +1525,20 @@ function updateAccordionStatusHeaders() {
         const swatch = document.getElementById(
             input.id + "Swatch"
         );
-    
-        if (swatch) {
+        
+        // Find the CSS variable associated with this input.
+        const field = COLOR_OVERRIDE_FIELDS.find(
+            field => field.inputId === input.id
+        );
+        
+        if (swatch && field) {
             if (isValidHexColor(value)) {
+                // Valid input: preview the custom colour.
                 swatch.style.backgroundColor = value;
             } else {
-                swatch.style.removeProperty(
-                    "background-color"
-                );
+                // Empty or invalid input: use the theme variable.
+                swatch.style.backgroundColor =
+                    `var(${field.variable}, transparent)`;
             }
         }
     
@@ -1799,7 +1805,7 @@ function updateAccordionStatusHeaders() {
     
                 <div class="ik-customizer-section">
     
-                    <h1 class=".ik-customizer-main-heading">
+                    <h1 class="ik-customizer-main-heading">
                         Customizer
                     </h1>
     
