@@ -1004,6 +1004,13 @@
                     border-box;
             }
 
+            /* Main Customizer heading */
+            #ikCustomizerDialog .ik-customizer-main-heading {
+                font-size: 2em;
+                font-weight: bold;
+                line-height: 1.2;
+                margin: 0 0 12px 0;
+            }
 
             #ikCustomizerDialog
             .ik-customizer-section {
@@ -1128,8 +1135,8 @@
                 transform: translateY(-50%) rotate(90deg);
             }
 
-            /* Active accordion header background */
-            :where(#ikCustomizerAccordion) > h3.ui-state-active {
+            /* Active accordion header - native fallback */
+            #ikCustomizerAccordion > h3.ui-state-active {
                 background-image: var(
                     --ik-theme-texture,
                     url("https://assets.illyriad.net/img/backgrounds/paper2.jpg")
@@ -1209,6 +1216,9 @@
                     wrap;
 
                 align-items:
+                    center;
+
+                justify-content: 
                     center;
 
                 gap:
@@ -1374,12 +1384,61 @@
                     "native"
             );
         }
+
+        updateThemeDescriptions();
     }
 
 
     // =========================================================================
     // CONTROL SYNC
     // =========================================================================
+    function updateThemeDescriptions() {
+        const fields = [
+            {
+                selectId: "ikCustomizerInterfaceTheme",
+                descriptionId: "ikCustomizerInterfaceDescription",
+                category: "interface",
+                nativeDescription:
+                    "Native leaves Illyriad's normal interface unchanged."
+            },
+            {
+                selectId: "ikCustomizerCityTheme",
+                descriptionId: "ikCustomizerCityDescription",
+                category: "city",
+                nativeDescription:
+                    "Native leaves Illyriad's city map unchanged."
+            }
+        ];
+    
+        for (const field of fields) {
+            const select = document.getElementById(
+                field.selectId
+            );
+    
+            const description = document.getElementById(
+                field.descriptionId
+            );
+    
+            if (!select || !description) {
+                continue;
+            }
+    
+            const theme = getTheme(
+                field.category,
+                select.value
+            );
+    
+            if (select.value === "native") {
+                description.textContent =
+                    field.nativeDescription;
+            } else {
+                description.textContent =
+                    theme?.description?.trim() ||
+                    "No description is available for this theme.";
+            }
+        }
+    }
+    
     function updateColorInputValidity(input) {
         if (!input) {
             return false;
@@ -1499,6 +1558,7 @@
             }
         }
 
+        updateThemeDescriptions();
         syncCustomCssState();
     }
 
@@ -1669,9 +1729,9 @@
     
                 <div class="ik-customizer-section">
     
-                    <div class="ik-customizer-heading">
+                    <h1 class="ik-customizer-heading">
                         Customizer
-                    </div>
+                    </h1>
     
                     <div class="ik-customizer-row">
     
@@ -1707,7 +1767,7 @@
     
                     </div>
     
-                    <div class="ik-customizer-description">
+                    <div id="ikCustomizerInterfaceDescription" class="ik-customizer-description">
                         Native leaves Illyriad's normal interface unchanged.
                     </div>
     
@@ -1732,8 +1792,8 @@
     
                     </div>
     
-                    <div class="ik-customizer-description">
-                        City-map themes will appear here as they are added.
+                    <div id="ikCustomizerCityDescription" class="ik-customizer-description">
+                        Native leaves Illyriad's city map unchanged.
                     </div>
     
                 </div>
@@ -1961,6 +2021,19 @@
                 updateColorInputValidity(input);
             });
         }
+
+        // Update theme descriptions immediately when selected.
+        document.getElementById("ikCustomizerInterfaceTheme")
+            ?.addEventListener(
+                "change",
+                updateThemeDescriptions
+            );
+        
+        document.getElementById("ikCustomizerCityTheme")
+            ?.addEventListener(
+                "change",
+                updateThemeDescriptions
+            );
 
         syncControlsFromSettings();
 
