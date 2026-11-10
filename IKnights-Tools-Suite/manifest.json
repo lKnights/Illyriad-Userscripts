@@ -92,7 +92,7 @@
             "requires": [
                 "customizer"
             ],
-            "enabled": true
+            "enabled": false
         },
         {
             "id": "ui-tweaks",
