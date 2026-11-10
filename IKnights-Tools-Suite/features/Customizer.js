@@ -73,17 +73,109 @@
         {
             setting: "textColor",
             inputId: "ikCustomizerTextColor",
-            variable: "--ik-theme-text"
+            label: "Text Colour",
+            variables: ["--ik-theme-text"],
+            previewVariable: "--ik-theme-text"
         },
         {
             setting: "backgroundColor",
             inputId: "ikCustomizerBackgroundColor",
-            variable: "--ik-theme-content-bg"
+            label: "Background Color",
+            variables: ["--ik-theme-content-bg"],
+            previewVariable: "--ik-theme-content-bg"
         },
         {
             setting: "alternatingBackgroundColor",
             inputId: "ikCustomizerAlternatingBackgroundColor",
-            variable: "--ik-theme-alt-bg"
+            label: "Alternating Background Color",
+            variables: ["--ik-theme-alt-bg"],
+            previewVariable: "--ik-theme-alt-bg"
+        },
+        {
+            setting: "borderColor",
+            inputId: "ikCustomizerBorderColor",
+            label: "Border Colour",
+            variables: [
+                "--ik-theme-border-color",
+                "--ik-theme-alt-border-color"
+            ],
+            previewVariable: "--ik-theme-border-color"
+        },
+        {
+            setting: "inputBoxColor",
+            inputId: "ikCustomizerInputBoxColor",
+            label: "Input Box Colour",
+            variables: [
+                "--ik-theme-input-bg",
+                "--ik-theme-light-alt-bg"
+            ],
+            previewVariable: "--ik-theme-input-bg"
+        },
+        {
+            setting: "activeHeaderColor",
+            inputId: "ikCustomizerActiveHeaderColor",
+            label: "Active Header Colour",
+            variables: [
+                "--ik-theme-special-text3",
+                "--ik-theme-special-text5"
+            ],
+            previewVariable: "--ik-theme-special-text5"
+        },
+        {
+            setting: "headerColor",
+            inputId: "ikCustomizerHeaderColor",
+            label: "Header Colour",
+            variables: ["--ik-theme-special-text4"],
+            previewVariable: "--ik-theme-special-text4"
+        },
+        {
+            setting: "linkColor",
+            inputId: "ikCustomizerLinkColor",
+            label: "Link Colour",
+            variables: ["--ik-theme-link"],
+            previewVariable: "--ik-theme-link"
+        },
+        {
+            setting: "linkHoverColor",
+            inputId: "ikCustomizerLinkHoverColor",
+            label: "Link Hover Colour",
+            variables: ["--ik-theme-link-hover"],
+            previewVariable: "--ik-theme-link-hover"
+        },
+        {
+            setting: "nameColor",
+            inputId: "ikCustomizerNameColor",
+            label: "Name Colour",
+            variables: ["--ik-theme-special-text6"],
+            previewVariable: "--ik-theme-special-text6"
+        },
+        {
+            setting: "selfChatColor",
+            inputId: "ikCustomizerSelfChatColor",
+            label: "Self Chat Colour",
+            variables: ["--ik-theme-special-text1"],
+            previewVariable: "--ik-theme-special-text2"
+        },
+        {
+            setting: "systemChatColor",
+            inputId: "ikCustomizerSystemChatColor",
+            label: "System Chat Colour",
+            variables: ["--ik-theme-special-text2"],
+            previewVariable: "--ik-theme-special-text8"
+        },
+        {
+            setting: "cityDropdownBackgroundColor",
+            inputId: "ikCustomizerCityDropdownBackgroundColor",
+            label: "City Dropdown Background Colour",
+            variables: ["--ik-theme-special-text8"],
+            previewVariable: "--ik-theme-special-text8"
+        },
+        {
+            setting: "cityDropdownSelectedColor",
+            inputId: "ikCustomizerCityDropdownSelectedColor",
+            label: "City Dropdown Selected Colour",
+            variables: ["--ik-theme-special-text7"],
+            previewVariable: "--ik-theme-special-text7"
         }
     ];
     
@@ -113,14 +205,13 @@
         customCss:
             "",
         
-        textColor:
-            "",
-        
-        backgroundColor:
-            "",
-        
-        alternatingBackgroundColor:
-            ""
+        ...Object.fromEntries(
+            COLOR_OVERRIDE_FIELDS.map(field => [
+                field.setting,
+                ""
+            ])
+        )
+       
     };
 
 
@@ -213,20 +304,15 @@
                     ? source.customCss
                     : "",
             
-            textColor:
-                typeof source.textColor === "string"
-                    ? source.textColor.trim()
-                    : "",
+            ...Object.fromEntries(
+                COLOR_OVERRIDE_FIELDS.map(field => [
+                    field.setting,
             
-            backgroundColor:
-                typeof source.backgroundColor === "string"
-                    ? source.backgroundColor.trim()
-                    : "",
-            
-            alternatingBackgroundColor:
-                typeof source.alternatingBackgroundColor === "string"
-                    ? source.alternatingBackgroundColor.trim()
-                    : ""
+                    typeof source[field.setting] === "string"
+                        ? source[field.setting].trim()
+                        : ""
+                ])
+            )
         };
     }
 
@@ -553,7 +639,7 @@
     function getColorOverrides() {
         const overrides = {};
     
-        // Do not override Native mode or disabled Customizer.
+        // Only apply to active custom interface themes.
         if (
             !settings ||
             !settings.enabled ||
@@ -565,8 +651,14 @@
         for (const field of COLOR_OVERRIDE_FIELDS) {
             const color = settings[field.setting];
     
-            if (isValidHexColor(color)) {
-                overrides[field.variable] = color;
+            // Ignore missing or invalid colours.
+            if (!isValidHexColor(color)) {
+                continue;
+            }
+    
+            // One input can override multiple variables.
+            for (const variable of field.variables) {
+                overrides[variable] = color;
             }
         }
     
@@ -1073,7 +1165,7 @@
 
             #ikCustomizerDialog
             .ik-customizer-color-row > label {
-                flex: 0 0 205px;
+                flex: 0 0 235px;
             }
             
             #ikCustomizerDialog
@@ -1521,25 +1613,37 @@ function updateAccordionStatusHeaders() {
             );
         }
     
-        // Keep the colour preview updated while typing.
+       // Update the colour indicator square.
         const swatch = document.getElementById(
             input.id + "Swatch"
         );
         
-        // Find the CSS variable associated with this input.
+        // Find the configuration for this input.
         const field = COLOR_OVERRIDE_FIELDS.find(
             field => field.inputId === input.id
         );
         
         if (swatch && field) {
-            if (isValidHexColor(value)) {
-                // Valid input: preview the custom colour.
-                swatch.style.backgroundColor = value;
-            } else {
-                // Empty or invalid input: use the theme variable.
-                swatch.style.backgroundColor =
-                    `var(${field.variable}, transparent)`;
-            }
+        
+            // Valid input: preview the entered colour.
+            // Otherwise use the designated theme variable.
+            const previewColor = isValidHexColor(value)
+                ? value
+                : `var(${field.previewVariable}, transparent)`;
+        
+            swatch.style.setProperty(
+                "background-color",
+                previewColor,
+                "important"
+            );
+        
+            // Prevent theme background textures from
+            // obscuring the solid colour indicator.
+            swatch.style.setProperty(
+                "background-image",
+                "none",
+                "important"
+            );
         }
     
         return input.classList.contains(
@@ -1912,56 +2016,30 @@ function updateAccordionStatusHeaders() {
                         Custom colours do not apply to Illyriad Native.
                     </div>
             
-                    <div class="ik-customizer-row ik-customizer-color-row">
-                        <label for="ikCustomizerTextColor">
-                            Text Colour
-                        </label>
-            
-                        <input type="text"
-                               id="ikCustomizerTextColor"
-                               class="ik-customizer-color-input"
-                               placeholder="#FFFFFF"
-                               autocomplete="off"
-                               spellcheck="false">
-            
-                        <span id="ikCustomizerTextColorSwatch"
-                              class="ik-customizer-color-swatch"
-                              aria-hidden="true"></span>
-                    </div>
-            
-                    <div class="ik-customizer-row ik-customizer-color-row">
-                        <label for="ikCustomizerBackgroundColor">
-                            Background Color
-                        </label>
-            
-                        <input type="text"
-                               id="ikCustomizerBackgroundColor"
-                               class="ik-customizer-color-input"
-                               placeholder="#151516"
-                               autocomplete="off"
-                               spellcheck="false">
-            
-                        <span id="ikCustomizerBackgroundColorSwatch"
-                              class="ik-customizer-color-swatch"
-                              aria-hidden="true"></span>
-                    </div>
-            
-                    <div class="ik-customizer-row ik-customizer-color-row">
-                        <label for="ikCustomizerAlternatingBackgroundColor">
-                            Alternating Background Color
-                        </label>
-            
-                        <input type="text"
-                               id="ikCustomizerAlternatingBackgroundColor"
-                               class="ik-customizer-color-input"
-                               placeholder="#202021"
-                               autocomplete="off"
-                               spellcheck="false">
-            
-                        <span id="ikCustomizerAlternatingBackgroundColorSwatch"
-                              class="ik-customizer-color-swatch"
-                              aria-hidden="true"></span>
-                    </div>
+                    ${COLOR_OVERRIDE_FIELDS.map(field => `
+                        <div class="ik-customizer-row ik-customizer-color-row">
+                    
+                            <label for="${field.inputId}">
+                                ${field.label}
+                            </label>
+                    
+                            <input
+                                type="text"
+                                id="${field.inputId}"
+                                class="ik-customizer-color-input"
+                                placeholder="#RRGGBB"
+                                autocomplete="off"
+                                spellcheck="false"
+                            >
+                    
+                            <span
+                                id="${field.inputId}Swatch"
+                                class="ik-customizer-color-swatch"
+                                aria-hidden="true"
+                            ></span>
+                    
+                        </div>
+                    `).join("")}
             
                     <div class="ik-customizer-color-actions">
                     
