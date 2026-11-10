@@ -34,6 +34,7 @@
         "--ik-theme-warning-highlight": "#ff000042",
         "--ik-theme-border-color": "#2e508f",
         "--ik-theme-alt-border-color": "#2e508f",
+        "--ik-theme-map-border-image": 'url("https://i.imgur.com/P9nIGwz.png")',
         "--ik-theme-logout": 'url("https://raw.githubusercontent.com/lKnights/Illyriad-Userscripts/refs/heads/HoRRis_Test_Branch/IKnights-Tools-Suite/themes/LuperDark_Cold/Assets/UI_LDC_4/colddarklogout.png")',
         "--ik-theme-tutorial": 'url("https://raw.githubusercontent.com/lKnights/Illyriad-Userscripts/refs/heads/HoRRis_Test_Branch/IKnights-Tools-Suite/themes/LuperDark_Cold/Assets/UI_LDC_8/colddarktutorial.png")',
         "--ik-theme-compass": 'url("https://raw.githubusercontent.com/lKnights/Illyriad-Userscripts/refs/heads/HoRRis_Test_Branch/IKnights-Tools-Suite/themes/LuperDark_Cold/Assets/UI_LDC_2/colddarkcompass.png")',
@@ -731,6 +732,25 @@ body.ik-dark-mode .cke_dialog_tab_selected {
 }
 body.ik-dark-mode .cke_dialog_background_cover {
     background-color: var(--ik-theme-bg) !important;
+}
+
+/* UI theme town-map border overlay */
+body.ik-dark-mode #townMap::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+
+    background-image: var(--ik-theme-map-border-image);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+
+    pointer-events: none;
+    z-index: 9999;
 }
 
 body.ik-dark-mode .largeBorder { border-image: var(--ik-theme-border-image) 33 35 stretch repeat !important; }
