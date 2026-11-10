@@ -1,11 +1,12 @@
 /*
- * IKnights Tools Suite - Customizer
+ * Illyriad Tools Suite - Customizer
  *
  * Copyright (c) 2026 IKnights
+ * Copyright (c) 2026 HoRRis Lupercal
  * Licensed under the IKnights Non-Commercial License
  *
  * Customizer provides the theme engine and configuration UI
- * for IKnights Tools Suite.
+ * for Illyriad Tools Suite.
  */
 
 (function () {
@@ -68,6 +69,29 @@
     const DIALOG_ID =
         "ikCustomizerDialog";
 
+    const COLOR_OVERRIDE_FIELDS = [
+        {
+            setting: "textColor",
+            inputId: "ikCustomizerTextColor",
+            variable: "--ik-theme-text"
+        },
+        {
+            setting: "backgroundColor",
+            inputId: "ikCustomizerBackgroundColor",
+            variable: "--ik-theme-content-bg"
+        },
+        {
+            setting: "alternatingBackgroundColor",
+            inputId: "ikCustomizerAlternatingBackgroundColor",
+            variable: "--ik-theme-alt-bg"
+        }
+    ];
+    
+    // Accept #RGB, #RRGGBB and #RRGGBBAA.
+    function isValidHexColor(value) {
+        return typeof value === "string" &&
+            /^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/.test(value);
+    }
 
     // =========================================================================
     // DEFAULT SETTINGS
@@ -87,6 +111,15 @@
             false,
 
         customCss:
+            "",
+        
+        textColor:
+            "",
+        
+        backgroundColor:
+            "",
+        
+        alternatingBackgroundColor:
             ""
     };
 
@@ -178,6 +211,21 @@
                 typeof source.customCss ===
                     "string"
                     ? source.customCss
+                    : "",
+            
+            textColor:
+                typeof source.textColor === "string"
+                    ? source.textColor.trim()
+                    : "",
+            
+            backgroundColor:
+                typeof source.backgroundColor === "string"
+                    ? source.backgroundColor.trim()
+                    : "",
+            
+            alternatingBackgroundColor:
+                typeof source.alternatingBackgroundColor === "string"
+                    ? source.alternatingBackgroundColor.trim()
                     : ""
         };
     }
@@ -498,7 +546,33 @@
             );
     }
 
-
+    // =========================================================================
+    // COLOUR OVERRIDES
+    // =========================================================================
+    
+    function getColorOverrides() {
+        const overrides = {};
+    
+        // Do not override Native mode or disabled Customizer.
+        if (
+            !settings ||
+            !settings.enabled ||
+            !getTheme("interface", settings.interfaceTheme)
+        ) {
+            return overrides;
+        }
+    
+        for (const field of COLOR_OVERRIDE_FIELDS) {
+            const color = settings[field.setting];
+    
+            if (isValidHexColor(color)) {
+                overrides[field.variable] = color;
+            }
+        }
+    
+        return overrides;
+    }
+    
     // =========================================================================
     // STYLE ENGINE
     // =========================================================================
@@ -686,6 +760,22 @@
             );
         }
 
+        const colorOverrides =
+            Object.entries(getColorOverrides());
+        
+        if (colorOverrides.length) {
+            blocks.push(
+                [
+                    "/* Interface Theme Colour Overrides */",
+                    "html:root, body {",
+                    ...colorOverrides.map(
+                        ([variable, color]) =>
+                            `    ${variable}: ${color} !important;`
+                    ),
+                    "}"
+                ].join("\n")
+            );
+        }
 
         if (
             settings.customCssEnabled &&
@@ -974,6 +1064,24 @@
                     0;
             }
 
+            #ikCustomizerDialog
+            .ik-customizer-color-row > label {
+                flex: 0 0 205px;
+            }
+            
+            #ikCustomizerDialog
+            .ik-customizer-color-input {
+                flex: 1 1 auto;
+                min-width: 0;
+                box-sizing: border-box;
+            }
+            
+            #ikCustomizerDialog
+            .ik-customizer-color-input.ik-customizer-invalid {
+                background-color: #ffd6d6 !important;
+                color: #800000 !important;
+                border: 2px solid #c00000 !important;
+            }
 
             #ikCustomizerDialog
             #ikCustomizerCustomCss {
@@ -1174,6 +1282,28 @@
     // CONTROL SYNC
     // =========================================================================
 
+    if (!input) {
+            return false;
+        }
+    
+        const value = input.value.trim();
+    
+        const invalid =
+            value !== "" && !isValidHexColor(value);
+    
+        input.classList.toggle(
+            "ik-customizer-invalid",
+            invalid
+        );
+    
+        input.setAttribute(
+            "aria-invalid",
+            String(invalid)
+        );
+    
+        return invalid;
+    }
+    
     function syncControlsFromSettings() {
         if (!settings) {
             return;
@@ -1247,6 +1377,15 @@
                 settings.customCss;
         }
 
+        for (const field of COLOR_OVERRIDE_FIELDS) {
+            const input =
+                document.getElementById(field.inputId);
+        
+            if (input) {
+                input.value = settings[field.setting] || "";
+                updateColorInputValidity(input);
+            }
+        }
 
         syncCustomCssState();
     }
@@ -1331,6 +1470,17 @@
                     ? customCss.value
                     : ""
         };
+
+        for (const field of COLOR_OVERRIDE_FIELDS) {
+            const input =
+                document.getElementById(field.inputId);
+        
+            settings[field.setting] =
+                input ? input.value.trim() : "";
+        
+            updateColorInputValidity(input);
+        }
+        
     }
 
 
@@ -1348,8 +1498,16 @@
         applyCustomizer();
 
 
+        const invalidColors = COLOR_OVERRIDE_FIELDS.some(field => {
+            const color = settings[field.setting];
+        
+            return color !== "" && !isValidHexColor(color);
+        });
+        
         setStatus(
-            "Customizer settings applied."
+            invalidColors
+                ? "Settings applied. Invalid colour values were ignored (red fields)."
+                : "Customizer settings applied."
         );
     }
 
@@ -1465,7 +1623,61 @@
                 </div>
 
             </div>
-
+            
+            <div class="ik-customizer-section">
+            
+                <div class="ik-customizer-heading">
+                    Theme Colour Overrides
+                </div>
+            
+                <div class="ik-customizer-description">
+                    Optional hex colours (#FFF, #FFFFFF, or #FFFFFFFF).
+                    Leave a field blank to use the interface theme's default.
+                </div>
+            
+                <div class="ik-customizer-row ik-customizer-color-row">
+                    <label for="ikCustomizerTextColor">
+                        Text Colour
+                    </label>
+                    <input
+                        type="text"
+                        id="ikCustomizerTextColor"
+                        class="ik-customizer-color-input"
+                        placeholder="#FFFFFF"
+                        autocomplete="off"
+                        spellcheck="false"
+                    >
+                </div>
+            
+                <div class="ik-customizer-row ik-customizer-color-row">
+                    <label for="ikCustomizerBackgroundColor">
+                        Background Color
+                    </label>
+                    <input
+                        type="text"
+                        id="ikCustomizerBackgroundColor"
+                        class="ik-customizer-color-input"
+                        placeholder="#151516"
+                        autocomplete="off"
+                        spellcheck="false"
+                    >
+                </div>
+            
+                <div class="ik-customizer-row ik-customizer-color-row">
+                    <label for="ikCustomizerAlternatingBackgroundColor">
+                        Alternating Background Color
+                    </label>
+                    <input
+                        type="text"
+                        id="ikCustomizerAlternatingBackgroundColor"
+                        class="ik-customizer-color-input"
+                        placeholder="#202021"
+                        autocomplete="off"
+                        spellcheck="false"
+                    >
+                </div>
+            
+            </div>
 
             <div class="ik-customizer-section">
 
@@ -1579,6 +1791,14 @@
                 syncCustomCssState
             );
 
+        for (const field of COLOR_OVERRIDE_FIELDS) {
+            const input =
+                document.getElementById(field.inputId);
+        
+            input?.addEventListener("input", () => {
+                updateColorInputValidity(input);
+            });
+        }
 
         syncControlsFromSettings();
 
@@ -1696,6 +1916,9 @@
 
     IKTools.customizer.getSettings =
         getSettings;
+
+    IKTools.customizer.getColorOverrides =
+        getColorOverrides;
 
 
     IKTools.customizer.apply =
