@@ -732,6 +732,150 @@
     
         return overrides;
     }
+
+    
+    // =========================================================================
+    // INTERFACE THEME IMAGE PRELOADER
+    // =========================================================================
+
+    const MAX_CONCURRENT_THEME_IMAGE_LOADS = 8;
+
+    // Retain image objects so downloaded/decoded assets stay available.
+    const preloadedThemeImages = new Map();
+
+    let themeImagePreloadSignature = "";
+    let themeImagePreloadGeneration = 0;
+
+    function clearThemeImagePreload() {
+        // Stop the old queue when switching or disabling themes.
+        // Already-started network requests may still finish.
+        themeImagePreloadGeneration++;
+        themeImagePreloadSignature = "";
+        preloadedThemeImages.clear();
+    }
+
+    function getInterfaceThemeImageUrls() {
+        const theme = getTheme("interface", settings?.interfaceTheme);
+        const css = theme?.css || "";
+
+        const hoverUrls = [];
+        const otherUrls = [];
+        const seen = new Set();
+
+        // Find URLs in CSS variables AND regular CSS rules.
+        const urlPattern = /url\(\s*(?:"([^"]+)"|'([^']+)'|([^\s)]+))\s*\)/gi;
+
+        let match;
+
+        while ((match = urlPattern.exec(css)) !== null) {
+            const rawUrl = (
+                match[1] || match[2] || match[3] || ""
+            ).trim();
+
+            let url;
+
+            try {
+                url = new URL(rawUrl, document.baseURI).href;
+            } catch (_) {
+                continue;
+            }
+
+            // Only preload downloadable HTTP(S) images.
+            if (!/^https?:/i.test(url) || seen.has(url)) {
+                continue;
+            }
+
+            seen.add(url);
+
+            // Find the CSS declaration containing this URL.
+            const start = Math.max(
+                css.lastIndexOf(";", match.index),
+                css.lastIndexOf("{", match.index),
+                css.lastIndexOf("}", match.index)
+            );
+
+            const declaration = css.slice(start + 1, match.index);
+
+            // Prioritize variables ending in -on.
+            const isHoverImage =
+                /--[\w-]+-on\s*:\s*$/i.test(declaration);
+
+            if (isHoverImage) {
+                hoverUrls.push(url);
+            } else {
+                otherUrls.push(url);
+            }
+        }
+
+        return hoverUrls.concat(otherUrls);
+    }
+
+    function preloadActiveInterfaceThemeImages() {
+        const urls = getInterfaceThemeImageUrls();
+        const signature = urls.join("\n");
+
+        // Don't reload the same set when Customizer reapplies.
+        if (signature === themeImagePreloadSignature) {
+            return;
+        }
+
+        clearThemeImagePreload();
+        themeImagePreloadSignature = signature;
+
+        if (!urls.length) {
+            return;
+        }
+
+        const generation = themeImagePreloadGeneration;
+
+        let nextIndex = 0;
+        let activeLoads = 0;
+
+        function pump() {
+            // Do not continue an outdated theme's queue.
+            if (generation !== themeImagePreloadGeneration) {
+                return;
+            }
+
+            while (
+                activeLoads < MAX_CONCURRENT_THEME_IMAGE_LOADS &&
+                nextIndex < urls.length
+            ) {
+                const url = urls[nextIndex++];
+                const img = new Image();
+
+                preloadedThemeImages.set(url, img);
+                activeLoads++;
+
+                let completed = false;
+
+                function finish() {
+                    if (completed) return;
+                    completed = true;
+
+                    img.onload = null;
+                    img.onerror = null;
+
+                    activeLoads--;
+                    pump();
+                }
+
+                img.onload = () => {
+                    if (typeof img.decode === "function") {
+                        img.decode().then(finish, finish);
+                    } else {
+                        finish();
+                    }
+                };
+
+                img.onerror = finish;
+                img.src = url;
+            }
+        }
+
+        pump();
+    }
+
     
     // =========================================================================
     // STYLE ENGINE
@@ -1034,8 +1178,8 @@
                 false
         ) {
             removeGeneratedStyles();
-
-
+            clearThemeImagePreload();
+        
             cleanupThemeHook(
                 "interface"
             );
@@ -1068,7 +1212,9 @@
             removeGeneratedStyles();
         }
 
-
+        // Preload all images from the selected UI theme.
+        preloadActiveInterfaceThemeImages();
+        
         activateThemeHook(
             "interface",
             getTheme(
@@ -1102,6 +1248,7 @@
 
 
         removeGeneratedStyles();
+        clearThemeImagePreload();
 
 
         cleanupThemeHook(
