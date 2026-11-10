@@ -1083,6 +1083,76 @@
                 border: 2px solid #c00000 !important;
             }
 
+            /* Accordion headers */
+            #ikCustomizerDialog #ikCustomizerAccordion > h3 {
+                display: block !important;
+                position: relative !important;
+                box-sizing: border-box !important;
+            
+                padding: 10px 12px 10px 34px !important;
+                min-height: 38px !important;
+                line-height: 18px !important;
+            
+                font-size: 13px !important;
+                cursor: pointer;
+                margin: 0 0 3px 0 !important;
+            }
+            
+            /* Hide default jQuery UI accordion icon */
+            #ikCustomizerDialog
+            #ikCustomizerAccordion .ui-accordion-header-icon {
+                display: none !important;
+            }
+            
+            /* Collapsed arrow */
+            #ikCustomizerDialog #ikCustomizerAccordion > h3::before {
+                content: "";
+                position: absolute;
+                left: 12px;
+                top: 50%;
+            
+                width: 0;
+                height: 0;
+            
+                border-top: 5px solid transparent;
+                border-bottom: 5px solid transparent;
+                border-left: 6px solid currentColor;
+            
+                transform: translateY(-50%);
+                pointer-events: none;
+            }
+            
+            /* Expanded arrow */
+            #ikCustomizerDialog
+            #ikCustomizerAccordion > h3.ui-state-active::before {
+                transform: translateY(-50%) rotate(90deg);
+            }
+            
+            /* Expanded accordion panel */
+            #ikCustomizerDialog
+            #ikCustomizerAccordion > .ui-accordion-content {
+                padding: 12px 12px 12px 34px !important;
+            }
+            
+            /* Hex colour preview */
+            #ikCustomizerDialog .ik-customizer-color-swatch {
+                flex: 0 0 34px;
+                width: 34px;
+                height: 24px;
+            
+                box-sizing: border-box;
+            
+                border: 1px solid var(--ik-theme-border, #888);
+                background-color: transparent;
+            }
+            
+            /* Center Clear button */
+            #ikCustomizerDialog .ik-customizer-color-actions {
+                display: flex;
+                justify-content: center;
+                margin-top: 10px;
+            }
+
             #ikCustomizerDialog
             #ikCustomizerCustomCss {
 
@@ -1300,7 +1370,20 @@
             "aria-invalid",
             String(invalid)
         );
-    
+        
+        // Update the corresponding colour preview.
+        const swatch = document.getElementById(
+            input.id + "Swatch"
+        );
+        
+        if (swatch) {
+            if (isValidHexColor(value)) {
+                swatch.style.backgroundColor = value;
+            } else {
+                swatch.style.removeProperty("background-color");
+            }
+        }
+        
         return invalid;
     }
     
@@ -1624,88 +1707,98 @@
 
             </div>
             
-            <div class="ik-customizer-section">
+            <div id="ikCustomizerAccordion">
             
-                <div class="ik-customizer-heading">
-                    Theme Colour Overrides
+                <h3>Custom Colour Settings</h3>
+            
+                <div class="ik-customizer-section">
+            
+                    <div class="ik-customizer-description">
+                        Optional hex colours (#FFF, #FFFFFF, or #FFFFFFFF).
+                        Leave a field blank to use the interface theme's default.
+                    </div>
+            
+                    <div class="ik-customizer-row ik-customizer-color-row">
+                        <label for="ikCustomizerTextColor">
+                            Text Colour
+                        </label>
+            
+                        <input type="text"
+                               id="ikCustomizerTextColor"
+                               class="ik-customizer-color-input"
+                               placeholder="#FFFFFF"
+                               autocomplete="off"
+                               spellcheck="false">
+            
+                        <span id="ikCustomizerTextColorSwatch"
+                              class="ik-customizer-color-swatch"
+                              aria-hidden="true"></span>
+                    </div>
+            
+                    <div class="ik-customizer-row ik-customizer-color-row">
+                        <label for="ikCustomizerBackgroundColor">
+                            Background Color
+                        </label>
+            
+                        <input type="text"
+                               id="ikCustomizerBackgroundColor"
+                               class="ik-customizer-color-input"
+                               placeholder="#151516"
+                               autocomplete="off"
+                               spellcheck="false">
+            
+                        <span id="ikCustomizerBackgroundColorSwatch"
+                              class="ik-customizer-color-swatch"
+                              aria-hidden="true"></span>
+                    </div>
+            
+                    <div class="ik-customizer-row ik-customizer-color-row">
+                        <label for="ikCustomizerAlternatingBackgroundColor">
+                            Alternating Background Color
+                        </label>
+            
+                        <input type="text"
+                               id="ikCustomizerAlternatingBackgroundColor"
+                               class="ik-customizer-color-input"
+                               placeholder="#202021"
+                               autocomplete="off"
+                               spellcheck="false">
+            
+                        <span id="ikCustomizerAlternatingBackgroundColorSwatch"
+                              class="ik-customizer-color-swatch"
+                              aria-hidden="true"></span>
+                    </div>
+            
+                    <div class="ik-customizer-color-actions">
+                        <input type="button"
+                               id="ikCustomizerClearColors"
+                               class="ik-game-button"
+                               value="Clear">
+                    </div>
+            
                 </div>
             
-                <div class="ik-customizer-description">
-                    Optional hex colours (#FFF, #FFFFFF, or #FFFFFFFF).
-                    Leave a field blank to use the interface theme's default.
-                </div>
             
-                <div class="ik-customizer-row ik-customizer-color-row">
-                    <label for="ikCustomizerTextColor">
-                        Text Colour
-                    </label>
-                    <input
-                        type="text"
-                        id="ikCustomizerTextColor"
-                        class="ik-customizer-color-input"
-                        placeholder="#FFFFFF"
-                        autocomplete="off"
-                        spellcheck="false"
-                    >
-                </div>
+                <h3>Custom CSS Injection</h3>
             
-                <div class="ik-customizer-row ik-customizer-color-row">
-                    <label for="ikCustomizerBackgroundColor">
-                        Background Color
-                    </label>
-                    <input
-                        type="text"
-                        id="ikCustomizerBackgroundColor"
-                        class="ik-customizer-color-input"
-                        placeholder="#151516"
-                        autocomplete="off"
-                        spellcheck="false"
-                    >
-                </div>
+                <div class="ik-customizer-section">
             
-                <div class="ik-customizer-row ik-customizer-color-row">
-                    <label for="ikCustomizerAlternatingBackgroundColor">
-                        Alternating Background Color
-                    </label>
-                    <input
-                        type="text"
-                        id="ikCustomizerAlternatingBackgroundColor"
-                        class="ik-customizer-color-input"
-                        placeholder="#202021"
-                        autocomplete="off"
-                        spellcheck="false"
-                    >
+                    <div class="ik-customizer-row">
+                        <label for="ikCustomizerCustomCssEnabled">
+                            Custom CSS
+                        </label>
+            
+                        <input type="checkbox"
+                               id="ikCustomizerCustomCssEnabled">
+                    </div>
+            
+                    <textarea id="ikCustomizerCustomCss"
+                              spellcheck="false"
+                              placeholder="Optional custom CSS"></textarea>
+            
                 </div>
             
             </div>
-
-            <div class="ik-customizer-section">
-
-                <div class="ik-customizer-heading">
-                    Advanced
-                </div>
-
-                <div class="ik-customizer-row">
-
-                    <label for="ikCustomizerCustomCssEnabled">
-                        Custom CSS
-                    </label>
-
-                    <input
-                        type="checkbox"
-                        id="ikCustomizerCustomCssEnabled"
-                    >
-
-                </div>
-
-                <textarea
-                    id="ikCustomizerCustomCss"
-                    spellcheck="false"
-                    placeholder="Optional custom CSS"
-                ></textarea>
-
-            </div>
-
 
             <div class="ik-customizer-buttons">
 
@@ -1735,6 +1828,20 @@
             dialog
         );
 
+        if (typeof jQuery.fn.accordion === "function") {
+            jQuery("#ikCustomizerAccordion").accordion({
+                header: "> h3",
+                collapsible: true,
+                active: false,
+        
+                // Modern jQuery UI
+                heightStyle: "content",
+        
+                // Legacy jQuery UI
+                autoHeight: false,
+                fillSpace: false
+            });
+        }
 
         jQuery(
             dialog
@@ -1791,6 +1898,29 @@
                 syncCustomCssState
             );
 
+        document.getElementById("ikCustomizerClearColors")
+            ?.addEventListener("click", () => {
+        
+                for (const field of COLOR_OVERRIDE_FIELDS) {
+                    const input =
+                        document.getElementById(field.inputId);
+        
+                    if (!input) {
+                        continue;
+                    }
+        
+                    // Clear the input.
+                    input.value = "";
+        
+                    // Reset validation and clear the preview.
+                    updateColorInputValidity(input);
+                }
+        
+                setStatus(
+                    "Colour fields cleared. Click Apply to save."
+                );
+            });
+        
         for (const field of COLOR_OVERRIDE_FIELDS) {
             const input =
                 document.getElementById(field.inputId);
