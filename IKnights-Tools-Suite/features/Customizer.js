@@ -2595,6 +2595,8 @@ function updateAccordionStatusHeaders() {
             dialog
         ).dialog({
             autoOpen: false,
+
+            dialogClass: "flora",
         
             width: 600,
             height: "auto",
